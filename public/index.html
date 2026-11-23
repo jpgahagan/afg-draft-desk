@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AFG Narrative Drafts for Volunteer Fire Departments, $249 | AFG Draft Desk</title>
-<meta name="description" content="Get your Assistance to Firefighters Grant (AFG) narratives drafted before the FY2026 window opens. Four scored narratives, each under FEMA's 4,000-character limit, for a flat $249. Free narrative checker included.">
+<title>State Fire Grant Deadlines 2026–27 and AFG Narrative Drafts | AFG Draft Desk</title>
+<meta name="description" content="Dated list of state fire department grant deadlines for winter 2026–27, plus flat-fee drafts of your Assistance to Firefighters Grant (AFG) narratives drafted before the FY2026 window opens. Four scored narratives, each under FEMA's 4,000-character limit, for a flat $249. Free narrative checker included.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script>window.__API_BASE__='__PORT_5001__';</script>
@@ -58,6 +58,12 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
 .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
 .tabs button{font:inherit;font-size:14px;padding:7px 12px;border-radius:8px;border:1.5px solid var(--line);background:#fff;cursor:pointer}
 .tabs button[aria-pressed=true]{border-color:var(--ink);font-weight:600}
+.gt{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;font-size:15px}
+.gt th,.gt td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+.gt th{font-weight:600;background:#ece7e0;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+.gt tr:last-child td{border-bottom:0}.gt .due{white-space:nowrap;font-weight:600}.gt .soon{color:var(--accent)}
+.filt{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 14px}.filt select{width:auto;min-width:200px}
+@media (max-width:820px){.gt,.gt thead,.gt tbody,.gt tr,.gt td{display:block}.gt thead{display:none}.gt tr{border-bottom:1px solid var(--line);padding:8px 0}.gt td{border:0;padding:3px 14px}}
 @media (max-width:820px){.brand{font-size:16px}.navcta{padding:7px 11px;font-size:14px}.hero{grid-template-columns:1fr;padding-top:18px}.steps,.facts,.two{grid-template-columns:1fr}}
 </style>
 </head>
@@ -73,7 +79,8 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
     <p class="kicker">For volunteer and combination fire departments</p>
     <h1>Your AFG narratives, drafted before the FY2026 window opens.</h1>
     <p class="lede">The four scored narratives in an Assistance to Firefighters Grant application are where most small departments lose points. Send us your facts once and get all four drafted, each under FEMA's 4,000-character limit, for a flat $249.</p>
-    <div class="cta-row"><a class="btn" href="#reserve" data-ev="reserve_click">Reserve a draft, pay nothing today</a><a class="btn ghost" href="#checker" data-ev="list_click">Try the free narrative checker</a></div>
+    <div class="cta-row"><a class="btn" href="#reserve" data-ev="reserve_click">Reserve a draft, pay nothing today</a><a class="btn ghost" href="#state" data-ev="list_click">See state grant deadlines</a></div>
+    <p class="note" style="margin-top:12px">Free tools: <a href="#state">state deadline list</a> and <a href="#checker">AFG narrative checker</a>.</p>
   </div>
   <div class="card">
     <div class="price">$249 <small>per application, flat fee</small></div>
@@ -102,6 +109,14 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
 </section>
 
 <div class="wrap">
+<section id="state">
+  <h2>State fire grant deadlines, winter 2026–27</h2>
+  <p class="muted">State and state-run federal programs for volunteer and rural fire departments, checked on each agency's own page on November 23, 2026. Past deadlines drop off automatically. Always confirm the date on the official page before you apply.</p>
+  <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
+  <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
+  <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+</section>
+
 <section>
   <h2>How it works</h2>
   <div class="steps">
@@ -188,6 +203,43 @@ f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
   .then(function(){f.querySelectorAll('label,button,.err').forEach(function(x){x.style.display='none'});ok.style.display='block'})
   .catch(function(x){err.textContent=x.message||'Could not reserve right now. Please try again.';sub.disabled=false;sub.textContent='Reserve my FY2026 draft'});
 });
+var G=[
+["2026-11-23","North Carolina","NC Forest Service Volunteer Fire Assistance","50% reimbursement","https://www.ncmhtd.com/NCFS/VFAP"],
+["2026-11-30","Illinois","OSFM Small Equipment Grant (FY2027)","Up to $50,000; SAM.gov and GATA registration required","https://sfm.illinois.gov/currentfocus/fy-27-small-equipment-grant-.html"],
+["2026-11-30","Pennsylvania","Act 13 Unconventional Gas Well Fund grant","For fire, rescue and EMS in 51 eligible counties","https://www.pa.gov/agencies/osfc/newsroom/2026/state-fire-commissioner-announces--250-000-in-available-grants"],
+["2026-11-30","Washington","DNR Volunteer Fire Assistance, 2027 Phase 2","Up to $18,000; 10% district match","https://dnr.wa.gov/sites/default/files/2026-10/rp_phase2_grant_requirements2027.pdf"],
+["2026-12-01","Minnesota","DNR Volunteer Fire Assistance grant","Matching grant; applications Sept 1 to Dec 1","https://www.dnr.state.mn.us/grants/ruralfire/volunteer.html"],
+["2026-12-13","Washington","DNR HB 1168 Operations Grant (2027)","Up to $20,000","https://dnr.wa.gov/sites/default/files/2026-11/rp_1168_operations_grant_application_2027.pdf"],
+["2026-12-15","Tennessee","Division of Forestry Volunteer Fire Assistance","Wildland fire suppression kits","https://www.tn.gov/tnwildlandfire/suppression/vfa.html"],
+["2026-12-17","Alaska","Volunteer Fire Capacity grant (2026–27)","Up to $10,000 per department","https://forestry.alaska.gov/Assets/pdfs/fire/vfc/2027_VFC_%20PowerPoint.pdf"],
+["2026-12-18","Maine","Maine Forest Service Volunteer Fire Capacity (FY2027)","50/50 match","https://www.maine.gov/dacf/mfs/forest_protection/downloads/vfa-2027/2027-vfc-announcement.pdf"],
+["2026-12-30","New York","DEC Volunteer Fire Capacity grant","Up to $3,500; dollar-for-dollar match","https://dec.ny.gov/environmental-protection/public-safety/volunteer-fire-capacity-grants"],
+["2026-12-31","Texas","VFIS of Texas / Texas Mutual Emergency Responder Health and Wellness grant","Private program listed by SFFMA","https://www.sffmatx.org/grant-programs"],
+["2027-01-06","Utah","Utah Fire Department Assistance Grant","See program guidance","https://ffsl.utah.gov/wp-content/uploads/2027-UFDAG-Grant-Timeline-Final-ada.pdf"],
+["2027-01-07","Pennsylvania","DCNR Volunteer Fire Assistance grant","Wildland fire equipment for rural fire companies","https://www.pa.gov/services/dcnr/apply-for-volunteer-fire-assistance-grants-for-fighting-wildfires"],
+["2027-03-01","North Carolina","OSFM Volunteer Fire Department Fund (opens Jan 2)","Up to $40,000; no deadline extensions","https://www.ncosfm.gov/fire-rescue/fire-rescue-grants-and-relief-funds/volunteer-fire-department-fund"],
+["2027-03-26","Texas","Texas A&M Forest Service Rural VFD Assistance Program","Rolling applications; next funding round Mar 26","https://tfsweb.tamu.edu/wp-content/uploads/2026/10/FY27-RVFDAP-Funding-Round-1-October-23-2026-Funding-Summary.pdf"],
+["2027-04-02","New Jersey","New Jersey American Water Volunteer Fire and EMS grant","Up to $5,000; company service areas only","https://www.nj.com/news/2026/11/this-nj-grant-for-first-responders-just-doubled-to-5000-heres-whos-eligible.html"],
+["2027-06-15","Kansas","Kansas Forest Service Volunteer Fire Assistance (opens May 1)","Cost share","https://www.kansasforests.org/programs/vfa.html"],
+["2027-06-30","Michigan","DNR Volunteer Fire Capacity grant (opens May 1)","50% reimbursement","https://www.michigan.gov/dnr/buy-and-apply/grants/forestry/fire"],
+["rolling","Florida","Florida Forest Service Volunteer Fire Assistance","Accepting applications now","https://www.fdacs.gov/Business-Services/Grant-Opportunities/Volunteer-Fire-Assistance-Grants"],
+["tbd","Ohio","ODNR Volunteer Fire Assistance","Up to $10,000; 50% cost share. Last cycle closed Jan 15; confirm the new date","https://dam.assets.ohio.gov/image/upload/odnr/forestry/fireprogram/FY2025_VFA_Grant_Application.pdf"],
+["tbd","Kentucky","Division of Forestry Volunteer Fire Assistance","$1,000 to $5,000; new funding expected early 2027","https://eec.ky.gov/Natural-Resources/Forestry/Pages/Grant-Opportunities.aspx"]];
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var today=new Date();today.setHours(0,0,0,0);
+var live=G.filter(function(g){if(!/^\d/.test(g[0]))return true;var p=g[0].split('-');return new Date(+p[0],p[1]-1,+p[2])>=today});
+var stf=document.getElementById('stf'),gtb=document.getElementById('gtb'),stc=document.getElementById('stc');
+Array.from(new Set(live.map(function(g){return g[1]}))).sort().forEach(function(n){var o=document.createElement('option');o.textContent=n;stf.appendChild(o)});
+function fmt(d){if(d==='rolling')return 'Rolling';if(d==='tbd')return 'Date to confirm';var p=d.split('-');return MON[p[1]-1]+' '+(+p[2])+', '+p[0]}
+function draw(){gtb.innerHTML='';var v=stf.value,n=0;live.forEach(function(g){if(v&&g[1]!==v)return;n++;var tr=document.createElement('tr');
+ var due=document.createElement('td');due.className='due';due.textContent=fmt(g[0]);
+ if(/^\d/.test(g[0])){var p=g[0].split('-');if((new Date(+p[0],p[1]-1,+p[2])-today)/864e5<=14)due.className+=' soon'}
+ var st=document.createElement('td');st.textContent=g[1];
+ var pr=document.createElement('td');var a=document.createElement('a');a.href=g[4];a.textContent=g[2];a.target='_blank';a.rel='noopener';a.addEventListener('click',function(){ev('list_click')});pr.appendChild(a);
+ var am=document.createElement('td');am.textContent=g[3];
+ tr.appendChild(due);tr.appendChild(st);tr.appendChild(pr);tr.appendChild(am);gtb.appendChild(tr)});
+ stc.textContent=n+' program'+(n===1?'':'s')}
+stf.addEventListener('change',draw);draw();
 var RULES={
  fin:[['States your annual operating budget','budget'],['Gives dollar amounts','\\$\\s?\\d'],['Names funding sources (taxes, fundraising, donations)','tax|fundrais|donation|levy|millage|subscription'],['Mentions other funding you tried','denied|unsuccessful|applied|attempt|unable'],['Explains why the shortfall is outside your control','beyond our control|out of our control|declin|cut|loss|economic|population']],
  proj:[['Describes the problem or risk','risk|problem|hazard|unsafe|fail'],['Gives age or condition of current items','\\byears? old\\b|\\d{4}|expired|out of service|condition'],['Cites a standard (NFPA, OSHA)','nfpa|osha|standard'],['Includes quotes or how costs were found','quote|bid|vendor|price'],['Includes a timeline','month|timeline|within|period of performance']],
