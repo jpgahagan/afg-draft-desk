@@ -3,3 +3,4 @@ __pycache__
 *.png
 server.log
 admin_key.txt
+outreach/
