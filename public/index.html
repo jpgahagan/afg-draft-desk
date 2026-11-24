@@ -262,7 +262,7 @@ section[id]{scroll-margin-top:12px}
 
     <div id="dout" hidden>
       <div class="stepn"><b>4</b> Finish your draft</div>
-      <div class="how" id="how"></div>
+      <div class="how" id="how4"></div>
       <div class="paths" id="dpaths"></div>
       <div class="prog"><div class="progbar"><i id="dprog"></i></div><span id="dprogt"></span></div>
       <div id="qa" hidden></div>
@@ -402,7 +402,7 @@ section[id]{scroll-margin-top:12px}
   <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
   <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" hidden style="margin-top:12px"><a id="stlink" href="https://backdraft.pplx.app/states/"></a></p>
-                     <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+                      <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
@@ -627,7 +627,7 @@ function build(o){
  function gshort(g){return g.replace(/^FP&S \u00b7 Project (\d+): /,'FP&S $1: ').replace(/^Project (\d+): /,'Project $1: ')}
  /* summary */
  var PNm=list(PL.map(function(x){return {afg:'AFG',safer:'SAFER',fps:'FP&S'}[x]}));
- var how=$('how');how.innerHTML='';
+ var how=$("how4");how.innerHTML='';
  var h1=document.createElement('p');h1.className='done1';h1.textContent='\u2713 Written: '+secs.length+' '+PNm+' narrative'+(secs.length===1?'':'s')+' for '+D.name;how.appendChild(h1);
  var h2=document.createElement('p');h2.className='done2';h2.textContent=qleft?'We used '+D._facts+' public facts about your department and county. All that\'s left are facts only your department knows, mostly short numbers'+(groups.length>1?', about '+gmins(Math.ceil(qleft/groups.length))+' minutes per grant.':', about '+gmins(qleft)+' minutes.'):'Every blank is filled. Review any section below, then send it to yourself.';how.appendChild(h2);
  /* two paths */
@@ -779,6 +779,6 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  var y=(rb-zt+24<=vh)?zt-28:rb-vh+24;window.scrollTo({top:y,behavior:'smooth'});history.replaceState(null,'','#draft')},true);
 if(location.hash==='#draft')window.addEventListener('load',function(){setTimeout(function(){var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=document.querySelector('#draft .kicker').getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;window.scrollTo(0,(rb-zt+24<=vh)?zt-28:rb-vh+24)},50)});
 </script>
-<script>(function(){var V='1795528742';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
+<script>(function(){var V='1795533242';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
 </body>
 </html>
