@@ -1,8 +1,9 @@
 <section id="draft">
-  <h2>Draft my department's FEMA grant narratives</h2>
-  <p class="muted">Pick the grant, then type your department or town and tap it. Your narratives appear right away, already filled in with what public records show. Then tap a few answers to make them stronger. No typing required after the first word.</p>
+  <p class="kicker">Free tool</p>
+  <h2>Draft your department's grant narratives</h2>
+  <p class="muted">Type your department or town and tap it. Tap a few answers. Your draft builds below, ready to copy.</p>
   <div class="card tool" id="dz">
-    <div class="stepn">1 · Pick the grant and your department</div>
+    <div class="stepn"><b>1</b> Pick the grant and your department</div>
     <div class="qg" data-q="prog" id="progg">
       <button type="button" data-v="afg" aria-pressed="true">AFG: gear, equipment, training</button><button type="button" data-v="safer">SAFER: staffing and volunteers</button><button type="button" data-v="fps">Fire Prevention and Safety</button></div>
     <p class="note" id="progn" style="margin-top:0"></p>
@@ -13,24 +14,13 @@
     <div id="dres" class="dres" aria-live="polite"></div>
 
     <div id="dstep2" hidden>
-      <div class="stepn">2 · What we already know</div>
+      <div class="stepn"><b>2</b> What public records already show</div>
       <ul class="known" id="known"></ul>
       <p class="note">From the U.S. Fire Administration's National Fire Department Registry and U.S. Census Bureau 2024 county data.</p>
 
-    </div>
-
-    <div id="dout" hidden>
-      <div class="stepn">3 · Your draft</div>
-      <div class="how" id="how"></div>
-      <div class="dtabs" role="tablist" id="dtabs"></div>
-      <div id="dsecs"></div>
-      <div class="cta-row">
-        <button class="btn ghost" id="dcopy" type="button">Copy all sections</button>
-        <button class="btn ghost" id="ddl" type="button">Download</button>
-      </div>
       <div class="chips">
-      <div class="stepn">4 · Tap to make it stronger (optional)</div>
-      <p class="note" style="margin-top:0">"Not sure" leaves a red blank for later. We never guess a number for you, because everything in a FEMA application has to be true.</p>
+      <div class="stepn"><b>3</b> Tap what fits <span>optional</span></div>
+      <p class="note" style="margin-top:0">Skip anything you don't know. It stays as a red blank, because everything in a FEMA application has to be true.</p>
       <div class="qg multi" data-q="item" data-prog="afg"><div class="ql">What are you asking for? (tap all that apply)</div>
         <button type="button" data-v="ppe" aria-pressed="true">Turnout gear</button><button type="button" data-v="scba">SCBA</button><button type="button" data-v="radio">Portable radios</button><button type="button" data-v="equip">Other equipment</button><button type="button" data-v="train">Training</button><button type="button" data-v="well">Physicals</button></div>
       <div class="qg" data-q="sact" data-prog="safer"><div class="ql">What do you need?</div>
@@ -53,6 +43,18 @@
         <button type="button" data-v="fundraisers and donations">Fundraisers</button><button type="button" data-v="a town or county appropriation">Town or county</button><button type="button" data-v="a fire district tax">Fire tax</button><button type="button" data-v="EMS billing">EMS billing</button><button type="button" data-v="state aid">State aid</button></div>
       <div class="qg multi" data-q="hz"><div class="ql">What's in your first-due area (tap all that apply)</div>
         <button type="button" data-v="an interstate or major highway">Highway</button><button type="button" data-v="a rail line">Rail line</button><button type="button" data-v="farms and barns">Farms</button><button type="button" data-v="woods and brush (wildland-urban interface)">Woods and brush</button><button type="button" data-v="schools">Schools</button><button type="button" data-v="nursing homes">Nursing homes</button><button type="button" data-v="industrial or chemical sites">Industrial</button><button type="button" data-v="lakes and rivers">Water</button></div>
+        <a class="skip" href="#dout">See my draft</a>
+      </div>
+    </div>
+
+    <div id="dout" hidden>
+      <div class="stepn"><b>4</b> Your draft</div>
+      <div class="how" id="how"></div>
+      <div class="dtabs" role="tablist" id="dtabs"></div>
+      <div id="dsecs"></div>
+      <div class="cta-row">
+        <button class="btn ghost" id="dcopy" type="button">Copy all sections</button>
+        <button class="btn ghost" id="ddl" type="button">Download</button>
       </div>
       <div class="card upsell">
         <h3>Want it finished, not just started?</h3>
