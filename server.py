@@ -62,6 +62,13 @@ for _d in DEPTS: _d.append(_d[1].lower())
 def dept_search():
     q = str(request.args.get("q", "")).strip().lower()[:80]
     st = str(request.args.get("st", "")).strip().upper()[:2]
+    fd = str(request.args.get("fdid", "")).strip()[:12]
+    if fd:
+        hit = [d for d in DEPTS if d[0] == fd and (not st or d[3] == st)][:1]
+        if hit:
+            d = hit[0]; c = ECON["counties"].get(d[10]) if d[10] else None
+            return jsonify(results=[dict(fdid=d[0], name=d[1], city=d[2], state=d[3], county=d[4], type=d[5], stations=d[6],
+                        career=d[7], volunteer=d[8], ppc=d[9], county_econ=c, state_econ=ECON["states"].get(d[3]))], us=ECON["us"])
     if len(q) < 2: return jsonify(results=[], us=ECON["us"], state_econ=ECON["states"].get(st) if st else None)
     words = q.split()
     out = []

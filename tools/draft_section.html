@@ -1,77 +1,61 @@
 <section id="draft">
   <h2>Draft my department's AFG narratives</h2>
-  <p class="muted">Find your department. We pull what public records already show about it, ask six quick questions, and write all four AFG narratives in plain fire-service language. Anything only your officers know is marked in red for you to fill in. Free, and nothing is saved unless you reserve.</p>
+  <p class="muted">Type your department or town. Tap it. Your four narratives appear right away, already filled in with what public records show. Then tap a few answers to make them stronger. No typing required after the first word.</p>
   <div class="card tool" id="dz">
-    <div class="stepn">Step 1 of 3 · Find your department</div>
+    <div class="stepn">1 · Find your department</div>
     <div class="two">
-      <label>Department or town name<input id="dq" placeholder="e.g. Mapleton or Ghent" autocomplete="off"></label>
+      <label>Department or town<input id="dq" placeholder="Start typing, e.g. Mapleton" autocomplete="off"></label>
       <label>State<select id="dst"><option value="">Any state</option></select></label>
     </div>
     <div id="dres" class="dres" aria-live="polite"></div>
 
     <div id="dstep2" hidden>
-      <div class="stepn">Step 2 of 3 · What we already know</div>
+      <div class="stepn">2 · What we already know</div>
       <ul class="known" id="known"></ul>
-      <p class="note">Sources: U.S. Fire Administration National Fire Department Registry; U.S. Census Bureau 2024 Small Area Income and Poverty Estimates and 2024 county population estimates.</p>
+      <p class="note">From the U.S. Fire Administration's National Fire Department Registry and U.S. Census Bureau 2024 county data.</p>
 
-      <div class="stepn">Step 3 of 3 · Six quick questions (skip any you don't know)</div>
-      <label>What are you asking AFG for?<select id="qitem">
-        <option value="ppe">Turnout gear (structural PPE)</option>
-        <option value="scba">SCBA (air packs, masks and bottles)</option>
-        <option value="radio">Portable radios</option>
-        <option value="equip">Other equipment (TIC, hose, extrication tools)</option>
-        <option value="train">Training (Firefighter I and II)</option>
-        <option value="well">Wellness (annual physicals)</option>
-      </select></label>
-      <div class="two">
-        <label>How old is the gear you'd replace? (years)<input id="qage" inputmode="numeric" placeholder="e.g. 12"></label>
-        <label>How many members need it?<input id="qn" inputmode="numeric"></label>
-      </div>
-      <div class="two">
-        <label>Calls per year<input id="qcalls" inputmode="numeric" placeholder="e.g. 240"></label>
-        <label>Yearly operating budget ($)<input id="qbud" inputmode="numeric" placeholder="e.g. 85000"></label>
-      </div>
-      <fieldset class="chk"><legend>Where your money comes from</legend>
-        <label><input type="checkbox" value="fundraisers and donations">Fundraisers and donations</label>
-        <label><input type="checkbox" value="a town or county appropriation">Town or county money</label>
-        <label><input type="checkbox" value="a fire district tax">Fire district tax</label>
-        <label><input type="checkbox" value="EMS or service billing">EMS or service billing</label>
-        <label><input type="checkbox" value="state aid">State aid</label>
-      </fieldset>
-      <fieldset class="chk" id="qhz"><legend>What's in your first-due area</legend>
-        <label><input type="checkbox" value="an interstate or major highway">Interstate or major highway</label>
-        <label><input type="checkbox" value="a rail line">Rail line</label>
-        <label><input type="checkbox" value="farms and agricultural buildings">Farms and barns</label>
-        <label><input type="checkbox" value="woodland and brush (wildland-urban interface)">Woods and brush</label>
-        <label><input type="checkbox" value="schools">Schools</label>
-        <label><input type="checkbox" value="nursing homes or assisted living">Nursing homes</label>
-        <label><input type="checkbox" value="industrial or chemical sites">Industrial or chemical sites</label>
-        <label><input type="checkbox" value="lakes and rivers">Lakes and rivers</label>
-      </fieldset>
-      <button class="btn" id="dgo" type="button">Write my four narratives</button>
     </div>
 
     <div id="dout" hidden>
+      <div class="stepn">3 · Your draft</div>
       <div class="how" id="how"></div>
+      <div class="dtabs" role="tablist" id="dtabs"></div>
       <div id="dsecs"></div>
       <div class="cta-row">
         <button class="btn ghost" id="dcopy" type="button">Copy all four</button>
-        <button class="btn ghost" id="ddl" type="button">Download as text</button>
+        <button class="btn ghost" id="ddl" type="button">Download</button>
+      </div>
+      <div class="chips">
+      <div class="stepn">4 · Tap to make it stronger (optional)</div>
+      <p class="note" style="margin-top:0">"Not sure" leaves a red blank for later. We never guess a number for you, because everything in a FEMA application has to be true.</p>
+      <div class="qg" data-q="item"><div class="ql">What are you asking for?</div>
+        <button type="button" data-v="ppe" aria-pressed="true">Turnout gear</button><button type="button" data-v="scba">SCBA</button><button type="button" data-v="radio">Portable radios</button><button type="button" data-v="equip">Other equipment</button><button type="button" data-v="train">Training</button><button type="button" data-v="well">Physicals</button></div>
+      <div class="qg" data-q="age"><div class="ql">How old is the gear you'd replace?</div>
+        <button type="button" data-v="">Not sure</button><button type="button" data-v="under 10 years old">Under 10 yrs</button><button type="button" data-v="10 to 15 years old">10–15 yrs</button><button type="button" data-v="more than 15 years old">Over 15 yrs</button></div>
+      <div class="qg" data-q="calls"><div class="ql">Calls per year</div>
+        <button type="button" data-v="">Not sure</button><button type="button" data-v="fewer than 100">Under 100</button><button type="button" data-v="between 100 and 300">100–300</button><button type="button" data-v="between 300 and 1,000">300–1,000</button><button type="button" data-v="more than 1,000">Over 1,000</button></div>
+      <div class="qg" data-q="bud"><div class="ql">Yearly operating budget</div>
+        <button type="button" data-v="">Not sure</button><button type="button" data-v="under $50,000">Under $50k</button><button type="button" data-v="between $50,000 and $150,000">$50k–150k</button><button type="button" data-v="between $150,000 and $500,000">$150k–500k</button><button type="button" data-v="over $500,000">Over $500k</button></div>
+      <div class="qg multi" data-q="fund"><div class="ql">Where your money comes from (tap all that apply)</div>
+        <button type="button" data-v="fundraisers and donations">Fundraisers</button><button type="button" data-v="a town or county appropriation">Town or county</button><button type="button" data-v="a fire district tax">Fire tax</button><button type="button" data-v="EMS billing">EMS billing</button><button type="button" data-v="state aid">State aid</button></div>
+      <div class="qg multi" data-q="hz"><div class="ql">What's in your first-due area (tap all that apply)</div>
+        <button type="button" data-v="an interstate or major highway">Highway</button><button type="button" data-v="a rail line">Rail line</button><button type="button" data-v="farms and barns">Farms</button><button type="button" data-v="woods and brush (wildland-urban interface)">Woods and brush</button><button type="button" data-v="schools">Schools</button><button type="button" data-v="nursing homes">Nursing homes</button><button type="button" data-v="industrial or chemical sites">Industrial</button><button type="button" data-v="lakes and rivers">Water</button></div>
       </div>
       <div class="card upsell">
         <h3>Want it finished, not just started?</h3>
-        <p>For $249 we take this draft, fill every red blank with you, rewrite each section with AI writing tools for your department, and check every line against FEMA's published scoring guidance. You read and approve it before it goes anywhere. One revision round included.</p>
+        <p>For $249 we fill every red blank with you in one short email exchange, rewrite each section with AI writing tools for your department, and check every line against FEMA's published scoring guidance. You approve it before it goes anywhere. One revision round included.</p>
         <a class="btn" href="#reserve" id="dres_cta" data-ev="reserve_click">Reserve my finished draft, pay nothing today</a>
+        <p class="note" style="margin-top:8px">Your department name, state and request are already filled in on the form.</p>
       </div>
       <div class="card gochk">
         <h3>What's left to submit in FEMA GO</h3>
-        <p class="note">FEMA requires your department's own authorized official to submit and sign, so no outside service can press Submit for you. Everything below is ready-to-paste or a quick check.</p>
+        <p class="note">FEMA requires your department's own authorized official to submit and sign, so no outside service can press Submit for you.</p>
         <ol>
-          <li>Active SAM.gov registration with a Unique Entity ID. Renew if it expires before awards. <a href="https://sam.gov/" target="_blank" rel="noopener">sam.gov</a></li>
-          <li>FEMA GO account with your Authorized Official and a Signatory listed. <a href="https://go.fema.gov/" target="_blank" rel="noopener">go.fema.gov</a></li>
-          <li>Incident reporting current in NFIRS or NERIS.</li>
-          <li>Written price quotes for what you're buying, so the Request Details match your Cost-Benefit numbers.</li>
-          <li>Paste the four narratives above, fill the red blanks, and submit before the FY2026 deadline.</li>
+          <li>Active SAM.gov registration with a Unique Entity ID. <a href="https://sam.gov/" target="_blank" rel="noopener">sam.gov</a></li>
+          <li>FEMA GO account with your Authorized Official listed. <a href="https://go.fema.gov/" target="_blank" rel="noopener">go.fema.gov</a></li>
+          <li>Incident reports current in NFIRS or NERIS.</li>
+          <li>Written price quotes, so the dollar amounts match your Cost-Benefit section.</li>
+          <li>Paste the four narratives, fill the red blanks, submit.</li>
         </ol>
       </div>
     </div>
