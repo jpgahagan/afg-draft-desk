@@ -30,7 +30,7 @@ for st in states:
 <header class="wrap" style="padding:20px 0"><a href="/?src=state_{slug}" style="font-weight:700;text-decoration:none;color:inherit">Backdraft Grants</a></header>
 <main class="wrap">
 <section><h1 style="font-size:clamp(30px,5vw,46px);line-height:1.1;margin:10px 0 14px">{st} fire department grant deadlines, 2026–27</h1>
-<p class="muted">Grant programs open to volunteer and rural fire departments in {st}, checked on each agency's official page on November 23, 2026. Confirm dates on the official page before applying.</p>
+<p class="muted">Grant programs open to volunteer and rural fire departments in {st}, checked on each agency's official page on November 24, 2026. Confirm dates on the official page before applying.</p>
 <table class="gt"><thead><tr><th>Due</th><th>Program</th><th>Amount and match</th></tr></thead><tbody>{rows}</tbody></table></section>
 <section><h2>The federal grant most {st} departments also apply for</h2>
 <p>The Assistance to Firefighters Grant (AFG) from FEMA is the largest federal grant for fire departments. In the FY2025 round FEMA received 8,426 applications for about 1,800 awards, and the four written narratives carry much of the score.</p>
@@ -44,7 +44,7 @@ for st in states:
 </body></html>'''
     open(os.path.join(B,f'public/states/{slug}.html'),'w').write(page)
     urls.append(f"{SITE}/states/{slug}.html")
-open(os.path.join(B,'public/sitemap.xml'),'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+"".join(f"<url><loc>{u}</loc><lastmod>2026-11-23</lastmod></url>\n" for u in urls)+'</urlset>\n')
+open(os.path.join(B,'public/sitemap.xml'),'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+"".join(f"<url><loc>{u}</loc><lastmod>2026-11-24</lastmod></url>\n" for u in urls)+'</urlset>\n')
 open(os.path.join(B,'public/robots.txt'),'w').write(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 links=" · ".join(f'<a href="/states/{x.lower().replace(" ","-")}.html">{x}</a>' for x in states)
 p2=os.path.join(B,'public/index.html');t=open(p2).read()
