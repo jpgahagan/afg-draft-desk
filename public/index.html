@@ -29,6 +29,7 @@ h3{font:600 19px/1.3 "Archivo",sans-serif;margin:0 0 6px}
 .cta-row{display:flex;gap:12px;flex-wrap:wrap}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
 .tiers{display:grid;gap:14px}.tier{border-bottom:1px solid var(--line);padding-bottom:12px}.tier p{margin:4px 0 0;font-size:15px}.tier .ticks{margin:6px 0 0}.tname{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent)}.tprice{font:800 30px "Archivo",sans-serif}.tprice small{font:500 15px "Public Sans";color:var(--muted)}.tier.hot{background:#f7f3ee;border:1.5px solid var(--ink);border-radius:10px;padding:12px 14px}
+.more{margin:4px 0 12px}.more summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--muted);padding:6px 0}
 .price{font:800 46px "Archivo",sans-serif}.price small{display:block;font:500 16px "Public Sans";color:var(--muted)}
 ul.ticks{padding:0;margin:14px 0 0;list-style:none}ul.ticks li{padding:6px 0 6px 26px;position:relative}
 ul.ticks li:before{content:"";position:absolute;left:2px;top:14px;width:12px;height:7px;border-left:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg)}
@@ -259,15 +260,18 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
       <p class="note">Full FEMA GO prep: when the round opens, your Authorized Official adds us in FEMA GO with the Grant Writer role. That role can fill in and edit the application but cannot sign or submit it. We enter every section, send it back for signature, and you submit. FEMA requires you to list us in the application's Contact Information section.</p>
     </div>
     <form id="f" class="card" novalidate>
+      <p class="note" style="margin-top:0">Two fields to type. No payment, no card, nothing to sign.</p>
       <label>Department name<input name="org" required autocomplete="organization"></label>
       <label>Email<input name="email" type="email" required autocomplete="email"></label>
+      <label>Plan<select name="plan"><option value="afg249">Finished narratives, $249</option><option value="gw795">Full FEMA GO prep, $795</option></select></label>
+      <details class="more"><summary>Add details (optional)</summary>
       <div class="two">
         <label>State<input name="state" autocomplete="address-level1"></label>
         <label>Department type<select name="orgtype"><option>All-volunteer</option><option>Mostly volunteer / combination</option><option>Mostly career / career</option><option>Nonaffiliated EMS</option></select></label>
       </div>
-      <label>Plan<select name="plan"><option value="afg249">Finished narratives, $249</option><option value="gw795">Full FEMA GO prep, $795</option></select></label>
       <label>What you plan to request<select name="req"><option>PPE / turnout gear</option><option>SCBA</option><option>Other equipment</option><option>Vehicle</option><option>Training</option><option>Facility modification</option><option>Wellness and fitness</option><option>SAFER: hiring</option><option>SAFER: recruitment and retention</option><option>Fire Prevention and Safety</option><option>Not sure yet</option></select></label>
       <label>Anything else (optional)<textarea name="note" rows="3"></textarea></label>
+      </details>
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="btn" id="sub" type="submit">Reserve my spot, pay nothing today</button>
       <div class="err" id="err" role="alert"></div>
@@ -282,8 +286,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
   <details><summary>Do you guarantee an award?</summary><p>No. Awards are competitive and decided by FEMA's review panels. We do not charge contingency fees, which FEMA does not allow as a grant cost.</p></details>
   <details><summary>Can you submit the application for us?</summary><p>No one outside your department can. In FEMA GO, only your Authorized Organization Representative can sign and submit. With Full FEMA GO prep, you add us as your Grant Writer, we fill in the entire application, and your official reviews it, signs and submits in a few minutes.</p></details>
   <details><summary>Do we have to disclose that we used you?</summary><p>Yes. FEMA asks applicants to identify anyone who helped prepare the application, paid or not. We give you the exact details to enter.</p></details>
-  <details><summary>Do you submit the application for us?</summary><p>No. Your department's authorized representative submits in FEMA GO. We supply the narrative text.</p></details>
-  <details><summary>What about SAFER, FP&amp;S or state grants?</summary><p>AFG comes first. If you want help with another program, mention it in the form.</p></details>
+  <details><summary>What about SAFER, Fire Prevention and Safety, or state grants?</summary><p>The free draft tool covers AFG, SAFER and Fire Prevention and Safety, and both paid plans cover all three at the same prices. For state grants, see the deadline list above and mention the program in the form.</p></details>
 </section>
 </div>
 
@@ -298,6 +301,7 @@ var q=new URLSearchParams(location.search);var src=(q.get('src')||'direct').slic
 var vid=Math.random().toString(36).slice(2,12);
 function ev(k){try{fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:src,page:'afg',vid:vid})})}catch(e){}}
 ev('view');
+(function(){var fs=false,ff=document.getElementById('f');if(ff)ff.addEventListener('focusin',function(){if(!fs){fs=true;ev('form_start')}})})();
 document.querySelectorAll('[data-ev]').forEach(function(a){a.addEventListener('click',function(){ev(a.getAttribute('data-ev'))})});
 document.querySelectorAll('details').forEach(function(d){d.addEventListener('toggle',function(){if(d.open)ev('faq_open')})});
 var f=document.getElementById('f'),err=document.getElementById('err'),ok=document.getElementById('ok'),sub=document.getElementById('sub');
@@ -307,7 +311,7 @@ f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
   sub.disabled=true;sub.textContent='Reserving...';
   fetch(API+'/api/reserve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({org:d.org,email:d.email,state:d.state,orgtype:d.orgtype,plan:(d.plan==='gw795'?'gw795':'afg249'),note:('[request: '+d.req+'] '+(d.note||'')).slice(0,600),src:src,vid:vid,website:d.website})})
   .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})})
-  .then(function(){f.querySelectorAll('label,button,.err').forEach(function(x){x.style.display='none'});ok.style.display='block'})
+  .then(function(){f.querySelectorAll('label,button,.err,details,.note').forEach(function(x){x.style.display='none'});ok.style.display='block'})
   .catch(function(x){err.textContent=x.message||'Could not reserve right now. Please try again.';sub.disabled=false;sub.textContent='Reserve my spot, pay nothing today'});
 });
 var G=[
