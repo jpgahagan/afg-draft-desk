@@ -399,8 +399,9 @@ section[id]{scroll-margin-top:12px}
 <section id="state">
   <h2>State fire grant deadlines, winter 2026–27</h2>
   <p class="muted">State and state-run federal programs for volunteer and rural fire departments, checked on each agency's own page on November 23, 2026. Past deadlines drop off automatically. Always confirm the date on the official page before you apply.</p>
-  <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
-  <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
+  <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">Choose your state</option></select></label><span id="stc" class="note"></span></div>
+  <p class="note" id="sthint" style="margin-top:12px">Choose your state, or pick your department in the free draft above, and its deadlines appear here.</p>
+  <table class="gt" id="gtt" hidden><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" hidden style="margin-top:12px"><a id="stlink" href="https://backdraftgrants.com/states/"></a></p>
                           <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
@@ -477,8 +478,11 @@ var today=new Date();today.setHours(0,0,0,0);
 var live=G.filter(function(g){if(!/^\d/.test(g[0]))return true;var p=g[0].split('-');return new Date(+p[0],p[1]-1,+p[2])>=today});
 var stf=document.getElementById('stf'),gtb=document.getElementById('gtb'),stc=document.getElementById('stc');
 Array.from(new Set(live.map(function(g){return g[1]}))).sort().forEach(function(n){var o=document.createElement('option');o.textContent=n;stf.appendChild(o)});
+var oa=document.createElement('option');oa.value='*';oa.textContent='Show all states';stf.appendChild(oa);
+var SNM={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',DC:'District of Columbia',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
+window.bdSetState=function(code){var n=SNM[String(code||'').toUpperCase()]||code;if(!n)return;for(var i=0;i<stf.options.length;i++){if(stf.options[i].textContent===n){stf.value=n;draw();return}}stf.value='';draw();window.__bdHintSet=false;document.getElementById('sthint').textContent='No '+n+' programs have an upcoming deadline on our list right now. Choose another state or Show all states.'};
 function fmt(d){if(d==='rolling')return 'Rolling';if(d==='tbd')return 'Date to confirm';var p=d.split('-');return MON[p[1]-1]+' '+(+p[2])+', '+p[0]}
-function draw(){gtb.innerHTML='';var v=stf.value,n=0;live.forEach(function(g){if(v&&g[1]!==v)return;n++;var tr=document.createElement('tr');
+function draw(){gtb.innerHTML='';var raw=stf.value,v=raw==='*'?'':raw,n=0;var gtt=document.getElementById('gtt'),sh=document.getElementById('sthint');if(!raw){gtt.hidden=true;sh.hidden=false;if(!window.__bdHintSet){sh.textContent='Choose your state, or pick your department in the free draft above, and its deadlines appear here.'}window.__bdHintSet=false;stc.textContent='';var sl0=document.getElementById('stlinks');if(sl0)sl0.hidden=true;return}gtt.hidden=false;sh.hidden=true;live.forEach(function(g){if(v&&g[1]!==v)return;n++;var tr=document.createElement('tr');
  var due=document.createElement('td');due.className='due';due.textContent=fmt(g[0]);
  if(/^\d/.test(g[0])){var p=g[0].split('-');if((new Date(+p[0],p[1]-1,+p[2])-today)/864e5<=14)due.className+=' soon'}
  var st=document.createElement('td');st.textContent=g[1];
@@ -519,8 +523,8 @@ function search(){var q=$('dq').value.trim();if(q.length<2){$('dres').innerHTML=
   m.addEventListener('click',function(){last=[{name:q,city:q,state:$('dst').value||'',county:'',type:'Volunteer',stations:0,career:0,volunteer:0,ppc:0,county_econ:null,state_econ:j.state_econ}];pick(0)});box.appendChild(m)})
  .catch(function(x){window.__err=String(x&&x.stack||x);$('dres').textContent='Search is unavailable right now. Please try again in a minute.'})}
 $('dq').addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(search,200)});
-$('dst').addEventListener('change',search);
-function pick(i,quiet){D=last[i];$('dres').innerHTML='';$('dq').value=D.name;
+$('dst').addEventListener('change',search);$('dst').addEventListener('change',function(){if(window.bdSetState&&$('dst').value)window.bdSetState($('dst').value)});
+function pick(i,quiet){D=last[i];$('dres').innerHTML='';$('dq').value=D.name;if(window.bdSetState&&D.state)window.bdSetState(D.state);
  var k=$('known');k.innerHTML='';var tot=D.career+D.volunteer+D.ppc,e=D.county_econ,se=D.state_econ;
  var facts=[['Department',D.name],['Type',D.type],['Location',(D.city?D.city+', ':'')+D.state+(D.county?' · '+D.county+' County':'')],['Stations',D.stations?String(D.stations):'not listed'],['Firefighters',tot?fmt(tot):'not listed']];
  if(e){if(e.pop)facts.push(['County population',fmt(e.pop)]);if(e.pov!=null)facts.push(['County poverty rate',e.pov+'% (U.S. '+US.pov+'%)']);if(e.inc)facts.push(['County household income','$'+fmt(e.inc)+' (U.S. $'+fmt(US.inc)+')'])}
@@ -779,6 +783,6 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  var y=(rb-zt+24<=vh)?zt-28:rb-vh+24;window.scrollTo({top:y,behavior:'smooth'});history.replaceState(null,'','#draft')},true);
 if(location.hash==='#draft')window.addEventListener('load',function(){setTimeout(function(){var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=document.querySelector('#draft .kicker').getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;window.scrollTo(0,(rb-zt+24<=vh)?zt-28:rb-vh+24)},50)});
 </script>
-<script>(function(){var V='1795543301';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
+<script>(function(){var V='1795544390';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
 </body>
 </html>
