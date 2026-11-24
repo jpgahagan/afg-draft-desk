@@ -61,3 +61,10 @@ The Perplexity daily cycle also edits main every day; it re-verifies state deadl
 - Payout setup, such as a Stripe Payment Link, is Joseph's job. Nobody else handles bank details.
 - The Gmail send-as display name reads "BackDraft Grants". The brand is "Backdraft Grants".
 - A free trial of Porkbun's hosted inbox ends 2026-12-09. Do not activate it; mail runs through Google.
+
+## Legal pages (added Nov 24, 2026, branch legal-pages)
+- Source text lives in `tools/legal/privacy.html` and `tools/legal/terms.html` (body fragments with TITLE/DESC comments). Edit those, never the generated files.
+- `python3 tools/build_states.py` now also writes `public/privacy.html`, `public/terms.html`, adds them to `sitemap.xml`, and puts the shared footer (Privacy, Terms, Grant disclaimer, hello@backdraftgrants.com) on all 50 state pages.
+- The homepage footer and the reservation acknowledgment line (`#ack`) are in `public/index.html`. Reservations record `[terms 2026-11-24]` at the start of the note. If the Terms change materially, update that date tag and the "Last updated" line together.
+- The Privacy Policy describes actual practices (no cookies, no IP stored by the app, drafts stay in the browser, Google Fonts loaded). If you add analytics, cookies, payments, AI processing of customer data or new vendors, update the policy in the same PR.
+- Not yet decided by the owner: refund terms for paid plans, checkbox vs text acknowledgment, liability cap amount, venue. Paid-service refund terms must be approved before any payment collection.

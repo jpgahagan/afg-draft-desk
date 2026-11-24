@@ -47,7 +47,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);border-c
 .err{color:#9b2c1c;font-size:15px;min-height:1em}
 details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px}
 summary{font-weight:600;cursor:pointer}
-footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color:var(--muted)}.footlinks{display:flex;flex-wrap:wrap;gap:8px 20px}.footlinks a{color:inherit;text-decoration:underline;text-underline-offset:2px}.ack{margin:4px 0 12px}
 .hp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .tool textarea{min-height:190px}
 .meter{height:10px;background:#ece7e0;border-radius:6px;overflow:hidden;margin:10px 0 4px}.meter i{display:block;height:100%;width:0;background:var(--ok)}
@@ -162,7 +162,7 @@ section[id]{scroll-margin-top:12px}
 .qnav{display:grid;grid-template-columns:56px auto 1fr;gap:10px}.qnav .btn{text-align:center}.qnav .btn:disabled{opacity:.35;cursor:default}.qnav2{display:flex;gap:10px;flex-wrap:wrap}.qnav2 .btn{flex:1;min-width:200px;text-align:center}.qstop{font:inherit;font-size:14px;background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;justify-self:start;padding:0}
 .qend b{font:800 26px/1.1 "Barlow Condensed",sans-serif;text-transform:uppercase;color:var(--ok)}.qend p{margin:4px 0 0}
 @media (max-width:820px){.paths{grid-template-columns:1fr}.qask{font-size:23px}.qcard{padding:16px}.gq{flex-direction:column;align-items:flex-start;gap:2px}}
-</style></head><body>
+</style><style>.footlinks{display:flex;flex-wrap:wrap;gap:8px 20px}.footlinks a{color:inherit;text-decoration:underline;text-underline-offset:2px}.legal{max-width:760px;padding-bottom:20px}.legal h1{font:800 clamp(30px,5vw,46px)/1.1 "Archivo",sans-serif;margin:24px 0 6px}.legal h2{font-size:clamp(21px,2.4vw,26px);margin:34px 0 10px}.legal h3{font-size:17px;margin:20px 0 6px}.legal li{margin:6px 0}.legal ul{padding-left:22px}.legal .legal-key{margin:26px 0}.legal .legal-key ul{margin-bottom:0}.legal p,.legal li{font-size:16px;line-height:1.6}.skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:12px;background:#fff;padding:8px 12px;z-index:9}</style></head><body>
 <header class="wrap" style="padding:20px 0"><a href="https://backdraftgrants.com/?src=state_wisconsin" style="font-weight:700;text-decoration:none;color:inherit">Backdraft Grants</a></header>
 <main class="wrap">
 <section><h1 style="font-size:clamp(30px,5vw,46px);line-height:1.1;margin:10px 0 14px">Wisconsin fire department grant deadlines, 2026–27</h1>
@@ -174,7 +174,7 @@ section[id]{scroll-margin-top:12px}
 <p><a class="btn" href="https://backdraftgrants.com/?src=state_wisconsin#reserve">Reserve an AFG draft, pay nothing today</a></p>
 <p class="note"><a href="https://backdraftgrants.com/?src=state_wisconsin#state">See deadlines for all states</a></p></section>
 </main>
-<footer class="wrap note" style="padding:30px 0">Run by Joseph Gahagan, 1390 Chain Bridge Rd #10140, McLean, VA 22101. Not affiliated with FEMA or any state agency.</footer>
+<footer class="wrap note sitefoot" style="padding-top:30px;padding-bottom:30px"><nav class="footlinks" aria-label="Legal and contact"><a href="https://backdraftgrants.com/privacy.html">Privacy Policy</a><a href="https://backdraftgrants.com/terms.html">Terms of Service</a><a href="https://backdraftgrants.com/terms.html#disclaimer">Grant disclaimer</a><a href="mailto:hello@backdraftgrants.com">hello@backdraftgrants.com</a></nav><p style="margin:10px 0 0">Backdraft Grants is run by Joseph Gahagan, 1390 Chain Bridge Rd #10140, McLean, VA 22101. Independent service. Not affiliated with FEMA, the U.S. Fire Administration or any state agency. Grant funding is never guaranteed.</p></footer>
 <div class="stk on"><span class="stk-t">Free grant draft for your department</span><a class="btn" href="https://backdraftgrants.com/?src=state_wisconsin#draft">Start my free draft</a></div>
 <script>try{var v=Math.random().toString(36).slice(2);fetch('/port/5001/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'view',src:'state_wisconsin',page:location.pathname,vid:v})}).catch(function(){})}catch(e){}</script>
 </body></html>

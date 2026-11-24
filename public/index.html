@@ -52,7 +52,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);border-c
 .err{color:#9b2c1c;font-size:15px;min-height:1em}
 details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px}
 summary{font-weight:600;cursor:pointer}
-footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color:var(--muted)}.footlinks{display:flex;flex-wrap:wrap;gap:8px 20px}.footlinks a{color:inherit;text-decoration:underline;text-underline-offset:2px}.ack{margin:4px 0 12px}
 .hp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .tool textarea{min-height:190px}
 .meter{height:10px;background:#ece7e0;border-radius:6px;overflow:hidden;margin:10px 0 4px}.meter i{display:block;height:100%;width:0;background:var(--ok)}
@@ -279,6 +279,7 @@ section[id]{scroll-margin-top:12px}
           <button type="button" class="act" id="dcopy"><b>Copy all sections</b><span>When the application is open, go to the Narrative page in FEMA GO and paste each section into its matching box.</span></button>
         </div>
         <p class="note" id="dactok" role="status"></p>
+        <p class="note">Before you submit, check every fact against your records. Yellow items are our estimates and red items are yours to supply. Your department is responsible for everything in its application. <a href="/terms.html#disclaimer">Grant disclaimer</a>.</p>
       </div>
       <div class="card upsell">
         <h3>Want it finished, not just started?</h3>
@@ -388,7 +389,8 @@ section[id]{scroll-margin-top:12px}
       <label>Anything else (optional)<textarea name="note" rows="3"></textarea></label>
       </details>
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="btn" id="sub" type="submit">Reserve my spot, pay nothing today</button>
+      <p class="note ack" id="ack">By reserving, you agree to our <a href="/terms.html">Terms of Service</a> and confirm you can act for this department. Reserving is free and doesn't commit you to buy. See our <a href="/privacy.html">Privacy Policy</a> for how we use your email.</p>
+      <button class="btn" id="sub" type="submit" aria-describedby="ack">Reserve my spot, pay nothing today</button>
       <div class="err" id="err" role="alert"></div>
       <p class="note">Not ready to reserve? <a href="#draft" data-ev="cta_inline">Start my free draft</a> first.</p>
       <div class="ok" id="ok">Reserved. We will email you once, when FEMA publishes the FY2026 notice.</div>
@@ -403,7 +405,7 @@ section[id]{scroll-margin-top:12px}
   <p class="note" id="sthint" style="margin-top:12px">Choose your state, or pick your department in the free draft above, and its deadlines appear here.</p>
   <table class="gt" id="gtt" hidden><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" hidden style="margin-top:12px"><a id="stlink" href="https://backdraftgrants.com/states/"></a></p>
-                          <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+                              <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
@@ -438,7 +440,7 @@ section[id]{scroll-margin-top:12px}
 
 <section>
   <h2>Questions</h2>
-  <details><summary>Who writes the drafts?</summary><p>Drafts are written with AI from your intake answers and checked against FEMA's published narrative guidance and the current funding notice. Every number comes from you. Your department reviews and approves everything before it is submitted.</p></details>
+  <details><summary>Who writes the drafts?</summary><p>The free tool builds your draft from fixed templates in your browser, using public records and the answers you tap. It does not use AI. For the paid plans, we rewrite the narratives with AI writing tools from your intake answers, and a person checks them against FEMA's published narrative guidance and the current funding notice. Every number comes from you or from public records you can check. Your department reviews and approves everything before it is submitted. See our <a href="/terms.html#ai">Terms</a> for details.</p></details>
   <details><summary>Do you guarantee an award?</summary><p>No. Awards are competitive and decided by FEMA's review panels. We do not charge contingency fees, which FEMA does not allow as a grant cost.</p></details>
   <details><summary>Can you submit the application for us?</summary><p>No one outside your department can. In FEMA GO, only your Authorized Organization Representative can sign and submit. With Full FEMA GO prep, you add us as your Grant Writer, we fill in the entire application, and your official reviews it, signs and submits in a few minutes.</p></details>
   <details><summary>Do we have to disclose that we used you?</summary><p>Yes. FEMA asks applicants to identify anyone who helped prepare the application, paid or not. We give you the exact details to enter.</p></details>
@@ -449,7 +451,8 @@ section[id]{scroll-margin-top:12px}
 
 <div class="stk" id="stk" aria-hidden="true"><span class="stk-t" id="stkt">Free grant draft for your department</span><a class="btn" href="#draft" id="stkb" data-ev="sticky_click">Start my free draft</a></div>
 <footer>
-  <div class="wrap">Backdraft Grants is run by Joseph Gahagan, 1390 Chain Bridge Rd #10140, McLean, VA 22101. Not affiliated with FEMA or the U.S. Department of Homeland Security.</div>
+  <div class="wrap"><nav class="footlinks" aria-label="Legal and contact"><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/terms.html#disclaimer">Grant disclaimer</a><a href="mailto:hello@backdraftgrants.com">hello@backdraftgrants.com</a></nav>
+  <p style="margin:10px 0 0">Backdraft Grants is run by Joseph Gahagan, 1390 Chain Bridge Rd #10140, McLean, VA 22101. Independent service. Not affiliated with FEMA, the U.S. Department of Homeland Security, the U.S. Fire Administration or any state agency. Grant funding is never guaranteed.</p></div>
 </footer>
 
 <script>
@@ -467,7 +470,7 @@ f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
   var d=Object.fromEntries(new FormData(f).entries());
   if(!d.org.trim()||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email.trim())){err.textContent='Please add your department name and a valid email.';return}
   sub.disabled=true;sub.textContent='Reserving...';
-  fetch(API+'/api/reserve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({org:d.org,email:d.email,state:d.state,orgtype:d.orgtype,plan:(d.plan==='gw795'?'gw795':'afg249'),note:('[request: '+d.req+'] '+(d.note||'')).slice(0,600),src:src,vid:vid,website:d.website})})
+  fetch(API+'/api/reserve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({org:d.org,email:d.email,state:d.state,orgtype:d.orgtype,plan:(d.plan==='gw795'?'gw795':'afg249'),note:('[terms 2026-11-24] [request: '+(d.req||'none')+'] '+(d.note||'')).slice(0,600),src:src,vid:vid,website:d.website})})
   .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})})
   .then(function(){f.querySelectorAll('label,button,.err,details,.note').forEach(function(x){x.style.display='none'});ok.style.display='block'})
   .catch(function(x){err.textContent=x.message||'Could not reserve right now. Please try again.';sub.disabled=false;sub.textContent='Reserve my spot, pay nothing today'});
@@ -783,6 +786,6 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  var y=(rb-zt+24<=vh)?zt-28:rb-vh+24;window.scrollTo({top:y,behavior:'smooth'});history.replaceState(null,'','#draft')},true);
 if(location.hash==='#draft')window.addEventListener('load',function(){setTimeout(function(){var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=document.querySelector('#draft .kicker').getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;window.scrollTo(0,(rb-zt+24<=vh)?zt-28:rb-vh+24)},50)});
 </script>
-<script>(function(){var V='1795544390';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
+<script>(function(){var V='1795548289';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
 </body>
 </html>
