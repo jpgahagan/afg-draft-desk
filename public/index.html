@@ -10,7 +10,8 @@
 <script>window.__API_BASE__='__PORT_5001__';</script>
 <style>
 :root{--bg:#f6f4f1;--surface:#fff;--ink:#1f1d1b;--muted:#5d5852;--line:#e2ddd6;--accent:#a3271c;--accent-ink:#fff;--dark:#23201e;--ok:#2d6a4f;--r:12px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
+*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip;-webkit-text-size-adjust:100%}
+body{overflow-x:hidden;overflow-x:clip;overscroll-behavior-x:none}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Public Sans",system-ui,sans-serif}
 a{color:var(--accent)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
@@ -42,7 +43,7 @@ section{padding:42px 0}
 .steps .n{font:800 26px "Archivo",sans-serif;color:var(--accent)}
 form{display:grid;gap:14px}
 label{font-weight:600;font-size:15px;display:grid;gap:6px}
-input,select,textarea{font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
+input,select,textarea{font:inherit;font-size:16px;max-width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);border-color:var(--accent)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ok{background:#e6f0ea;border:1px solid #b9d3c3;padding:16px;border-radius:8px;display:none}
@@ -50,7 +51,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);border-c
 details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px}
 summary{font-weight:600;cursor:pointer}
 footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color:var(--muted)}
-.hp{position:absolute;left:-9999px}
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .tool textarea{min-height:190px}
 .meter{height:10px;background:#ece7e0;border-radius:6px;overflow:hidden;margin:10px 0 4px}.meter i{display:block;height:100%;width:0;background:var(--ok)}
 .checks{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px}
@@ -167,7 +168,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
       <div class="chips">
       <div class="stepn">4 · Tap to make it stronger (optional)</div>
       <p class="note" style="margin-top:0">"Not sure" leaves a red blank for later. We never guess a number for you, because everything in a FEMA application has to be true.</p>
-      <div class="qg" data-q="item" data-prog="afg"><div class="ql">What are you asking for?</div>
+      <div class="qg multi" data-q="item" data-prog="afg"><div class="ql">What are you asking for? (tap all that apply)</div>
         <button type="button" data-v="ppe" aria-pressed="true">Turnout gear</button><button type="button" data-v="scba">SCBA</button><button type="button" data-v="radio">Portable radios</button><button type="button" data-v="equip">Other equipment</button><button type="button" data-v="train">Training</button><button type="button" data-v="well">Physicals</button></div>
       <div class="qg" data-q="sact" data-prog="safer"><div class="ql">What do you need?</div>
         <button type="button" data-v="hire" aria-pressed="true">Hire firefighters</button><button type="button" data-v="rr">Recruit and keep volunteers</button></div>
@@ -371,7 +372,7 @@ var API=window.__API_BASE__||'';
 function ev(k){try{fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:new URLSearchParams(location.search).get('src')||'direct',page:'afg'})})}catch(e){}}
 var ST=['AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','PR','GU','VI','AS','MP'];
 ST.forEach(function(s){var o=document.createElement('option');o.value=s;o.textContent=s;$('dst').appendChild(o)});
-var D=null,US=null,timer=null,last=[],A={prog:'afg',item:'ppe',sact:'hire',npos:'',rr:[],fp:'alarm',aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false;
+var D=null,US=null,timer=null,last=[],A={prog:'afg',item:['ppe'],sact:'hire',npos:'',rr:[],fp:'alarm',aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false;
 function fmt(n){return Number(n).toLocaleString('en-US')}
 function getJ(u){return fetch(API+u).then(function(r){return r.json()})}
 function search(){var q=$('dq').value.trim();if(q.length<2){$('dres').innerHTML='';return}
@@ -427,9 +428,12 @@ function build(){
  var hz=A.hz.length?'Our first-due area includes '+list(A.hz)+'. ':'';
  var secs;
  if(A.prog==='safer')secs=A.sact==='hire'?safH():safR();else if(A.prog==='fps')secs=fps();else secs=afg();
- function afg(){var it=IT[A.item];
+ function afg(){var sel=A.item.filter(function(k){return IT[k]}),its=sel.map(function(k){return IT[k]}),it;
+  if(!its.length)it={what:F('what you are requesting'),full:F('what you are requesting'),std:F('the standard it must meet'),risk:'',use:F('the calls it will be used on'),meet:F('the standard it must meet')};
+  else if(its.length===1)it=its[0];
+  else{var cap=function(x){return x.charAt(0).toUpperCase()+x.slice(1)};it={what:list(its.map(function(x){return x.what})),full:its[0].full+', plus '+list(its.slice(1).map(function(x){return F('number')+' '+x.full})),std:its.map(function(x,i){return i?cap(x.std):x.std}).join('. '),risk:its.map(function(x){return x.risk}).join(' '),use:its[0].use,meet:list(its.map(function(x){return x.meet}))}}
   var fin=base+econ+budget+'Replacing '+it.what+' for '+nTxt+' members costs about '+F('$ total from your quotes')+', more than we can raise in '+F('number')+' years. We have tried to fund this locally through '+F('e.g. boot drives, a budget request to the town')+', but '+F('what happened')+'. Without AFG funding, we will '+F('consequence, e.g. keep members in gear past its service life')+'.';
-  var proj='We are requesting '+nTxt+' '+it.full+'. Our current '+it.what+' is '+(A.age||F('age'))+' and '+F('condition, e.g. failed inspection, past service life, parts no longer available')+'. '+it.std.charAt(0).toUpperCase()+it.std.slice(1)+'. '+it.risk+(A.hz.length?' Our first-due area includes '+list(A.hz)+', which drives the type and number of calls we run.':'')+' This request covers '+nTxt+' members who '+F('e.g. are interior-qualified / respond on every call')+'. We will buy only what those members need, nothing extra.';
+  var proj='We are requesting '+nTxt+' '+it.full+'. Our current '+it.what+(its.length>1?' are ':' is ')+(A.age||F('age'))+' and '+F('condition, e.g. failed inspection, past service life, parts no longer available')+'. '+it.std.charAt(0).toUpperCase()+it.std.slice(1)+'. '+it.risk+(A.hz.length?' Our first-due area includes '+list(A.hz)+', which drives the type and number of calls we run.':'')+' This request covers '+nTxt+' members who '+F('e.g. are interior-qualified / respond on every call')+'. We will buy only what those members need, nothing extra.';
   var cb='We collected '+F('number')+' written quotes and selected '+F('vendor or "the lowest qualified quote"')+' at '+F('$ per unit')+' per unit, for a total of '+F('$ total')+'. The department will pay its required cost share of '+F('5% if you protect 20,000 people or fewer, 10% if 20,001 to 1 million')+' from '+F('source, e.g. our equipment reserve')+'. The '+it.what+' will be used on '+it.use+'. With '+(A.calls||F('number'))+' calls a year over '+F('expected service life')+' years of service, the cost works out to about '+F('$')+' per call. We give and receive mutual aid with '+F('names or number of departments')+', so this purchase also protects members from neighboring companies working beside us.';
   var soe='With new '+it.what+', our members will be able to '+F('what changes on calls, e.g. make a safe interior attack on arrival instead of waiting for mutual aid')+'. Today we '+F('current workaround, e.g. share packs / borrow from neighboring departments')+'. This grant will improve firefighter safety on '+it.use+', reduce the chance of injury or a line-of-duty death, and let us meet '+it.meet+'. We will put the '+it.what+' in service within '+F('number')+' days of delivery, train all members on it, log inspections '+F('monthly / after each use')+', and report incidents through '+F('NFIRS or NERIS')+'. Residents of '+town+' will see '+F('benefit, e.g. faster, safer fire attack')+'.';
   return [['Financial Need',fin,4000],['Project Description',proj,4000],['Cost-Benefit',cb,4000],['Statement of Effect',soe,4000]]}
@@ -465,7 +469,7 @@ function build(){
  var how=$('how');how.innerHTML='';var h=document.createElement('p');var hb=document.createElement('b');hb.textContent='Done. ';h.appendChild(hb);
  h.appendChild(document.createTextNode('We found '+D.name+' in the national registry, pulled '+D._facts+' facts about your department and county, and wrote all '+secs.length+' scored '+PNm+' narratives. '+blanks+' red blanks are left for facts only your officers know. Tap the answers below the draft to fill some of them now.'));how.appendChild(h);
  $('dout').hidden=false;
- var f=$('f');if(f){f.org.value=D.name;if(D.state)f.state.value=D.state;var map={ppe:'PPE / turnout gear',scba:'SCBA',radio:'Other equipment',equip:'Other equipment',train:'Training',well:'Wellness and fitness'};f.req.value=A.prog==='afg'?map[A.item]:(A.prog==='fps'?'Fire Prevention and Safety':(A.sact==='hire'?'SAFER: hiring':'SAFER: recruitment and retention'));f.orgtype.value=/volunteer/i.test(D.type)?'All-volunteer':'Mostly volunteer / combination'}}
+ var f=$('f');if(f){f.org.value=D.name;if(D.state)f.state.value=D.state;var map={ppe:'PPE / turnout gear',scba:'SCBA',radio:'Other equipment',equip:'Other equipment',train:'Training',well:'Wellness and fitness'};f.req.value=A.prog==='afg'?(A.item.length===1?map[A.item[0]]:(A.item.length?map[A.item[0]]:'Not sure yet')):(A.prog==='fps'?'Fire Prevention and Safety':(A.sact==='hire'?'SAFER: hiring':'SAFER: recruitment and retention'));f.orgtype.value=/volunteer/i.test(D.type)?'All-volunteer':'Mostly volunteer / combination'}}
 var FP={
  alarm:{what:'smoke alarms and installation',full:F('number')+' 10-year sealed-battery smoke alarms, plus bed-shaker and strobe alarms for residents who are deaf or hard of hearing, installed free in homes by our members',how:'Members will go door to door and by appointment, install alarms on every level and outside sleeping areas, test existing alarms, and leave a home escape plan at each visit.',vuln:'many of these homes have missing, expired or disabled smoke alarms',inc:'residential fires, including '+F('number')+' in homes without working smoke alarms',goal:'install working smoke alarms in '+F('number')+' high-risk homes within 12 months',o1:'install '+F('number')+' alarms in '+F('number')+' homes',o2:'teach a home escape plan at every visit',m:'the number of homes visited, alarms installed, and homes with working alarms on follow-up checks of a sample of visited homes'},
  crr:{what:'fire safety education',full:'a community fire safety education program, including '+F('e.g. presentation materials, a fire safety trailer, handouts in the languages spoken locally')+', delivered by our members',how:'Members will deliver short sessions on cooking safety, heating safety, smoke alarms and escape planning at '+F('locations, e.g. schools, the senior center')+'.',vuln:'cooking and heating cause most home fires in our response area',inc:'residential fires, with '+F('number')+' caused by cooking or heating',goal:'reach '+F('number')+' residents with fire safety education within 12 months',o1:'hold '+F('number')+' sessions',o2:'hand out '+F('number')+' printed safety guides',m:'attendance, pre- and post-session quiz scores, and changes in cooking and heating fire calls'},

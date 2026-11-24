@@ -5,7 +5,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f6f4f1;--surface:#fff;--ink:#1f1d1b;--muted:#5d5852;--line:#e2ddd6;--accent:#a3271c;--accent-ink:#fff;--dark:#23201e;--ok:#2d6a4f;--r:12px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
+*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip;-webkit-text-size-adjust:100%}
+body{overflow-x:hidden;overflow-x:clip;overscroll-behavior-x:none}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Public Sans",system-ui,sans-serif}
 a{color:var(--accent)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
@@ -35,7 +36,7 @@ section{padding:42px 0}
 .steps .n{font:800 26px "Archivo",sans-serif;color:var(--accent)}
 form{display:grid;gap:14px}
 label{font-weight:600;font-size:15px;display:grid;gap:6px}
-input,select,textarea{font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
+input,select,textarea{font:inherit;font-size:16px;max-width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);border-color:var(--accent)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ok{background:#e6f0ea;border:1px solid #b9d3c3;padding:16px;border-radius:8px;display:none}
