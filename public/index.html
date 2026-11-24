@@ -73,6 +73,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
 .chk{border:0;padding:0;margin:12px 0;display:flex;flex-wrap:wrap;gap:8px 16px}.chk legend{font-weight:600;margin-bottom:6px;padding:0}.chk label{display:flex;gap:6px;align-items:center;font-size:15px;font-weight:400}.chk input{width:auto}
 .dsec{border-top:1px solid var(--line);padding:16px 0}.dsec h3{margin:0 0 8px}.dsec p{white-space:pre-wrap;margin:0 0 6px;line-height:1.6}
 .dsec mark{background:#fbe3df;color:#8a1f15;padding:0 3px;border-radius:3px;font-weight:600}
+.wex{background:#faf8f5;border:1px dashed #cfc6ba;border-radius:12px;padding:14px 16px;margin:6px 0 16px}.wex .btn{font-size:16px;padding:12px 18px}.wex .note{margin:8px 0 0}#wexf{margin-top:12px}
 .how{background:#f1ede7;border-radius:8px;padding:12px 14px;margin:16px 0 4px;font-size:15px}.upsell,.gochk{margin-top:18px}.gochk ol{padding-left:20px;margin:8px 0 0}.gochk li{margin:6px 0}
 
 .qg{margin:14px 0}.ql{font-weight:600;font-size:15px;margin-bottom:6px}.chips{border-top:1px solid var(--line);margin-top:18px}.qg button{font:inherit;font-size:15px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;margin:0 4px 6px 0;cursor:pointer;min-height:36px}.qg button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -298,13 +299,21 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
 
 <section id="checker">
   <h2>Free AFG narrative checker</h2>
-  <p class="muted">Paste a draft narrative. It counts characters against FEMA's 4,000-character limit and checks for the elements FEMA's narrative guide asks for. Your text stays in your browser and is never uploaded.</p>
+  <p class="muted">Paste your narrative, or have us write an example for your department. It counts characters against FEMA's 4,000-character limit and checks for the elements FEMA's narrative guide asks for. Your text stays in your browser and is never uploaded.</p>
   <div class="card tool">
     <div class="tabs" role="group" aria-label="Narrative section">
       <button type="button" data-sec="fin" aria-pressed="true">Financial Need</button>
       <button type="button" data-sec="proj" aria-pressed="false">Project Description</button>
       <button type="button" data-sec="cb" aria-pressed="false">Cost-Benefit</button>
       <button type="button" data-sec="soe" aria-pressed="false">Statement of Effect</button>
+    </div>
+    <div class="wex" id="wex">
+      <button class="btn" id="wexb" type="button">Write an example narrative for me</button>
+      <p class="note" id="wexn">Written for your department from public records. Anything we don't know stays as a [blank] for you to fill.</p>
+      <div id="wexf" hidden>
+        <div class="two"><label>Your department or town<input id="wq" placeholder="Start typing, e.g. Mapleton" autocomplete="off"></label><label>State<select id="wst"><option value="">Any state</option></select></label></div>
+        <div id="wres" class="dres" aria-live="polite"></div>
+      </div>
     </div>
     <label for="nar">Your narrative text</label>
     <textarea id="nar" placeholder="Paste your narrative here"></textarea>
@@ -457,7 +466,7 @@ var IT={
  equip:{meet:'current NFPA requirements for this equipment',what:'equipment',full:F('list the equipment, e.g. thermal imaging camera, attack hose and nozzles, battery extrication tools'),std:'equipment must meet the NFPA standard for its type',risk:'Without this equipment our crews take longer to find victims, locate fire in walls and ceilings, and free trapped patients.',use:'structure fires, vehicle crashes and searches'},
  train:{meet:'the NFPA 1001 (NFPA 1010) standard for interior firefighters',what:'training',full:'Firefighter I and II certification courses (NFPA 1001, now part of NFPA 1010), including instructor costs, books and burn-building fees',std:'members who enter burning buildings should be trained to at least Firefighter I',risk:'Untrained members on the fireground are a danger to themselves and their crews, and limit what we can safely do on arrival.',use:'every call our members respond to'},
  well:{meet:'the NFPA 1582 medical evaluation standard',what:'annual medical exams',full:'annual NFPA 1582 medical exams, including cardiac and cancer screening, for all active members',std:'NFPA 1582 sets the medical evaluation standard for fire department members',risk:'Sudden cardiac events are a leading cause of on-duty firefighter deaths, and cancer is now the top career-related threat to firefighters.',use:'keeping every member fit for duty'}};
-function build(){
+function build(o){
  var e=D.county_econ||D.state_econ,area=D.county_econ?D.county+' County':(D.state||F('state')),tot=D.career+D.volunteer+D.ppc;
  var dtype=/volunteer/i.test(D.type)?'all-volunteer':(/combination|mostly/i.test(D.type)?'combination':D.type.toLowerCase());
  var who=D.name+(/^[aeiou]/.test(dtype)?' is an ':' is a ')+dtype+' fire department';
@@ -470,6 +479,7 @@ function build(){
  var hz=A.hz.length?'Our first-due area includes '+list(A.hz)+'. ':'';
  var secs;
  if(A.prog==='safer')secs=A.sact==='hire'?safH():safR();else if(A.prog==='fps')secs=fps();else secs=afg();
+ if(o&&o.compute)return secs;
  function afg(){var sel=A.item.filter(function(k){return IT[k]}),its=sel.map(function(k){return IT[k]}),it;
   if(!its.length)it={what:F('what you are requesting'),full:F('what you are requesting'),std:F('the standard it must meet'),risk:'',use:F('the calls it will be used on'),meet:F('the standard it must meet')};
   else if(its.length===1)it=its[0];
@@ -524,6 +534,22 @@ document.querySelectorAll('a[data-plan]').forEach(function(a){a.addEventListener
 var QS=new URLSearchParams(location.search),fd=QS.get('fdid'),pq=(QS.get('prog')||'').replace(/[^a-z]/g,'');
 if(pq){var pb=document.querySelector('#progg [data-v="'+pq+'"]');if(pb)pb.click()}
 if(fd){getJ('/api/dept?fdid='+encodeURIComponent(fd)+'&st='+encodeURIComponent(QS.get('st')||'')).then(function(j){if(j.results&&j.results.length){US=j.us;last=j.results;pick(0)}}).catch(function(x){window.__err=String(x&&x.stack||x)})}
+
+/* example narrative writer in the checker */
+(function(){var WD=null,last2=[],t2=null,gen='';var KEY={fin:0,proj:1,cb:2,soe:3};
+ST.forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=x;$('wst').appendChild(o)});
+function curSec(){var b=document.querySelector('#checker .tabs button[aria-pressed=true]');return b?b.getAttribute('data-sec'):'fin'}
+function write(){var d=WD||D;if(!d)return;var sp=A.prog,sd=D;A.prog='afg';D=d;var secs;try{secs=build({compute:true})}finally{A.prog=sp;D=sd}
+ var sc=secs[KEY[curSec()]||0];gen=sc[1].replace(/\u27E6/g,'[').replace(/\u27E7/g,']');var n=$('nar');n.value=gen;n.dispatchEvent(new Event('input'));
+ var c=(gen.match(/\[[^\]]*\]/g)||[]).length;$('wexn').textContent='Example '+sc[0]+' for '+d.name+'. '+c+' [blank'+(c===1?'':'s')+'] left for facts only your officers know. Edit it right here, or tap answers in the free tool above to fill more.';$('wexf').hidden=true;$('wexb').textContent='Write it for a different department';$('wexb').className='btn ghost';ev('example_write')}
+function search2(){var q=$('wq').value.trim();if(q.length<2){$('wres').innerHTML='';return}
+ getJ('/api/dept?q='+encodeURIComponent(q)+'&st='+$('wst').value).then(function(j){US=US||j.us;last2=j.results;var box=$('wres');box.innerHTML='';
+  j.results.slice(0,6).forEach(function(d){var b=document.createElement('button');b.type='button';b.className='dpick';var s1=document.createElement('strong');s1.textContent=d.name;var s2=document.createElement('span');s2.textContent='  '+d.city+', '+d.state+' · '+d.type;b.appendChild(s1);b.appendChild(s2);b.addEventListener('click',function(){WD=d;US=US||j.us;box.innerHTML='';write()});box.appendChild(b)});
+  if(!j.results.length)box.textContent='No match in the national registry. Try your town name.'}).catch(function(x){window.__err=String(x);$('wres').textContent='Search is unavailable right now. Please try again in a minute.'})}
+$('wq').addEventListener('input',function(){clearTimeout(t2);t2=setTimeout(search2,200)});$('wst').addEventListener('change',search2);
+$('wexb').addEventListener('click',function(){if((WD||D)&&$('wexb').textContent.indexOf('different')<0){write();return}WD=null;$('wexf').hidden=false;if(D&&!$('wq').value)$('wq').value='';$('wq').focus()});
+document.querySelectorAll('#checker .tabs button').forEach(function(b){b.addEventListener('click',function(){if(gen&&$('nar').value===gen)setTimeout(write,0)})});
+})();
 })();
 
 </script>
