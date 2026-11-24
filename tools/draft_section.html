@@ -1,8 +1,11 @@
 <section id="draft">
-  <h2>Draft my department's AFG narratives</h2>
-  <p class="muted">Type your department or town. Tap it. Your four narratives appear right away, already filled in with what public records show. Then tap a few answers to make them stronger. No typing required after the first word.</p>
+  <h2>Draft my department's FEMA grant narratives</h2>
+  <p class="muted">Pick the grant, then type your department or town and tap it. Your narratives appear right away, already filled in with what public records show. Then tap a few answers to make them stronger. No typing required after the first word.</p>
   <div class="card tool" id="dz">
-    <div class="stepn">1 · Find your department</div>
+    <div class="stepn">1 · Pick the grant and your department</div>
+    <div class="qg" data-q="prog" id="progg">
+      <button type="button" data-v="afg" aria-pressed="true">AFG: gear, equipment, training</button><button type="button" data-v="safer">SAFER: staffing and volunteers</button><button type="button" data-v="fps">Fire Prevention and Safety</button></div>
+    <p class="note" id="progn" style="margin-top:0"></p>
     <div class="two">
       <label>Department or town<input id="dq" placeholder="Start typing, e.g. Mapleton" autocomplete="off"></label>
       <label>State<select id="dst"><option value="">Any state</option></select></label>
@@ -22,15 +25,25 @@
       <div class="dtabs" role="tablist" id="dtabs"></div>
       <div id="dsecs"></div>
       <div class="cta-row">
-        <button class="btn ghost" id="dcopy" type="button">Copy all four</button>
+        <button class="btn ghost" id="dcopy" type="button">Copy all sections</button>
         <button class="btn ghost" id="ddl" type="button">Download</button>
       </div>
       <div class="chips">
       <div class="stepn">4 · Tap to make it stronger (optional)</div>
       <p class="note" style="margin-top:0">"Not sure" leaves a red blank for later. We never guess a number for you, because everything in a FEMA application has to be true.</p>
-      <div class="qg" data-q="item"><div class="ql">What are you asking for?</div>
+      <div class="qg" data-q="item" data-prog="afg"><div class="ql">What are you asking for?</div>
         <button type="button" data-v="ppe" aria-pressed="true">Turnout gear</button><button type="button" data-v="scba">SCBA</button><button type="button" data-v="radio">Portable radios</button><button type="button" data-v="equip">Other equipment</button><button type="button" data-v="train">Training</button><button type="button" data-v="well">Physicals</button></div>
-      <div class="qg" data-q="age"><div class="ql">How old is the gear you'd replace?</div>
+      <div class="qg" data-q="sact" data-prog="safer"><div class="ql">What do you need?</div>
+        <button type="button" data-v="hire" aria-pressed="true">Hire firefighters</button><button type="button" data-v="rr">Recruit and keep volunteers</button></div>
+      <div class="qg" data-q="npos" data-prog="safer-hire"><div class="ql">How many new positions?</div>
+        <button type="button" data-v="">Not sure</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="6">6</button></div>
+      <div class="qg multi" data-q="rr" data-prog="safer-rr"><div class="ql">What would the money pay for? (tap all that apply)</div>
+        <button type="button" data-v="a recruitment marketing campaign" aria-pressed="true">Recruiting ads</button><button type="button" data-v="Firefighter I training and tuition for new members" aria-pressed="true">Training and tuition</button><button type="button" data-v="entry and annual medical physicals">Physicals</button><button type="button" data-v="turnout gear for new recruits">Gear for recruits</button><button type="button" data-v="per-call stipends or a length-of-service award program">Stipends or LOSAP</button></div>
+      <div class="qg" data-q="fp" data-prog="fps"><div class="ql">What's the project?</div>
+        <button type="button" data-v="alarm" aria-pressed="true">Smoke alarm installs</button><button type="button" data-v="crr">Fire safety education</button><button type="button" data-v="wui">Wildfire risk outreach</button><button type="button" data-v="code">Inspections and code work</button><button type="button" data-v="oc">Fire investigation</button></div>
+      <div class="qg multi" data-q="aud" data-prog="fps"><div class="ql">Who are you trying to reach? (tap all that apply)</div>
+        <button type="button" data-v="older adults" aria-pressed="true">Older adults</button><button type="button" data-v="families with young children">Young children</button><button type="button" data-v="low-income households">Low-income homes</button><button type="button" data-v="mobile home residents">Mobile homes</button><button type="button" data-v="rental housing tenants">Renters</button></div>
+      <div class="qg" data-q="age" data-prog="afg"><div class="ql">How old is the gear you'd replace?</div>
         <button type="button" data-v="">Not sure</button><button type="button" data-v="under 10 years old">Under 10 yrs</button><button type="button" data-v="10 to 15 years old">10–15 yrs</button><button type="button" data-v="more than 15 years old">Over 15 yrs</button></div>
       <div class="qg" data-q="calls"><div class="ql">Calls per year</div>
         <button type="button" data-v="">Not sure</button><button type="button" data-v="fewer than 100">Under 100</button><button type="button" data-v="between 100 and 300">100–300</button><button type="button" data-v="between 300 and 1,000">300–1,000</button><button type="button" data-v="more than 1,000">Over 1,000</button></div>
@@ -45,7 +58,7 @@
         <h3>Want it finished, not just started?</h3>
         <p>For $249 we fill every red blank with you in one short email exchange, rewrite each section with AI writing tools for your department, and check every line against FEMA's published scoring guidance. You approve it before it goes anywhere. One revision round included.</p>
         <a class="btn" href="#reserve" id="dres_cta" data-ev="reserve_click">Reserve my finished draft, pay nothing today</a>
-        <p class="note" style="margin-top:8px">Your department name, state and request are already filled in on the form.</p>
+        <p class="note" style="margin-top:8px">Your department name, state and grant are already filled in on the form.</p>
       </div>
       <div class="card gochk">
         <h3>What's left to submit in FEMA GO</h3>
@@ -54,8 +67,8 @@
           <li>Active SAM.gov registration with a Unique Entity ID. <a href="https://sam.gov/" target="_blank" rel="noopener">sam.gov</a></li>
           <li>FEMA GO account with your Authorized Official listed. <a href="https://go.fema.gov/" target="_blank" rel="noopener">go.fema.gov</a></li>
           <li>Incident reports current in NFIRS or NERIS.</li>
-          <li>Written price quotes, so the dollar amounts match your Cost-Benefit section.</li>
-          <li>Paste the four narratives, fill the red blanks, submit.</li>
+          <li>Written price quotes or salary figures, so the dollar amounts match your narratives.</li>
+          <li>Paste the narratives and fill the red blanks. Your Authorized Official then signs and submits.</li>
         </ol>
       </div>
     </div>
