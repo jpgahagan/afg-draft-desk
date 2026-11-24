@@ -1,8 +1,8 @@
-# AFG Draft Desk
+# Backdraft Grants
 
 Flat-fee ($249) drafts of the four scored FEMA Assistance to Firefighters Grant (AFG) narratives for volunteer and combination fire departments: Financial Need, Project Description, Cost-Benefit and Statement of Effect.
 
-- Live page and free narrative checker: https://afgdrafts.pplx.app/?src=github
+- Live page and free narrative checker: https://backdraft.pplx.app/?src=github
 - The checker counts characters against FEMA's 4,000-character limit and flags missing elements from FEMA's narrative guidance. It runs entirely in the browser.
 
 ## AFG prep checklist (free)
