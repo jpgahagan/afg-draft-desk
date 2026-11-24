@@ -114,7 +114,7 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
 .qg button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
 .dtabs .tgrp{grid-column:1/-1;flex-basis:100%;font:700 13px/1.2 inherit;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:8px 0 0}
 .qh{font-size:14px;color:var(--muted);margin:-2px 0 8px;line-height:1.45}.qh.warn{color:var(--accent);font-weight:600}
-.qg.multi button[aria-pressed=true]:before{content:"\2713\00a0"}
+.qg.multi button:before{content:"+";display:inline-block;width:1.15em;text-align:left;font-weight:700;color:var(--muted)}.qg.multi button[aria-pressed=true]:before{content:"\2713";color:#fff}
 #progg button{border-radius:10px;font-weight:600}
 .chips{border-top:0;margin-top:0;background:#faf8f5;border:1px solid var(--line);border-radius:12px;padding:4px 16px 14px}
 .skip{display:inline-block;margin-top:6px;font-weight:600}
@@ -319,7 +319,7 @@ section[id]{scroll-margin-top:12px}
   <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
   <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/georgia.html">Georgia</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/indiana.html">Indiana</a> · <a href="/states/iowa.html">Iowa</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/missouri.html">Missouri</a> · <a href="/states/new-hampshire.html">New Hampshire</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/south-carolina.html">South Carolina</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/vermont.html">Vermont</a> · <a href="/states/virginia.html">Virginia</a> · <a href="/states/washington.html">Washington</a> · <a href="/states/west-virginia.html">West Virginia</a> · <a href="/states/wisconsin.html">Wisconsin</a></p>
-           <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+            <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
@@ -645,6 +645,6 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  var y=(rb-zt+24<=vh)?zt-12:rb-vh+24;window.scrollTo({top:y,behavior:'smooth'});history.replaceState(null,'','#draft')},true);
 if(location.hash==='#draft')window.addEventListener('load',function(){setTimeout(function(){var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=z.getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;window.scrollTo(0,(rb-zt+24<=vh)?zt-12:rb-vh+24)},50)});
 </script>
-<script>(function(){var V='1795525994';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
+<script>(function(){var V='1795526703';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
 </body>
 </html>
