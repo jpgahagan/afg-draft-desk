@@ -208,6 +208,7 @@ section[id]{scroll-margin-top:12px}
       
       <button type="button" data-v="afg" aria-pressed="true">AFG: gear, equipment, training</button><button type="button" data-v="safer">SAFER: staffing and volunteers</button><button type="button" data-v="fps">Fire Prevention and Safety</button></div>
     <p class="note" id="progn" hidden></p>
+    <button type="button" class="btn" id="dnext1" hidden style="margin-top:6px">Next: check what we found &darr;</button>
 
 
     <div id="dstep2" hidden>
@@ -320,7 +321,7 @@ section[id]{scroll-margin-top:12px}
   <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
   <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/georgia.html">Georgia</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/indiana.html">Indiana</a> · <a href="/states/iowa.html">Iowa</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/missouri.html">Missouri</a> · <a href="/states/new-hampshire.html">New Hampshire</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/south-carolina.html">South Carolina</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/vermont.html">Vermont</a> · <a href="/states/virginia.html">Virginia</a> · <a href="/states/washington.html">Washington</a> · <a href="/states/west-virginia.html">West Virginia</a> · <a href="/states/wisconsin.html">Wisconsin</a></p>
-               <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+                <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
@@ -486,7 +487,7 @@ function pick(i,quiet){D=last[i];$('dres').innerHTML='';$('dq').value=D.name;
  D._facts=facts.length;$('dstep2').hidden=false;
  if(!A.fund.length&&/volunteer/i.test(D.type)){} 
  build();if(!made){made=true;ev('draft_made')}
- if(!quiet)$('dstep2').scrollIntoView({behavior:'smooth',block:'start'})}
+ $('dnext1').hidden=false}
 Array.prototype.forEach.call(document.querySelectorAll('#dz .qg'),function(g){var key=g.getAttribute('data-q'),multi=g.classList.contains('multi');
  if(!multi&&!g.querySelector('[aria-pressed=true]'))g.querySelector('button').setAttribute('aria-pressed','true');
  Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){if(!b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','false');
@@ -605,6 +606,7 @@ var FP={
  oc:{what:'fire origin and cause investigation',full:F('e.g. fire investigation training, a thermal camera, scene documentation kits')+' for our fire investigation work',how:'Trained members will determine origin and cause on every qualifying fire, so we can see patterns and aim prevention where it is needed.',vuln:'many fire causes in our area are recorded as undetermined',inc:'fires with an undetermined cause',goal:'determine origin and cause on '+F('share')+' of qualifying fires within 12 months',o1:'train '+F('number')+' members in origin and cause investigation',o2:'complete investigations on every qualifying fire',m:'share of fires with a determined cause, compared with the year before the grant'}};
 function dname(){return D?D.name:'Draft'}
 function flash(t){$('dactok').textContent=t;setTimeout(function(){$('dactok').textContent=''},6000)}
+$('dnext1').addEventListener('click',function(){$('dstep2').scrollIntoView({behavior:'smooth',block:'start'})});
 $('dcopy').addEventListener('click',function(){var t=window.__draftText||'';var ok=function(){flash('Copied all sections. Paste them into FEMA GO, an email or a document.')},no=function(){flash('Copy did not work on this device. Use Email it to myself instead.')};
  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,no);else no();ev('draft_copy')});
 $('ddl').addEventListener('click',function(){var esc=function(x){return x.replace(/&/g,'&amp;').replace(/</g,'&lt;')};var h='<html><head><meta charset="utf-8"><title>'+esc(dname())+' grant narratives</title></head><body style="font-family:Calibri,Arial,sans-serif;font-size:12pt"><h1 style="font-size:16pt">'+esc(dname())+': grant narratives (draft)</h1><p style="color:#a3271c">Anything in [brackets] still needs your department\'s facts.</p>'+(window.__secs||[]).map(function(s){return '<h2 style="font-size:13pt">'+esc(s[0])+'</h2><p>'+esc(s[1])+'</p>'}).join('')+'<p style="color:#777;font-size:9pt">Drafted with Backdraft Grants, backdraft.pplx.app. Not affiliated with FEMA.</p></body></html>';
@@ -649,6 +651,6 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  var y=(rb-zt+24<=vh)?zt-28:rb-vh+24;window.scrollTo({top:y,behavior:'smooth'});history.replaceState(null,'','#draft')},true);
 if(location.hash==='#draft')window.addEventListener('load',function(){setTimeout(function(){var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=document.querySelector('#draft .kicker').getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;window.scrollTo(0,(rb-zt+24<=vh)?zt-28:rb-vh+24)},50)});
 </script>
-<script>(function(){var V='1795528225';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
+<script>(function(){var V='1795528737';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
 </body>
 </html>
