@@ -39,6 +39,7 @@ for st in states:
 <p class="note"><a href="/?src=state_{slug}#state">See deadlines for all states</a></p></section>
 </main>
 <footer class="wrap note" style="padding:30px 0">Run by Joseph Gahagan, 1390 Chain Bridge Rd #10140, McLean, VA 22101. Not affiliated with FEMA or any state agency.</footer>
+<div class="stk on"><span class="stk-t">Free grant draft for your department</span><a class="btn" href="/?src=state_{slug}#draft">Start my free draft</a></div>
 {TRACK}
 </body></html>'''
     open(os.path.join(B,f'public/states/{slug}.html'),'w').write(page)
@@ -47,7 +48,7 @@ open(os.path.join(B,'public/sitemap.xml'),'w').write('<?xml version="1.0" encodi
 open(os.path.join(B,'public/robots.txt'),'w').write(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 links=" · ".join(f'<a href="/states/{x.lower().replace(" ","-")}.html">{x}</a>' for x in states)
 p2=os.path.join(B,'public/index.html');t=open(p2).read()
-t=re.sub(r'<p class="note" id="stlinks">.*?</p>','',t,flags=re.S)
+t=re.sub(r'  <p class="note" id="stlinks"[^>]*>.*?</p>\n',' ',t,flags=re.S).replace('</tbody></table>\n \n','</tbody></table>\n')
 t=t.replace('</tbody></table>\n','</tbody></table>\n  <p class="note" id="stlinks" style="margin-top:12px">State pages: '+links+'</p>\n',1)
 open(p2,'w').write(t)
 print(len(urls))

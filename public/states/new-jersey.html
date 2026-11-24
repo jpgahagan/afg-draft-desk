@@ -68,6 +68,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
 .chk{border:0;padding:0;margin:12px 0;display:flex;flex-wrap:wrap;gap:8px 16px}.chk legend{font-weight:600;margin-bottom:6px;padding:0}.chk label{display:flex;gap:6px;align-items:center;font-size:15px;font-weight:400}.chk input{width:auto}
 .dsec{border-top:1px solid var(--line);padding:16px 0}.dsec h3{margin:0 0 8px}.dsec p{white-space:pre-wrap;margin:0 0 6px;line-height:1.6}
 .dsec mark{background:#fbe3df;color:#8a1f15;padding:0 3px;border-radius:3px;font-weight:600}
+.wex{background:#faf8f5;border:1px dashed #cfc6ba;border-radius:12px;padding:14px 16px;margin:6px 0 16px}.wex .btn{font-size:16px;padding:12px 18px}.wex .note{margin:8px 0 0}#wexf{margin-top:12px}
 .how{background:#f1ede7;border-radius:8px;padding:12px 14px;margin:16px 0 4px;font-size:15px}.upsell,.gochk{margin-top:18px}.gochk ol{padding-left:20px;margin:8px 0 0}.gochk li{margin:6px 0}
 
 .qg{margin:14px 0}.ql{font-weight:600;font-size:15px;margin-bottom:6px}.chips{border-top:1px solid var(--line);margin-top:18px}.qg button{font:inherit;font-size:15px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;margin:0 4px 6px 0;cursor:pointer;min-height:36px}.qg button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -117,6 +118,18 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
 .plan.hot{border:2px solid var(--accent);box-shadow:0 14px 40px rgba(194,42,28,.15)}
 .flag{position:absolute;top:-12px;left:20px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:99px}
 @media (max-width:820px){.plans{grid-template-columns:1fr}.preview{transform:none}.hero{padding:16px 0 40px}.fact b{font-size:46px}section#draft .tool{padding:18px}}
+
+.sec-cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px}.sec-cta .note{margin:0}
+.band .sec-cta .note{color:#ffe2dc}.btn.light{background:#fff;color:var(--accent)}
+.heroband .navcta{background:var(--accent);border-color:var(--accent)}
+.resume{background:#e3f0e8;color:#1f5a3d;border-radius:10px;padding:10px 14px;margin:0 0 6px;font-size:15px;font-weight:600}.resume button{font:inherit;font-size:14px;background:none;border:0;color:#1f5a3d;text-decoration:underline;cursor:pointer;padding:0}
+.stk{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(22,24,27,.96);color:#fff;transform:translateY(110%);transition:transform .25s ease;box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+.stk.on{transform:none}.stk .btn{padding:12px 20px;font-size:16px;white-space:nowrap}.stk-t{font-weight:600;font-size:15px}
+body{padding-bottom:76px}
+section[id]{scroll-margin-top:12px}
+:focus-visible{outline:3px solid var(--trim);outline-offset:2px}
+@media (max-width:560px){.stk-t{display:none}.stk .btn{width:100%;text-align:center}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stk{transition:none}}
 </style></head><body>
 <header class="wrap" style="padding:20px 0"><a href="/?src=state_new-jersey" style="font-weight:700;text-decoration:none;color:inherit">AFG Draft Desk</a></header>
 <main class="wrap">
@@ -130,5 +143,6 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
 <p class="note"><a href="/?src=state_new-jersey#state">See deadlines for all states</a></p></section>
 </main>
 <footer class="wrap note" style="padding:30px 0">Run by Joseph Gahagan, 1390 Chain Bridge Rd #10140, McLean, VA 22101. Not affiliated with FEMA or any state agency.</footer>
+<div class="stk on"><span class="stk-t">Free grant draft for your department</span><a class="btn" href="/?src=state_new-jersey#draft">Start my free draft</a></div>
 <script>try{var v=Math.random().toString(36).slice(2);fetch('/port/5001/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'view',src:'state_new-jersey',page:location.pathname,vid:v})}).catch(function(){})}catch(e){}</script>
 </body></html>

@@ -123,13 +123,25 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
 .plan.hot{border:2px solid var(--accent);box-shadow:0 14px 40px rgba(194,42,28,.15)}
 .flag{position:absolute;top:-12px;left:20px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:99px}
 @media (max-width:820px){.plans{grid-template-columns:1fr}.preview{transform:none}.hero{padding:16px 0 40px}.fact b{font-size:46px}section#draft .tool{padding:18px}}
+
+.sec-cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px}.sec-cta .note{margin:0}
+.band .sec-cta .note{color:#ffe2dc}.btn.light{background:#fff;color:var(--accent)}
+.heroband .navcta{background:var(--accent);border-color:var(--accent)}
+.resume{background:#e3f0e8;color:#1f5a3d;border-radius:10px;padding:10px 14px;margin:0 0 6px;font-size:15px;font-weight:600}.resume button{font:inherit;font-size:14px;background:none;border:0;color:#1f5a3d;text-decoration:underline;cursor:pointer;padding:0}
+.stk{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(22,24,27,.96);color:#fff;transform:translateY(110%);transition:transform .25s ease;box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+.stk.on{transform:none}.stk .btn{padding:12px 20px;font-size:16px;white-space:nowrap}.stk-t{font-weight:600;font-size:15px}
+body{padding-bottom:76px}
+section[id]{scroll-margin-top:12px}
+:focus-visible{outline:3px solid var(--trim);outline-offset:2px}
+@media (max-width:560px){.stk-t{display:none}.stk .btn{width:100%;text-align:center}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stk{transition:none}}
 </style>
 </head>
 <body>
 <div class="heroband"><div class="wrap">
 <header class="top">
   <a class="brand" href="#"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="5" fill="#a3271c"/><path d="M8 18h10M8 13.5h10M8 9h6" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>AFG Draft Desk</a>
-  <a class="navcta" href="#reserve" data-ev="reserve_click">Reserve a draft</a>
+  <a class="navcta" href="#draft" data-ev="cta_nav">Start my free draft</a>
 </header>
 <div class="hero">
   <div>
@@ -159,6 +171,7 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
     <div class="fact"><b>$1,500</b><span class="muted">The most FEMA allows as a pre-award grant-writer fee, under its timing and documentation rules.</span></div>
   </div>
   <p class="muted" style="margin-top:18px">Sources: <a href="https://www.federalregister.gov/documents/2026/09/10/2026-18419/assistance-to-firefighters-grant-program-fire-prevention-and-safety-grants">Federal Register notice 2026-18419</a> and the <a href="https://www.fema.gov/sites/default/files/documents/fema_rsl_hmd_fy25-afg-nofo_05292026.pdf">FY2025 AFG funding notice</a>. Each of the four narratives is 25% of the peer review score.</p>
+  <div class="sec-cta"><a class="btn light" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </div>
 </section>
 
@@ -168,6 +181,7 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
   <h2>Draft your department's grant narratives</h2>
   <p class="muted">Type your department or town and tap it. Tap a few answers. Your draft builds below, ready to copy.</p>
   <div class="card tool" id="dz">
+    <p class="resume" id="resume" hidden><span id="resumet"></span> <button type="button" id="resumex">Start over</button></p>
     <div class="stepn"><b>1</b> Pick the grant and your department</div>
     <div class="qg" data-q="prog" id="progg">
       <button type="button" data-v="afg" aria-pressed="true">AFG: gear, equipment, training</button><button type="button" data-v="safer">SAFER: staffing and volunteers</button><button type="button" data-v="fps">Fire Prevention and Safety</button></div>
@@ -281,10 +295,8 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
   <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
   <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/georgia.html">Georgia</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/indiana.html">Indiana</a> · <a href="/states/iowa.html">Iowa</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/missouri.html">Missouri</a> · <a href="/states/new-hampshire.html">New Hampshire</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/south-carolina.html">South Carolina</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/vermont.html">Vermont</a> · <a href="/states/virginia.html">Virginia</a> · <a href="/states/washington.html">Washington</a> · <a href="/states/west-virginia.html">West Virginia</a> · <a href="/states/wisconsin.html">Wisconsin</a></p>
-  <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/georgia.html">Georgia</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/indiana.html">Indiana</a> · <a href="/states/iowa.html">Iowa</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/missouri.html">Missouri</a> · <a href="/states/new-hampshire.html">New Hampshire</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/south-carolina.html">South Carolina</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/vermont.html">Vermont</a> · <a href="/states/virginia.html">Virginia</a> · <a href="/states/washington.html">Washington</a> · <a href="/states/west-virginia.html">West Virginia</a> · <a href="/states/wisconsin.html">Wisconsin</a></p>
-  <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/washington.html">Washington</a></p>
-  <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/washington.html">Washington</a></p>
-  <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+       <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+  <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
 <section>
@@ -295,6 +307,7 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
     <div class="card"><div class="n">3</div><h3>Review and submit</h3><p>Drafts arrive within 3 business days. Your department edits, approves and submits in FEMA GO.</p></div>
   </div>
   <p class="note" style="margin-top:14px">For comparison, one fire-grant consultant lists $500 for AFG narratives only and $1,350 for a turnkey application (<a href="https://firstdueconsultants.com/">First Due Consulting</a>).</p>
+  <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
 <section id="checker">
@@ -348,6 +361,7 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="btn" id="sub" type="submit">Reserve my spot, pay nothing today</button>
       <div class="err" id="err" role="alert"></div>
+      <p class="note">Not ready to reserve? <a href="#draft" data-ev="cta_inline">Start my free draft</a> first.</p>
       <div class="ok" id="ok">Reserved. We will email you once, when FEMA publishes the FY2026 notice.</div>
     </form>
   </div>
@@ -360,9 +374,11 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
   <details><summary>Can you submit the application for us?</summary><p>No one outside your department can. In FEMA GO, only your Authorized Organization Representative can sign and submit. With Full FEMA GO prep, you add us as your Grant Writer, we fill in the entire application, and your official reviews it, signs and submits in a few minutes.</p></details>
   <details><summary>Do we have to disclose that we used you?</summary><p>Yes. FEMA asks applicants to identify anyone who helped prepare the application, paid or not. We give you the exact details to enter.</p></details>
   <details><summary>What about SAFER, Fire Prevention and Safety, or state grants?</summary><p>The free draft tool covers AFG, SAFER and Fire Prevention and Safety, and both paid plans cover all three at the same prices. For state grants, see the deadline list above and mention the program in the form.</p></details>
+  <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 </div>
 
+<div class="stk" id="stk" aria-hidden="true"><span class="stk-t" id="stkt">Free grant draft for your department</span><a class="btn" href="#draft" id="stkb" data-ev="sticky_click">Start my free draft</a></div>
 <footer>
   <div class="wrap">AFG Draft Desk is run by Joseph Gahagan, 1390 Chain Bridge Rd #10140, McLean, VA 22101. Not affiliated with FEMA or the U.S. Department of Homeland Security.</div>
 </footer>
@@ -436,7 +452,7 @@ function search(){var q=$('dq').value.trim();if(q.length<2){$('dres').innerHTML=
  .catch(function(x){window.__err=String(x&&x.stack||x);$('dres').textContent='Search is unavailable right now. Please try again in a minute.'})}
 $('dq').addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(search,200)});
 $('dst').addEventListener('change',search);
-function pick(i){D=last[i];$('dres').innerHTML='';$('dq').value=D.name;
+function pick(i,quiet){D=last[i];$('dres').innerHTML='';$('dq').value=D.name;
  var k=$('known');k.innerHTML='';var tot=D.career+D.volunteer+D.ppc,e=D.county_econ,se=D.state_econ;
  var facts=[['Department',D.name],['Type',D.type],['Location',(D.city?D.city+', ':'')+D.state+(D.county?' · '+D.county+' County':'')],['Stations',D.stations?String(D.stations):'not listed'],['Firefighters',tot?fmt(tot):'not listed']];
  if(e){if(e.pop)facts.push(['County population',fmt(e.pop)]);if(e.pov!=null)facts.push(['County poverty rate',e.pov+'% (U.S. '+US.pov+'%)']);if(e.inc)facts.push(['County household income','$'+fmt(e.inc)+' (U.S. $'+fmt(US.inc)+')'])}
@@ -445,7 +461,7 @@ function pick(i){D=last[i];$('dres').innerHTML='';$('dq').value=D.name;
  D._facts=facts.length;$('dstep2').hidden=false;
  if(!A.fund.length&&/volunteer/i.test(D.type)){} 
  build();if(!made){made=true;ev('draft_made')}
- $('dstep2').scrollIntoView({behavior:'smooth',block:'start'})}
+ if(!quiet)$('dstep2').scrollIntoView({behavior:'smooth',block:'start'})}
 Array.prototype.forEach.call(document.querySelectorAll('#dz .qg'),function(g){var key=g.getAttribute('data-q'),multi=g.classList.contains('multi');
  if(!multi&&!g.querySelector('[aria-pressed=true]'))g.querySelector('button').setAttribute('aria-pressed','true');
  Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){if(!b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','false');
@@ -480,6 +496,7 @@ function build(o){
  var secs;
  if(A.prog==='safer')secs=A.sact==='hire'?safH():safR();else if(A.prog==='fps')secs=fps();else secs=afg();
  if(o&&o.compute)return secs;
+ try{localStorage.setItem('afgdd',JSON.stringify({v:1,t:Date.now(),D:D,US:US,A:A}))}catch(e){}
  function afg(){var sel=A.item.filter(function(k){return IT[k]}),its=sel.map(function(k){return IT[k]}),it;
   if(!its.length)it={what:F('what you are requesting'),full:F('what you are requesting'),std:F('the standard it must meet'),risk:'',use:F('the calls it will be used on'),meet:F('the standard it must meet')};
   else if(its.length===1)it=its[0];
@@ -534,6 +551,16 @@ document.querySelectorAll('a[data-plan]').forEach(function(a){a.addEventListener
 var QS=new URLSearchParams(location.search),fd=QS.get('fdid'),pq=(QS.get('prog')||'').replace(/[^a-z]/g,'');
 if(pq){var pb=document.querySelector('#progg [data-v="'+pq+'"]');if(pb)pb.click()}
 if(fd){getJ('/api/dept?fdid='+encodeURIComponent(fd)+'&st='+encodeURIComponent(QS.get('st')||'')).then(function(j){if(j.results&&j.results.length){US=j.us;last=j.results;pick(0)}}).catch(function(x){window.__err=String(x&&x.stack||x)})}
+
+/* resume saved draft + sticky CTA */
+function applyChips(){Array.prototype.forEach.call(document.querySelectorAll('#dz .qg'),function(g){var k=g.getAttribute('data-q'),m=g.classList.contains('multi'),v=A[k];Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){var x=b.getAttribute('data-v');b.setAttribute('aria-pressed',(m?(Array.isArray(v)&&v.indexOf(x)>=0):x===v)?'true':'false')})});vis()}
+if(!fd){try{var SV=JSON.parse(localStorage.getItem('afgdd')||'null');if(SV&&SV.v===1&&SV.D&&Date.now()-SV.t<1000*60*60*24*120){for(var k in SV.A)if(k in A)A[k]=SV.A[k];if(typeof A.item==='string')A.item=[A.item];US=SV.US;applyChips();last=[SV.D];made=true;pick(0,true);
+ $('resumet').textContent='Welcome back. Your draft for '+SV.D.name+' is saved on this device.';$('resume').hidden=false;$('stkb').textContent='Continue my draft';$('stkt').textContent='Your draft for '+SV.D.name+' is saved';ev('resume')}}catch(e){window.__err=String(e)}}
+$('resumex').addEventListener('click',function(){try{localStorage.removeItem('afgdd')}catch(e){}location.href=location.pathname+'#draft';location.reload()});
+(function(){var bar=$('stk');if(!('IntersectionObserver' in window)){bar.classList.add('on');return}
+ var vis2={hero:true,tool:false,res:false};function upd(){var on=!vis2.hero&&!vis2.tool&&!vis2.res;bar.classList.toggle('on',on);bar.setAttribute('aria-hidden',on?'false':'true')}
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){vis2[e.target.getAttribute('data-k')]=e.isIntersecting});upd()},{threshold:0.05});
+ [['hero','.hero .cta-row'],['tool','#dz'],['res','#reserve form']].forEach(function(p){var el=document.querySelector(p[1]);if(el){el.setAttribute('data-k',p[0]);io.observe(el)}})})();
 
 /* example narrative writer in the checker */
 (function(){var WD=null,last2=[],t2=null,gen='';var KEY={fin:0,proj:1,cb:2,soe:3};

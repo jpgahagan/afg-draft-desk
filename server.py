@@ -18,7 +18,7 @@ def event():
     if request.method == "OPTIONS": return ("", 204)
     d = request.get_json(silent=True) or {}
     kind = str(d.get("kind", ""))[:32]
-    if kind not in ("view", "reserve_click", "list_click", "faq_open", "draft_made", "draft_copy", "form_start", "example_write"):
+    if kind not in ("view", "reserve_click", "list_click", "faq_open", "draft_made", "draft_copy", "form_start", "example_write", "sticky_click", "cta_inline", "cta_nav", "resume"):
         return jsonify(ok=False), 400
     c = db(); c.execute("INSERT INTO events(ts,kind,src,page,vid) VALUES(?,?,?,?,?)",
         (time.time(), kind, str(d.get("src", ""))[:64], str(d.get("page", ""))[:64], str(d.get("vid", ""))[:40])); c.commit()
