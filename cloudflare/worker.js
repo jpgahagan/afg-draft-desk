@@ -11,6 +11,10 @@ export default {
       url.protocol = 'https:';
       return Response.redirect(url.toString(), 301);
     }
+    if (url.pathname === '/__cf') {
+      // Loop guard: pplx.app pages redirect here only if this answer arrives straight from the Worker.
+      return new Response('backdraft-cf', { headers: { 'access-control-allow-origin': '*', 'cache-control': 'no-store', 'content-type': 'text/plain' } });
+    }
     const upstream = 'https://' + ORIGIN + url.pathname + url.search;
     const headers = new Headers();
     for (const k of KEEP) { const v = request.headers.get(k); if (v) headers.set(k, v); }

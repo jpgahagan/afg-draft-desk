@@ -24,7 +24,7 @@ for st in states:
     title=f"{st} Fire Department Grant Deadlines 2026–27 | Backdraft Grants"
     desc=f"{n} current {st} grant program{'s' if n>1 else ''} for volunteer and rural fire departments, with deadlines and official links, plus help with federal AFG narratives."
     page=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<script>if(/\\.pplx\\.app$/.test(location.hostname))location.replace('https://backdraftgrants.com'+location.pathname+location.search+location.hash);</script><title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{SITE}/states/{slug}.html">
+<script>if(/\\.pplx\\.app$/.test(location.hostname))fetch('https://backdraftgrants.com/__cf',{{cache:'no-store',redirect:'error'}}).then(function(r){{return r.text()}}).then(function(t){{if(t.trim()==='backdraft-cf')location.replace('https://backdraftgrants.com'+location.pathname+location.search+location.hash)}}).catch(function(){{}});</script><title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{SITE}/states/{slug}.html">
 {fonts}
 {style}</head><body>
 <header class="wrap" style="padding:20px 0"><a href="{SITE}/?src=state_{slug}" style="font-weight:700;text-decoration:none;color:inherit">Backdraft Grants</a></header>

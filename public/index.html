@@ -7,7 +7,7 @@
 <meta name="description" content="Pick your fire department and get free draft narratives for FEMA's AFG, SAFER and Fire Prevention and Safety grants, prefilled from the national registry and Census data. Flat $249 to have it finished. Plus state fire grant deadlines for 2026–27.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Barlow+Condensed:wght@700;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<script>if(/\.pplx\.app$/.test(location.hostname))location.replace('https://backdraftgrants.com'+location.pathname+location.search+location.hash);</script>
+<script>if(/\.pplx\.app$/.test(location.hostname))fetch('https://backdraftgrants.com/__cf',{cache:'no-store',redirect:'error'}).then(function(r){return r.text()}).then(function(t){if(t.trim()==='backdraft-cf')location.replace('https://backdraftgrants.com'+location.pathname+location.search+location.hash)}).catch(function(){});</script>
 <script>window.__API_BASE__='__PORT_5001__';</script>
 <style>
 :root{--bg:#f6f4f1;--surface:#fff;--ink:#1f1d1b;--muted:#5d5852;--line:#e2ddd6;--accent:#a3271c;--accent-ink:#fff;--dark:#23201e;--ok:#2d6a4f;--r:12px}
@@ -402,7 +402,7 @@ section[id]{scroll-margin-top:12px}
   <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
   <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" hidden style="margin-top:12px"><a id="stlink" href="https://backdraftgrants.com/states/"></a></p>
-                         <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+                          <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
@@ -779,6 +779,6 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  var y=(rb-zt+24<=vh)?zt-28:rb-vh+24;window.scrollTo({top:y,behavior:'smooth'});history.replaceState(null,'','#draft')},true);
 if(location.hash==='#draft')window.addEventListener('load',function(){setTimeout(function(){var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=document.querySelector('#draft .kicker').getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;window.scrollTo(0,(rb-zt+24<=vh)?zt-28:rb-vh+24)},50)});
 </script>
-<script>(function(){var V='1795540233';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
+<script>(function(){var V='1795543301';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
 </body>
 </html>
