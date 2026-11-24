@@ -11,7 +11,7 @@ def fmt(d):
     if d=='rolling':return 'Rolling'
     if d=='tbd':return 'Date to confirm'
     y,m,dd=d.split('-');return f"{MON[int(m)-1]} {int(dd)}, {y}"
-SITE='https://backdraft.pplx.app'
+SITE='https://backdraftgrants.com'
 TRACK0="<script>try{var v=Math.random().toString(36).slice(2);fetch('/port/5001/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'view',src:'SLUG',page:location.pathname,vid:v})}).catch(function(){})}catch(e){}</script>"
 states=sorted(set(g[1] for g in G))
 os.makedirs(os.path.join(B,'public/states'),exist_ok=True)
@@ -24,7 +24,7 @@ for st in states:
     title=f"{st} Fire Department Grant Deadlines 2026–27 | Backdraft Grants"
     desc=f"{n} current {st} grant program{'s' if n>1 else ''} for volunteer and rural fire departments, with deadlines and official links, plus help with federal AFG narratives."
     page=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<script>if(location.hostname==='afgdrafts.pplx.app')location.replace('https://backdraft.pplx.app'+location.pathname+location.search+location.hash);</script><title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{SITE}/states/{slug}.html">
+<script>if(/\\.pplx\\.app$/.test(location.hostname))location.replace('https://backdraftgrants.com'+location.pathname+location.search+location.hash);</script><title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{SITE}/states/{slug}.html">
 {fonts}
 {style}</head><body>
 <header class="wrap" style="padding:20px 0"><a href="{SITE}/?src=state_{slug}" style="font-weight:700;text-decoration:none;color:inherit">Backdraft Grants</a></header>
