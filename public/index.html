@@ -112,6 +112,8 @@ section#draft .tool{border:0;box-shadow:0 10px 40px rgba(30,20,10,.08);padding:2
 .qg button{color:var(--ink);font-weight:500;padding:8px 14px;min-height:42px;transition:background .12s,border-color .12s}
 .qg button:hover{border-color:var(--ink)}
 .qg button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.dtabs .tgrp{grid-column:1/-1;flex-basis:100%;font:700 13px/1.2 inherit;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:8px 0 0}
+.qh{font-size:14px;color:var(--muted);margin:-2px 0 8px;line-height:1.45}.qh.warn{color:var(--accent);font-weight:600}
 .qg.multi button[aria-pressed=true]:before{content:"\2713\00a0"}
 #progg button{border-radius:10px;font-weight:600}
 .chips{border-top:0;margin-top:0;background:#faf8f5;border:1px solid var(--line);border-radius:12px;padding:4px 16px 14px}
@@ -147,6 +149,7 @@ section[id]{scroll-margin-top:12px}
 .acts{display:grid;gap:10px;margin-top:6px}.act{font:inherit;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;display:grid;gap:3px;color:var(--ink)}.act:hover{border-color:var(--ink)}.act b{font-size:17px}.act b:after{content:" \2192";color:var(--accent)}.act span{font-size:14px;color:var(--muted)}
 #dactok{color:var(--ok);font-weight:600;min-height:1.2em}
 @media (min-width:821px){.acts{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:820px){#dz .two.dpick2{grid-template-columns:minmax(0,1fr) 128px;gap:10px}#dz .two.dpick2 select{padding-left:8px;padding-right:4px}#progn{font-size:14px;margin-bottom:8px}}
 </style>
 </head>
 <body>
@@ -198,8 +201,8 @@ section[id]{scroll-margin-top:12px}
     <div class="qg" data-q="prog" id="progg">
       <button type="button" data-v="afg" aria-pressed="true">AFG: gear, equipment, training</button><button type="button" data-v="safer">SAFER: staffing and volunteers</button><button type="button" data-v="fps">Fire Prevention and Safety</button></div>
     <p class="note" id="progn" style="margin-top:0"></p>
-    <div class="two">
-      <label>Department or town<input id="dq" placeholder="Start typing, e.g. Mapleton" autocomplete="off"></label>
+    <div class="two dpick2" id="dpickrow">
+      <label>Department or town<input id="dq" placeholder="e.g. Mapleton" autocomplete="off"></label>
       <label>State<select id="dst"><option value="">Any state</option></select></label>
     </div>
     <div id="dres" class="dres" aria-live="polite"></div>
@@ -220,9 +223,9 @@ section[id]{scroll-margin-top:12px}
         <button type="button" data-v="">Not sure</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="6">6</button></div>
       <div class="qg multi" data-q="rr" data-prog="safer-rr"><div class="ql">What would the money pay for? (tap all that apply)</div>
         <button type="button" data-v="a recruitment marketing campaign" aria-pressed="true">Recruiting ads</button><button type="button" data-v="Firefighter I training and tuition for new members" aria-pressed="true">Training and tuition</button><button type="button" data-v="entry and annual medical physicals">Physicals</button><button type="button" data-v="turnout gear for new recruits">Gear for recruits</button><button type="button" data-v="per-call stipends or a length-of-service award program">Stipends or LOSAP</button></div>
-      <div class="qg" data-q="fp" data-prog="fps"><div class="ql">What's the project?</div>
+      <div class="qg multi" data-q="fp" data-prog="fps" data-max="3"><div class="ql">What do you want to do? (tap up to 3)</div><p class="qh">FEMA lets you put up to 3 projects in one FP&amp;S application. Each one gets its own set of narratives, so we draft them separately.</p>
         <button type="button" data-v="alarm" aria-pressed="true">Smoke alarm installs</button><button type="button" data-v="crr">Fire safety education</button><button type="button" data-v="wui">Wildfire risk outreach</button><button type="button" data-v="code">Inspections and code work</button><button type="button" data-v="oc">Fire investigation</button></div>
-      <div class="qg multi" data-q="aud" data-prog="fps"><div class="ql">Who are you trying to reach? (tap all that apply)</div>
+      <div class="qg multi" data-q="aud" data-prog="fps"><div class="ql">Who in your town is most at risk from fire? (tap all that apply)</div><p class="qh">FEMA calls this your &ldquo;target audience&rdquo;: the people your project will protect. Pick the groups you see on calls most.</p>
         <button type="button" data-v="older adults" aria-pressed="true">Older adults</button><button type="button" data-v="families with young children">Young children</button><button type="button" data-v="low-income households">Low-income homes</button><button type="button" data-v="mobile home residents">Mobile homes</button><button type="button" data-v="rental housing tenants">Renters</button></div>
       <div class="qg" data-q="age" data-prog="afg"><div class="ql">How old is the gear you'd replace?</div>
         <button type="button" data-v="">Not sure</button><button type="button" data-v="under 10 years old">Under 10 yrs</button><button type="button" data-v="10 to 15 years old">10–15 yrs</button><button type="button" data-v="more than 15 years old">Over 15 yrs</button></div>
@@ -314,7 +317,7 @@ section[id]{scroll-margin-top:12px}
   <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
   <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/georgia.html">Georgia</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/indiana.html">Indiana</a> · <a href="/states/iowa.html">Iowa</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/missouri.html">Missouri</a> · <a href="/states/new-hampshire.html">New Hampshire</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/south-carolina.html">South Carolina</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/vermont.html">Vermont</a> · <a href="/states/virginia.html">Virginia</a> · <a href="/states/washington.html">Washington</a> · <a href="/states/west-virginia.html">West Virginia</a> · <a href="/states/wisconsin.html">Wisconsin</a></p>
-        <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+          <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
@@ -343,7 +346,7 @@ section[id]{scroll-margin-top:12px}
       <button class="btn" id="wexb" type="button">Write an example narrative for me</button>
       <p class="note" id="wexn">Written for your department from public records. Anything we don't know stays as a [blank] for you to fill.</p>
       <div id="wexf" hidden>
-        <div class="two"><label>Your department or town<input id="wq" placeholder="Start typing, e.g. Mapleton" autocomplete="off"></label><label>State<select id="wst"><option value="">Any state</option></select></label></div>
+        <div class="two"><label>Your department or town<input id="wq" placeholder="e.g. Mapleton" autocomplete="off"></label><label>State<select id="wst"><option value="">Any state</option></select></label></div>
         <div id="wres" class="dres" aria-live="polite"></div>
       </div>
     </div>
@@ -458,7 +461,7 @@ var API=window.__API_BASE__||'';
 function ev(k){try{fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:new URLSearchParams(location.search).get('src')||'direct',page:'afg'})})}catch(e){}}
 var ST=['AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','PR','GU','VI','AS','MP'];
 ST.forEach(function(s){var o=document.createElement('option');o.value=s;o.textContent=s;$('dst').appendChild(o)});
-var D=null,US=null,timer=null,last=[],A={prog:'afg',item:['ppe'],sact:'hire',npos:'',rr:[],fp:'alarm',aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false,FILL={},EDIT=null;
+var D=null,US=null,timer=null,last=[],A={prog:'afg',item:['ppe'],sact:'hire',npos:'',rr:[],fp:['alarm'],aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false,FILL={},EDIT=null;
 function fmt(n){return Number(n).toLocaleString('en-US')}
 function getJ(u){return fetch(API+u).then(function(r){return r.json()})}
 function search(){var q=$('dq').value.trim();if(q.length<2){$('dres').innerHTML='';return}
@@ -485,7 +488,7 @@ Array.prototype.forEach.call(document.querySelectorAll('#dz .qg'),function(g){va
  if(!multi&&!g.querySelector('[aria-pressed=true]'))g.querySelector('button').setAttribute('aria-pressed','true');
  Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){if(!b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','false');
   b.addEventListener('click',function(){var v=b.getAttribute('data-v');
-   if(multi){var on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on?'true':'false');A[key]=Array.prototype.filter.call(g.querySelectorAll('button[aria-pressed=true]'),function(){return 1}).map(function(x){return x.getAttribute('data-v')})}
+   if(multi){var on=b.getAttribute('aria-pressed')!=='true',mx=+g.getAttribute('data-max')||0;var h0=g.querySelector('.qh.warn');if(h0){h0.classList.remove('warn');h0.textContent=h0.getAttribute('data-t')}if(on&&mx&&g.querySelectorAll('button[aria-pressed=true]').length>=mx){var h=g.querySelector('.qh');if(h){if(!h.getAttribute('data-t'))h.setAttribute('data-t',h.textContent);h.classList.add('warn');h.textContent='FEMA allows 3 projects per application. Tap one you picked to remove it, then pick this one.'}return}if(!on&&key==='fp'&&g.querySelectorAll('button[aria-pressed=true]').length<=1)return;b.setAttribute('aria-pressed',on?'true':'false');A[key]=Array.prototype.filter.call(g.querySelectorAll('button[aria-pressed=true]'),function(){return 1}).map(function(x){return x.getAttribute('data-v')})}
    else{Array.prototype.forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed','false')});b.setAttribute('aria-pressed','true');A[key]=v}
    if(key==='prog'||key==='sact')vis();if(key==='prog')TAB=0;if(D)build()})})});
 Array.prototype.forEach.call(document.querySelectorAll('#dz .qg.multi'),function(g){A[g.getAttribute('data-q')]=Array.prototype.map.call(g.querySelectorAll('button[aria-pressed=true]'),function(x){return x.getAttribute('data-v')})});
@@ -537,14 +540,15 @@ function build(o){
   var fn=base+econ+budget+'We have '+F('no money / only $ amount')+' set aside for recruitment, training tuition or member incentives. We have tried '+F('e.g. open houses, state recruitment programs')+', but '+F('what happened')+'. Without SAFER, '+F('critical function affected, e.g. our daytime response will keep shrinking')+'.';
   var cb='Recruitment and Retention awards carry no cost share. Volunteers save the community the cost of paid positions, about '+F('$ salary and benefits')+' a year. Spending '+F('$ total')+' to add and keep '+F('number')+' members works out to about '+F('$')+' per member, a small fraction of that cost.';
   return [['Project Description',pd,0],['Impact on Daily Operations',io,0],['Financial Need',fn,4000],['Cost Benefit',cb,0]]}
- function fps(){var P=FP[A.fp],aud=A.aud.length?list(A.aud):F('target audience');
+ function fps1(P,pre){var aud=A.aud.length?list(A.aud):F('target audience');
   var fn=base+econ+budget+'We have '+F('no line item / only $ amount a year')+' for '+P.what+'. Without FP&S funding we could reach only '+F('number')+' households a year, and the residents at highest risk would wait.';
   var vs='We looked at '+F('e.g. 5 years of our incident data, NFIRS or NERIS reports, Census housing data')+' to find where fire risk is highest in '+town+'. '+(e&&e.pov!=null&&US?e.pov+'% of '+area+' residents live below the poverty line, compared with '+US.pov+'% nationally. ':'')+'Our target audience is '+aud+'. We found that '+F('what you found, e.g. '+P.vuln)+'. Over the last '+F('number')+' years we had '+F('number')+' '+P.inc+'. ';
   var pd='We are requesting '+P.full+'. '+P.how+' This project directly addresses the risk described in our Vulnerability Statement for '+aud+'.';
   var ip='Goal: '+P.goal+'. Objectives: 1) '+P.o1+'; 2) '+P.o2+'; 3) partner with '+F('e.g. the senior center, schools, visiting nurses, local churches')+' to reach '+aud+'. Timeline: months 1 to 2, buy materials and train members; months 3 to '+F('number')+', deliver the project; final 2 months, evaluate and report. '+F('Name or title')+' will manage the project, and '+F('number')+' members will take part.';
   var ev='We will measure '+P.m+'. Before the project starts we will record '+F('baseline, e.g. share of homes with working smoke alarms')+', and we will measure again at the end. Our measurable target is '+F('e.g. 90% of visited homes with working alarms / 25% gain in post-test scores')+'. Results will be reported to FEMA and shared with our town officials.';
   var cb='The total project cost is '+F('$ total')+', and the department will provide its required cost share of at least 5%, in cash or in-kind, from '+F('source')+'. That works out to about '+F('$')+' per household reached. '+F('Share')+' of the money goes directly to '+P.what+'. One prevented fire death or major house fire far outweighs the cost.';
-  return [['Financial Need',fn,0],['Vulnerability Statement',vs,0],['Project Description',pd,0],['Implementation Plan',ip,0],['Evaluation Plan',ev,0],['Cost-Benefit',cb,0]]}
+  return [['Financial Need',fn,0],['Vulnerability Statement',vs,0],['Project Description',pd,0],['Implementation Plan',ip,0],['Evaluation Plan',ev,0],['Cost-Benefit',cb,0]].map(function(x){return [pre+x[0],x[1],x[2]]})}
+ function fps(){var L=(A.fp&&A.fp.length?A.fp:['alarm']).filter(function(k){return FP[k]}).slice(0,3),out=[];if(!L.length)L=['alarm'];L.forEach(function(k,i){out=out.concat(fps1(FP[k],L.length>1?'Project '+(i+1)+' ('+FPN[k]+'): ':''))});return out}
  if(TAB>=secs.length)TAB=0;
  var btot=0,bdone=0,secInfo=[];
  function parts(s){var occ={},out=[];s[1].split(/(\u27E6[^\u27E7]*\u27E7)/).forEach(function(part){if(/^\u27E6/.test(part)){var lab=part.slice(1,-1);occ[lab]=(occ[lab]||0)+1;var k=A.prog+'|'+s[0]+'|'+lab+'|'+occ[lab];out.push({k:k,lab:lab,v:FILL[k]||''})}else if(part)out.push(part)});return out}
@@ -553,8 +557,8 @@ function build(o){
  window.__secs=secs.map(function(s){return [s[0],plain(s)]});
  window.__draftText=window.__secs.map(function(s){return s[0].toUpperCase()+'\n'+s[1]}).join('\n\n');
  var tabs=$('dtabs');tabs.innerHTML='';
- secs.forEach(function(s,i){var t=document.createElement('button');t.type='button';t.setAttribute('role','tab');t.setAttribute('aria-selected',i===TAB?'true':'false');var left=secInfo[i][0]-secInfo[i][1];
-  var nn=document.createElement('span');nn.className='tn';nn.textContent=left?String(i+1):'\u2713';if(!left)t.className='full';t.appendChild(nn);t.appendChild(document.createTextNode(s[0]));
+ var lastG='';secs.forEach(function(s,i){var gm=/^(Project \d+ \(([^)]*)\)): (.*)$/.exec(s[0]);if(gm&&gm[1]!==lastG){lastG=gm[1];var gh=document.createElement('div');gh.className='tgrp';gh.textContent=gm[1].replace(' (',': ').replace(/\)$/,'');tabs.appendChild(gh)}var t=document.createElement('button');t.type='button';t.setAttribute('role','tab');t.setAttribute('aria-selected',i===TAB?'true':'false');var left=secInfo[i][0]-secInfo[i][1];
+  var nn=document.createElement('span');nn.className='tn';nn.textContent=left?String(i+1):'\u2713';if(!left)t.className='full';t.appendChild(nn);t.appendChild(document.createTextNode(gm?gm[3]:s[0]));
   t.addEventListener('click',function(){TAB=i;EDIT=null;build()});tabs.appendChild(t)});
  var s=secs[TAB],out=$('dsecs');out.innerHTML='';
  var hd=document.createElement('div');hd.className='sechd';hd.textContent='Section '+(TAB+1)+' of '+secs.length+': '+s[0];out.appendChild(hd);
@@ -586,6 +590,7 @@ function build(o){
  h.appendChild(document.createTextNode('We found '+D.name+' in the national registry, pulled '+D._facts+' facts about your department and county, and wrote all '+secs.length+' scored '+PNm+' narratives. Tap each red blank below to type the answer. Skip any you don\'t know yet; your work is saved on this device.'));how.appendChild(h);
  $('dout').hidden=false;
  var f=$('f');if(f){f.org.value=D.name;if(D.state)f.state.value=D.state;var map={ppe:'PPE / turnout gear',scba:'SCBA',radio:'Other equipment',equip:'Other equipment',train:'Training',well:'Wellness and fitness'};f.req.value=A.prog==='afg'?(A.item.length===1?map[A.item[0]]:(A.item.length?map[A.item[0]]:'Not sure yet')):(A.prog==='fps'?'Fire Prevention and Safety':(A.sact==='hire'?'SAFER: hiring':'SAFER: recruitment and retention'));f.orgtype.value=/volunteer/i.test(D.type)?'All-volunteer':'Mostly volunteer / combination'}}
+var FPN={alarm:'Smoke alarms',crr:'Fire safety education',wui:'Wildfire outreach',code:'Inspections',oc:'Fire investigation'};
 var FP={
  alarm:{what:'smoke alarms and installation',full:F('number')+' 10-year sealed-battery smoke alarms, plus bed-shaker and strobe alarms for residents who are deaf or hard of hearing, installed free in homes by our members',how:'Members will go door to door and by appointment, install alarms on every level and outside sleeping areas, test existing alarms, and leave a home escape plan at each visit.',vuln:'many of these homes have missing, expired or disabled smoke alarms',inc:'residential fires, including '+F('number')+' in homes without working smoke alarms',goal:'install working smoke alarms in '+F('number')+' high-risk homes within 12 months',o1:'install '+F('number')+' alarms in '+F('number')+' homes',o2:'teach a home escape plan at every visit',m:'the number of homes visited, alarms installed, and homes with working alarms on follow-up checks of a sample of visited homes'},
  crr:{what:'fire safety education',full:'a community fire safety education program, including '+F('e.g. presentation materials, a fire safety trailer, handouts in the languages spoken locally')+', delivered by our members',how:'Members will deliver short sessions on cooking safety, heating safety, smoke alarms and escape planning at '+F('locations, e.g. schools, the senior center')+'.',vuln:'cooking and heating cause most home fires in our response area',inc:'residential fires, with '+F('number')+' caused by cooking or heating',goal:'reach '+F('number')+' residents with fire safety education within 12 months',o1:'hold '+F('number')+' sessions',o2:'hand out '+F('number')+' printed safety guides',m:'attendance, pre- and post-session quiz scores, and changes in cooking and heating fire calls'},
@@ -607,7 +612,7 @@ if(fd){getJ('/api/dept?fdid='+encodeURIComponent(fd)+'&st='+encodeURIComponent(Q
 
 /* resume saved draft + sticky CTA */
 function applyChips(){Array.prototype.forEach.call(document.querySelectorAll('#dz .qg'),function(g){var k=g.getAttribute('data-q'),m=g.classList.contains('multi'),v=A[k];Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){var x=b.getAttribute('data-v');b.setAttribute('aria-pressed',(m?(Array.isArray(v)&&v.indexOf(x)>=0):x===v)?'true':'false')})});vis()}
-if(!fd){try{var SV=JSON.parse(localStorage.getItem('afgdd')||'null');if(SV&&SV.v===1&&SV.D&&Date.now()-SV.t<1000*60*60*24*120){for(var k in SV.A)if(k in A)A[k]=SV.A[k];if(typeof A.item==='string')A.item=[A.item];if(SV.FILL)FILL=SV.FILL;if(SV.TAB)TAB=SV.TAB;US=SV.US;applyChips();last=[SV.D];made=true;pick(0,true);
+if(!fd){try{var SV=JSON.parse(localStorage.getItem('afgdd')||'null');if(SV&&SV.v===1&&SV.D&&Date.now()-SV.t<1000*60*60*24*120){for(var k in SV.A)if(k in A)A[k]=SV.A[k];if(typeof A.item==='string')A.item=[A.item];if(typeof A.fp==='string')A.fp=[A.fp];if(SV.FILL)FILL=SV.FILL;if(SV.TAB)TAB=SV.TAB;US=SV.US;applyChips();last=[SV.D];made=true;pick(0,true);
  $('resumet').textContent='Welcome back. Your draft for '+SV.D.name+' is saved on this device.';$('resume').hidden=false;$('stkb').textContent='Continue my draft';$('stkt').textContent='Your draft for '+SV.D.name+' is saved';ev('resume')}}catch(e){window.__err=String(e)}}
 $('resumex').addEventListener('click',function(){try{localStorage.removeItem('afgdd')}catch(e){}location.href=location.pathname+'#draft';location.reload()});
 (function(){var bar=$('stk');if(!('IntersectionObserver' in window)){bar.classList.add('on');return}
@@ -632,6 +637,11 @@ document.querySelectorAll('#checker .tabs button').forEach(function(b){b.addEven
 })();
 })();
 
+
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href="#draft"]');if(!a)return;e.preventDefault();
+ var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=z.getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;
+ var y=(rb-zt+24<=vh)?zt-12:rb-vh+24;window.scrollTo({top:y,behavior:'smooth'});history.replaceState(null,'','#draft')},true);
+if(location.hash==='#draft')window.addEventListener('load',function(){setTimeout(function(){var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=z.getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;window.scrollTo(0,(rb-zt+24<=vh)?zt-12:rb-vh+24)},50)});
 </script>
 </body>
 </html>
