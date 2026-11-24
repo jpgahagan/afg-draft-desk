@@ -135,6 +135,18 @@ section[id]{scroll-margin-top:12px}
 :focus-visible{outline:3px solid var(--trim);outline-offset:2px}
 @media (max-width:560px){.stk-t{display:none}.stk .btn{width:100%;text-align:center}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stk{transition:none}}
+.prog{display:flex;align-items:center;gap:12px;margin:14px 0 4px;font-size:14px;font-weight:600}.progbar{flex:1;height:10px;background:#ece7e0;border-radius:99px;overflow:hidden}.progbar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.dtabs button{display:flex;align-items:center;gap:8px;text-align:left}.dtabs .tn{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#ece7e0;font-size:12px;font-weight:700;flex:none}.dtabs button[aria-selected=true] .tn{background:var(--accent);color:#fff}.dtabs button.full .tn{background:var(--ok);color:#fff}
+.sechd{font:800 22px/1.1 "Barlow Condensed",sans-serif;text-transform:uppercase;margin:18px 0 0}
+.dtext{font-size:17px;line-height:1.8}
+.blank{font:inherit;font-size:16px;font-weight:600;background:#fbe3df;color:#8a1f15;border:1.5px dashed #d98b80;border-radius:6px;padding:1px 7px;margin:0 1px;cursor:pointer;line-height:1.5}.blank:before{content:"\270E\00a0";font-size:13px}
+.blank.filled{background:#e3f0e8;color:#1f5a3d;border:1.5px solid #b9d3c3}.blank.filled:before{content:""}
+.bedit{display:inline-flex;gap:6px;align-items:center;vertical-align:middle;max-width:100%;margin:2px 0}.bedit input{width:min(260px,58vw);padding:6px 10px;border:2px solid var(--accent)}.bedit button{font:inherit;font-size:15px;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 12px;cursor:pointer}
+.secnav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin:6px 0 4px}.secnav .btn{flex:1;min-width:140px;text-align:center}
+#dsend{border-top:3px solid var(--ink);margin-top:28px}
+.acts{display:grid;gap:10px;margin-top:6px}.act{font:inherit;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;display:grid;gap:3px;color:var(--ink)}.act:hover{border-color:var(--ink)}.act b{font-size:17px}.act b:after{content:" \2192";color:var(--accent)}.act span{font-size:14px;color:var(--muted)}
+#dactok{color:var(--ok);font-weight:600;min-height:1.2em}
+@media (min-width:821px){.acts{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
@@ -227,13 +239,20 @@ section[id]{scroll-margin-top:12px}
     </div>
 
     <div id="dout" hidden>
-      <div class="stepn"><b>4</b> Your draft</div>
+      <div class="stepn"><b>4</b> Fill in the red blanks</div>
       <div class="how" id="how"></div>
+      <div class="prog"><div class="progbar"><i id="dprog"></i></div><span id="dprogt"></span></div>
       <div class="dtabs" role="tablist" id="dtabs"></div>
       <div id="dsecs"></div>
-      <div class="cta-row">
-        <button class="btn ghost" id="dcopy" type="button">Copy all sections</button>
-        <button class="btn ghost" id="ddl" type="button">Download</button>
+      <div id="dsend">
+        <div class="stepn"><b>5</b> Get it into FEMA GO</div>
+        <p class="note" id="dsendn" style="margin-top:0"></p>
+        <div class="acts">
+          <button type="button" class="act" id="dmail"><b>Email it to myself</b><span>Opens your email app with every section, so you can finish on a computer or forward it to whoever handles your grants.</span></button>
+          <button type="button" class="act" id="ddl"><b>Save as a Word file</b><span>Opens in Word, Google Docs or Pages. Good for printing and for review at the next officers' meeting.</span></button>
+          <button type="button" class="act" id="dcopy"><b>Copy all sections</b><span>When the application is open, go to the Narrative page in FEMA GO and paste each section into its matching box.</span></button>
+        </div>
+        <p class="note" id="dactok" role="status"></p>
       </div>
       <div class="card upsell">
         <h3>Want it finished, not just started?</h3>
@@ -295,7 +314,7 @@ section[id]{scroll-margin-top:12px}
   <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
   <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/georgia.html">Georgia</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/indiana.html">Indiana</a> · <a href="/states/iowa.html">Iowa</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/missouri.html">Missouri</a> · <a href="/states/new-hampshire.html">New Hampshire</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/south-carolina.html">South Carolina</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/vermont.html">Vermont</a> · <a href="/states/virginia.html">Virginia</a> · <a href="/states/washington.html">Washington</a> · <a href="/states/west-virginia.html">West Virginia</a> · <a href="/states/wisconsin.html">Wisconsin</a></p>
-       <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+        <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. AFG Draft Desk drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
@@ -439,7 +458,7 @@ var API=window.__API_BASE__||'';
 function ev(k){try{fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:new URLSearchParams(location.search).get('src')||'direct',page:'afg'})})}catch(e){}}
 var ST=['AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','PR','GU','VI','AS','MP'];
 ST.forEach(function(s){var o=document.createElement('option');o.value=s;o.textContent=s;$('dst').appendChild(o)});
-var D=null,US=null,timer=null,last=[],A={prog:'afg',item:['ppe'],sact:'hire',npos:'',rr:[],fp:'alarm',aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false;
+var D=null,US=null,timer=null,last=[],A={prog:'afg',item:['ppe'],sact:'hire',npos:'',rr:[],fp:'alarm',aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false,FILL={},EDIT=null;
 function fmt(n){return Number(n).toLocaleString('en-US')}
 function getJ(u){return fetch(API+u).then(function(r){return r.json()})}
 function search(){var q=$('dq').value.trim();if(q.length<2){$('dres').innerHTML='';return}
@@ -496,7 +515,7 @@ function build(o){
  var secs;
  if(A.prog==='safer')secs=A.sact==='hire'?safH():safR();else if(A.prog==='fps')secs=fps();else secs=afg();
  if(o&&o.compute)return secs;
- try{localStorage.setItem('afgdd',JSON.stringify({v:1,t:Date.now(),D:D,US:US,A:A}))}catch(e){}
+ try{localStorage.setItem('afgdd',JSON.stringify({v:1,t:Date.now(),D:D,US:US,A:A,FILL:FILL,TAB:TAB}))}catch(e){}
  function afg(){var sel=A.item.filter(function(k){return IT[k]}),its=sel.map(function(k){return IT[k]}),it;
   if(!its.length)it={what:F('what you are requesting'),full:F('what you are requesting'),std:F('the standard it must meet'),risk:'',use:F('the calls it will be used on'),meet:F('the standard it must meet')};
   else if(its.length===1)it=its[0];
@@ -526,17 +545,45 @@ function build(o){
   var ev='We will measure '+P.m+'. Before the project starts we will record '+F('baseline, e.g. share of homes with working smoke alarms')+', and we will measure again at the end. Our measurable target is '+F('e.g. 90% of visited homes with working alarms / 25% gain in post-test scores')+'. Results will be reported to FEMA and shared with our town officials.';
   var cb='The total project cost is '+F('$ total')+', and the department will provide its required cost share of at least 5%, in cash or in-kind, from '+F('source')+'. That works out to about '+F('$')+' per household reached. '+F('Share')+' of the money goes directly to '+P.what+'. One prevented fire death or major house fire far outweighs the cost.';
   return [['Financial Need',fn,0],['Vulnerability Statement',vs,0],['Project Description',pd,0],['Implementation Plan',ip,0],['Evaluation Plan',ev,0],['Cost-Benefit',cb,0]]}
- window.__draftText=secs.map(function(s){return s[0].toUpperCase()+'\n'+s[1].replace(/\u27E6/g,'[').replace(/\u27E7/g,']')}).join('\n\n');
  if(TAB>=secs.length)TAB=0;
- var tabs=$('dtabs');tabs.innerHTML='';var out=$('dsecs');out.innerHTML='';var blanks=0;
- secs.forEach(function(s,i){var b=0;var p=document.createElement('p');
-  s[1].split(/(\u27E6[^\u27E7]*\u27E7)/).forEach(function(part){if(/^\u27E6/.test(part)){b++;var m=document.createElement('mark');m.textContent='['+part.slice(1,-1)+']';p.appendChild(m)}else if(part)p.appendChild(document.createTextNode(part))});
-  blanks+=b;var t=document.createElement('button');t.type='button';t.setAttribute('role','tab');t.setAttribute('aria-selected',i===TAB?'true':'false');t.textContent=s[0];
-  t.addEventListener('click',function(){TAB=i;build()});tabs.appendChild(t);
-  if(i===TAB){var w=document.createElement('div');w.className='dsec';w.appendChild(p);var c=document.createElement('div');c.className='note';var len=s[1].replace(/[\u27E6\u27E7]/g,'').length.toLocaleString();c.textContent=(s[2]?len+' of '+s[2].toLocaleString()+' characters':len+' characters')+' · '+b+' blank'+(b===1?'':'s')+' to fill';w.appendChild(c);out.appendChild(w)}});
+ var btot=0,bdone=0,secInfo=[];
+ function parts(s){var occ={},out=[];s[1].split(/(\u27E6[^\u27E7]*\u27E7)/).forEach(function(part){if(/^\u27E6/.test(part)){var lab=part.slice(1,-1);occ[lab]=(occ[lab]||0)+1;var k=A.prog+'|'+s[0]+'|'+lab+'|'+occ[lab];out.push({k:k,lab:lab,v:FILL[k]||''})}else if(part)out.push(part)});return out}
+ function plain(s){return parts(s).map(function(x){return typeof x==='string'?x:(x.v||'['+x.lab+']')}).join('')}
+ secs.forEach(function(s){var ps=parts(s),n=0,f=0;ps.forEach(function(x){if(typeof x!=='string'){n++;if(x.v)f++}});btot+=n;bdone+=f;secInfo.push([n,f])});
+ window.__secs=secs.map(function(s){return [s[0],plain(s)]});
+ window.__draftText=window.__secs.map(function(s){return s[0].toUpperCase()+'\n'+s[1]}).join('\n\n');
+ var tabs=$('dtabs');tabs.innerHTML='';
+ secs.forEach(function(s,i){var t=document.createElement('button');t.type='button';t.setAttribute('role','tab');t.setAttribute('aria-selected',i===TAB?'true':'false');var left=secInfo[i][0]-secInfo[i][1];
+  var nn=document.createElement('span');nn.className='tn';nn.textContent=left?String(i+1):'\u2713';if(!left)t.className='full';t.appendChild(nn);t.appendChild(document.createTextNode(s[0]));
+  t.addEventListener('click',function(){TAB=i;EDIT=null;build()});tabs.appendChild(t)});
+ var s=secs[TAB],out=$('dsecs');out.innerHTML='';
+ var hd=document.createElement('div');hd.className='sechd';hd.textContent='Section '+(TAB+1)+' of '+secs.length+': '+s[0];out.appendChild(hd);
+ var p=document.createElement('p');p.className='dtext';var ps=parts(s),bl=[];
+ ps.forEach(function(x){if(typeof x!=='string')bl.push(x.k)});
+ ps.forEach(function(x){if(typeof x==='string'){p.appendChild(document.createTextNode(x));return}
+  if(EDIT===x.k){var w=document.createElement('span');w.className='bedit';var inp=document.createElement('input');inp.value=x.v;inp.placeholder=x.lab;inp.setAttribute('aria-label',x.lab);inp.setAttribute('enterkeyhint','next');
+   var ok=document.createElement('button');ok.type='button';ok.textContent='Save';var saved=false;
+   var save=function(next){if(saved)return;saved=true;var v=inp.value.trim();if(v)FILL[x.k]=v;else delete FILL[x.k];var idx=bl.indexOf(x.k);EDIT=null;if(next){for(var j=idx+1;j<bl.length;j++){if(!FILL[bl[j]]){EDIT=bl[j];break}}}build();var e=document.querySelector('.bedit input');if(e)e.focus({preventScroll:false})};
+   inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();save(true)}if(e.key==='Escape'){saved=true;EDIT=null;build()}});
+   ok.addEventListener('mousedown',function(e){e.preventDefault()});ok.addEventListener('click',function(){save(true)});inp.addEventListener('blur',function(){setTimeout(function(){save(false)},150)});
+   w.appendChild(inp);w.appendChild(ok);p.appendChild(w);return}
+  var b=document.createElement('button');b.type='button';b.className=x.v?'blank filled':'blank';b.textContent=x.v||x.lab;b.title=x.v?'Tap to change':'Tap to fill in';
+  b.addEventListener('click',function(){EDIT=x.k;build();var e=document.querySelector('.bedit input');if(e)e.focus()});p.appendChild(b)});
+ var wrap=document.createElement('div');wrap.className='dsec';wrap.appendChild(p);
+ var len=plain(s).length,lim=s[2];var c=document.createElement('div');c.className='note';var left=secInfo[TAB][0]-secInfo[TAB][1];
+ c.textContent=(lim?len.toLocaleString()+' of '+lim.toLocaleString()+' characters':len.toLocaleString()+' characters')+' · '+(left?left+' blank'+(left===1?'':'s')+' left in this section':'all blanks filled in this section');wrap.appendChild(c);out.appendChild(wrap);
+ var nav=document.createElement('div');nav.className='secnav';
+ if(TAB>0){var pv=document.createElement('button');pv.type='button';pv.className='btn ghost';pv.textContent='\u2190 Back';pv.addEventListener('click',function(){TAB--;EDIT=null;build();$('dtabs').scrollIntoView({block:'start',behavior:'smooth'})});nav.appendChild(pv)}
+ var nx=document.createElement('button');nx.type='button';nx.className='btn';
+ if(TAB<secs.length-1){nx.textContent='Next: '+secs[TAB+1][0]+' \u2192';nx.addEventListener('click',function(){TAB++;EDIT=null;build();$('dtabs').scrollIntoView({block:'start',behavior:'smooth'})})}
+ else{nx.textContent='Done: get it into FEMA GO \u2192';nx.addEventListener('click',function(){$('dsend').scrollIntoView({block:'start',behavior:'smooth'});ev('flow_done')})}
+ nav.appendChild(nx);out.appendChild(nav);
+ var pct=btot?Math.round(bdone/btot*100):100;$('dprog').style.width=pct+'%';$('dprogt').textContent=bdone+' of '+btot+' blanks filled';
+ $('dsendn').textContent=secs.length+' sections for '+D.name+(btot-bdone?' ('+(btot-bdone)+' blanks still open; you can fill them later)':' (every blank filled)');
+ var blanks=btot-bdone;
  var PNm={afg:'AFG',safer:'SAFER',fps:'Fire Prevention and Safety'}[A.prog];
- var how=$('how');how.innerHTML='';var h=document.createElement('p');var hb=document.createElement('b');hb.textContent='Done. ';h.appendChild(hb);
- h.appendChild(document.createTextNode('We found '+D.name+' in the national registry, pulled '+D._facts+' facts about your department and county, and wrote all '+secs.length+' scored '+PNm+' narratives. '+blanks+' red blanks are left for facts only your officers know. Tap the answers in step 3 to fill some of them now.'));how.appendChild(h);
+ var how=$('how');how.innerHTML='';var h=document.createElement('p');var hb=document.createElement('b');hb.textContent='Your draft is ready. ';h.appendChild(hb);
+ h.appendChild(document.createTextNode('We found '+D.name+' in the national registry, pulled '+D._facts+' facts about your department and county, and wrote all '+secs.length+' scored '+PNm+' narratives. Tap each red blank below to type the answer. Skip any you don\'t know yet; your work is saved on this device.'));how.appendChild(h);
  $('dout').hidden=false;
  var f=$('f');if(f){f.org.value=D.name;if(D.state)f.state.value=D.state;var map={ppe:'PPE / turnout gear',scba:'SCBA',radio:'Other equipment',equip:'Other equipment',train:'Training',well:'Wellness and fitness'};f.req.value=A.prog==='afg'?(A.item.length===1?map[A.item[0]]:(A.item.length?map[A.item[0]]:'Not sure yet')):(A.prog==='fps'?'Fire Prevention and Safety':(A.sact==='hire'?'SAFER: hiring':'SAFER: recruitment and retention'));f.orgtype.value=/volunteer/i.test(D.type)?'All-volunteer':'Mostly volunteer / combination'}}
 var FP={
@@ -545,8 +592,14 @@ var FP={
  wui:{what:'wildfire risk reduction outreach',full:'a wildfire risk reduction outreach program for homes in the wildland-urban interface, including '+F('e.g. home ignition zone assessments, printed guides, a wildfire sprinkler trailer for demonstrations')+'',how:'Members will offer free home ignition zone assessments, give owners a written list of fixes, and hold neighborhood meetings on defensible space.',vuln:'many homes sit against woods and brush with little defensible space',inc:'wildland or brush fires that threatened structures',goal:'complete '+F('number')+' home wildfire risk assessments within 12 months',o1:'assess '+F('number')+' homes',o2:'hold '+F('number')+' neighborhood meetings',m:'assessments completed, share of owners who made at least one recommended fix on follow-up, and meeting attendance'},
  code:{what:'fire inspections and code enforcement',full:F('e.g. inspection software and tablets, fire inspector certification training for members')+'',how:'Trained members will inspect '+F('occupancy types, e.g. businesses, places of assembly, rental housing')+' on a regular schedule and follow up on violations.',vuln:'many buildings have not been inspected in years',inc:'fires in commercial or multi-family buildings',goal:'inspect '+F('number')+' occupancies within 12 months',o1:'certify '+F('number')+' members as fire inspectors',o2:'complete '+F('number')+' inspections and follow-ups',m:'inspections completed, violations found and corrected, and repeat violations'},
  oc:{what:'fire origin and cause investigation',full:F('e.g. fire investigation training, a thermal camera, scene documentation kits')+' for our fire investigation work',how:'Trained members will determine origin and cause on every qualifying fire, so we can see patterns and aim prevention where it is needed.',vuln:'many fire causes in our area are recorded as undetermined',inc:'fires with an undetermined cause',goal:'determine origin and cause on '+F('share')+' of qualifying fires within 12 months',o1:'train '+F('number')+' members in origin and cause investigation',o2:'complete investigations on every qualifying fire',m:'share of fires with a determined cause, compared with the year before the grant'}};
-$('dcopy').addEventListener('click',function(){if(navigator.clipboard)navigator.clipboard.writeText(window.__draftText||'').then(function(){$('dcopy').textContent='Copied'});ev('draft_copy')});
-$('ddl').addEventListener('click',function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([window.__draftText||''],{type:'text/plain'}));a.download='AFG-narratives-'+(D?D.name.replace(/[^A-Za-z0-9]+/g,'-'):'draft')+'.txt';a.click();ev('draft_copy')});
+function dname(){return D?D.name:'Draft'}
+function flash(t){$('dactok').textContent=t;setTimeout(function(){$('dactok').textContent=''},6000)}
+$('dcopy').addEventListener('click',function(){var t=window.__draftText||'';var ok=function(){flash('Copied all sections. Paste them into FEMA GO, an email or a document.')},no=function(){flash('Copy did not work on this device. Use Email it to myself instead.')};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,no);else no();ev('draft_copy')});
+$('ddl').addEventListener('click',function(){var esc=function(x){return x.replace(/&/g,'&amp;').replace(/</g,'&lt;')};var h='<html><head><meta charset="utf-8"><title>'+esc(dname())+' grant narratives</title></head><body style="font-family:Calibri,Arial,sans-serif;font-size:12pt"><h1 style="font-size:16pt">'+esc(dname())+': grant narratives (draft)</h1><p style="color:#a3271c">Anything in [brackets] still needs your department\'s facts.</p>'+(window.__secs||[]).map(function(s){return '<h2 style="font-size:13pt">'+esc(s[0])+'</h2><p>'+esc(s[1])+'</p>'}).join('')+'<p style="color:#777;font-size:9pt">Drafted with AFG Draft Desk, afgdrafts.pplx.app. Not affiliated with FEMA.</p></body></html>';
+ var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff',h],{type:'application/msword'}));a.download=dname().replace(/[^A-Za-z0-9]+/g,'-')+'-grant-narratives.doc';document.body.appendChild(a);a.click();a.remove();flash('Saved. Look in your Downloads or Files app.');ev('draft_copy')});
+$('dmail').addEventListener('click',function(){var body='Grant narratives for '+dname()+' (draft). Anything in [brackets] still needs our facts.\n\n'+(window.__draftText||'')+'\n\nDrafted with AFG Draft Desk: https://afgdrafts.pplx.app';location.href='mailto:?subject='+encodeURIComponent(dname()+' grant narratives (draft)')+'&body='+encodeURIComponent(body);ev('draft_copy')});
+
 document.querySelectorAll('a[data-plan]').forEach(function(a){a.addEventListener('click',function(){var f=$('f');if(f&&f.plan)f.plan.value=a.getAttribute('data-plan');ev('reserve_click')})});
 var QS=new URLSearchParams(location.search),fd=QS.get('fdid'),pq=(QS.get('prog')||'').replace(/[^a-z]/g,'');
 if(pq){var pb=document.querySelector('#progg [data-v="'+pq+'"]');if(pb)pb.click()}
@@ -554,7 +607,7 @@ if(fd){getJ('/api/dept?fdid='+encodeURIComponent(fd)+'&st='+encodeURIComponent(Q
 
 /* resume saved draft + sticky CTA */
 function applyChips(){Array.prototype.forEach.call(document.querySelectorAll('#dz .qg'),function(g){var k=g.getAttribute('data-q'),m=g.classList.contains('multi'),v=A[k];Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){var x=b.getAttribute('data-v');b.setAttribute('aria-pressed',(m?(Array.isArray(v)&&v.indexOf(x)>=0):x===v)?'true':'false')})});vis()}
-if(!fd){try{var SV=JSON.parse(localStorage.getItem('afgdd')||'null');if(SV&&SV.v===1&&SV.D&&Date.now()-SV.t<1000*60*60*24*120){for(var k in SV.A)if(k in A)A[k]=SV.A[k];if(typeof A.item==='string')A.item=[A.item];US=SV.US;applyChips();last=[SV.D];made=true;pick(0,true);
+if(!fd){try{var SV=JSON.parse(localStorage.getItem('afgdd')||'null');if(SV&&SV.v===1&&SV.D&&Date.now()-SV.t<1000*60*60*24*120){for(var k in SV.A)if(k in A)A[k]=SV.A[k];if(typeof A.item==='string')A.item=[A.item];if(SV.FILL)FILL=SV.FILL;if(SV.TAB)TAB=SV.TAB;US=SV.US;applyChips();last=[SV.D];made=true;pick(0,true);
  $('resumet').textContent='Welcome back. Your draft for '+SV.D.name+' is saved on this device.';$('resume').hidden=false;$('stkb').textContent='Continue my draft';$('stkt').textContent='Your draft for '+SV.D.name+' is saved';ev('resume')}}catch(e){window.__err=String(e)}}
 $('resumex').addEventListener('click',function(){try{localStorage.removeItem('afgdd')}catch(e){}location.href=location.pathname+'#draft';location.reload()});
 (function(){var bar=$('stk');if(!('IntersectionObserver' in window)){bar.classList.add('on');return}

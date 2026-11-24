@@ -130,6 +130,18 @@ section[id]{scroll-margin-top:12px}
 :focus-visible{outline:3px solid var(--trim);outline-offset:2px}
 @media (max-width:560px){.stk-t{display:none}.stk .btn{width:100%;text-align:center}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stk{transition:none}}
+.prog{display:flex;align-items:center;gap:12px;margin:14px 0 4px;font-size:14px;font-weight:600}.progbar{flex:1;height:10px;background:#ece7e0;border-radius:99px;overflow:hidden}.progbar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.dtabs button{display:flex;align-items:center;gap:8px;text-align:left}.dtabs .tn{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#ece7e0;font-size:12px;font-weight:700;flex:none}.dtabs button[aria-selected=true] .tn{background:var(--accent);color:#fff}.dtabs button.full .tn{background:var(--ok);color:#fff}
+.sechd{font:800 22px/1.1 "Barlow Condensed",sans-serif;text-transform:uppercase;margin:18px 0 0}
+.dtext{font-size:17px;line-height:1.8}
+.blank{font:inherit;font-size:16px;font-weight:600;background:#fbe3df;color:#8a1f15;border:1.5px dashed #d98b80;border-radius:6px;padding:1px 7px;margin:0 1px;cursor:pointer;line-height:1.5}.blank:before{content:"\270E\00a0";font-size:13px}
+.blank.filled{background:#e3f0e8;color:#1f5a3d;border:1.5px solid #b9d3c3}.blank.filled:before{content:""}
+.bedit{display:inline-flex;gap:6px;align-items:center;vertical-align:middle;max-width:100%;margin:2px 0}.bedit input{width:min(260px,58vw);padding:6px 10px;border:2px solid var(--accent)}.bedit button{font:inherit;font-size:15px;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 12px;cursor:pointer}
+.secnav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin:6px 0 4px}.secnav .btn{flex:1;min-width:140px;text-align:center}
+#dsend{border-top:3px solid var(--ink);margin-top:28px}
+.acts{display:grid;gap:10px;margin-top:6px}.act{font:inherit;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;display:grid;gap:3px;color:var(--ink)}.act:hover{border-color:var(--ink)}.act b{font-size:17px}.act b:after{content:" \2192";color:var(--accent)}.act span{font-size:14px;color:var(--muted)}
+#dactok{color:var(--ok);font-weight:600;min-height:1.2em}
+@media (min-width:821px){.acts{grid-template-columns:repeat(3,1fr)}}
 </style></head><body>
 <header class="wrap" style="padding:20px 0"><a href="/?src=state_new-hampshire" style="font-weight:700;text-decoration:none;color:inherit">AFG Draft Desk</a></header>
 <main class="wrap">
