@@ -1,9 +1,8 @@
 # AFG Draft Desk: owner checklist (under 30 minutes)
 
 ## A. Send the outreach (about 10 minutes)
-1. Open Gmail drafts in the wagl mailbox and search: `in:drafts "a free FEMA grant draft"` (25 drafts).
+1. Open Gmail drafts in the wagl mailbox and search: `in:drafts "Free AFG grant draft for"` (25 drafts).
 2. For each, change From to a non-wagl AFG Draft Desk address you control (not wagl, not COMPÁS), then send it yourself.
-3. Delete the 25 older drafts: search `in:drafts "AFG narrative help"`, select all, Discard drafts.
 4. If anyone replies "no thanks", forward it to the task so the address goes on the suppression list.
 
 ## B. FEMA GO Grant Writer account (about 10 minutes, needed before the $795 tier)
