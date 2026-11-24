@@ -28,6 +28,7 @@ h3{font:600 19px/1.3 "Archivo",sans-serif;margin:0 0 6px}
 .btn:hover{filter:brightness(1.1)}.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
 .cta-row{display:flex;gap:12px;flex-wrap:wrap}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.tiers{display:grid;gap:14px}.tier{border-bottom:1px solid var(--line);padding-bottom:12px}.tier p{margin:4px 0 0;font-size:15px}.tier .ticks{margin:6px 0 0}.tname{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent)}.tprice{font:800 30px "Archivo",sans-serif}.tprice small{font:500 15px "Public Sans";color:var(--muted)}.tier.hot{background:#f7f3ee;border:1.5px solid var(--ink);border-radius:10px;padding:12px 14px}
 .price{font:800 46px "Archivo",sans-serif}.price small{display:block;font:500 16px "Public Sans";color:var(--muted)}
 ul.ticks{padding:0;margin:14px 0 0;list-style:none}ul.ticks li{padding:6px 0 6px 26px;position:relative}
 ul.ticks li:before{content:"";position:absolute;left:2px;top:14px;width:12px;height:7px;border-left:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg)}
@@ -93,16 +94,28 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
     <div class="cta-row"><a class="btn" href="#draft">Draft my department's narratives, free</a><a class="btn ghost" href="#reserve" data-ev="reserve_click">Reserve a finished draft</a></div>
     <p class="note" style="margin-top:12px">Also free: <a href="#state">state grant deadlines</a> and the <a href="#checker">AFG narrative checker</a>.</p>
   </div>
-  <div class="card">
-    <div class="price">$249 <small>per application, flat fee</small></div>
-    <ul class="ticks">
-      <li>Every scored narrative: four for AFG or SAFER, six for Fire Prevention and Safety</li>
-      <li>Each section checked against FEMA's published narrative guidance</li>
-      <li>Starts from your free auto-draft, then finished with AI writing tools and your facts, nothing invented</li>
-      <li>One full revision round included</li>
-      <li>Delivered as a Word file ready to paste into FEMA GO</li>
-    </ul>
-    <p class="note">Reserving holds a spot for the next round (FY2026, expected to open in 2027). In FY2025, AFG, SAFER and Fire Prevention and Safety all took applications on the same dates. You are not charged now.</p>
+  <div class="card tiers">
+    <div class="tier">
+      <div class="tname">Free draft</div><div class="tprice">$0</div>
+      <p>Every scored narrative, prefilled from public records, with red blanks for your facts. Copy it and finish it yourself.</p>
+    </div>
+    <div class="tier">
+      <div class="tname">Finished narratives</div><div class="tprice">$249 <small>per application</small></div>
+      <ul class="ticks">
+        <li>Every scored narrative: four for AFG or SAFER, six for Fire Prevention and Safety</li>
+        <li>We fill every blank with you by email and check each section against FEMA's scoring guidance</li>
+        <li>One revision round. Delivered as a Word file ready to paste into FEMA GO</li>
+      </ul>
+    </div>
+    <div class="tier hot">
+      <div class="tname">Full FEMA GO prep</div><div class="tprice">$795 <small>per application</small></div>
+      <ul class="ticks">
+        <li>Everything in Finished narratives</li>
+        <li>You add us as your Grant Writer in FEMA GO. We fill in the whole application: contacts, request details, budget and narratives</li>
+        <li>Your chief or Authorized Official reviews it, signs and submits. FEMA only lets them do that part</li>
+      </ul>
+    </div>
+    <p class="note">Flat fees, never a percentage of your award. Reserving holds a spot for the next round (FY2026, expected to open in 2027). In FY2025, AFG, SAFER and Fire Prevention and Safety all took applications on the same dates. You are not charged now.</p>
   </div>
 </div>
 </div>
@@ -179,7 +192,8 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
       <div class="card upsell">
         <h3>Want it finished, not just started?</h3>
         <p>For $249 we fill every red blank with you in one short email exchange, rewrite each section with AI writing tools for your department, and check every line against FEMA's published scoring guidance. You approve it before it goes anywhere. One revision round included.</p>
-        <a class="btn" href="#reserve" id="dres_cta" data-ev="reserve_click">Reserve my finished draft, pay nothing today</a>
+        <div class="cta-row" style="margin-top:0"><a class="btn" href="#reserve" id="dres_cta" data-plan="afg249">Finished narratives, $249</a><a class="btn ghost" href="#reserve" id="dres_gw" data-plan="gw795">We fill in FEMA GO, $795</a></div>
+        <p class="note" style="margin-top:8px">Both reserve a spot. Pay nothing today. With the $795 plan, you add us as your Grant Writer in FEMA GO, we enter the whole application, and your chief signs and submits.</p>
         <p class="note" style="margin-top:8px">Your department name, state and grant are already filled in on the form.</p>
       </div>
       <div class="card gochk">
@@ -239,9 +253,10 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
 <section id="reserve">
   <div class="two" style="align-items:start;gap:32px">
     <div>
-      <h2>Reserve a draft for the next AFG round</h2>
-      <p>No payment today. We email you once, when FEMA announces the FY2026 round (expected in 2027), with the intake form and a $249 invoice. If you no longer need it, ignore that email.</p>
+      <h2>Reserve a spot for the next round</h2>
+      <p>No payment today. We email you once, when FEMA announces the FY2026 round (expected in 2027), with the intake form and an invoice for the plan you picked ($249 or $795). If you no longer need it, ignore that email.</p>
       <p class="note">Fees for grant writers can be listed as a pre-award cost only if they are a flat fee (not contingency), competitively sourced, listed in the application's Request Details, and paid within FEMA's timing window. Check the FY2026 notice before you count on reimbursement.</p>
+      <p class="note">Full FEMA GO prep: when the round opens, your Authorized Official adds us in FEMA GO with the Grant Writer role. That role can fill in and edit the application but cannot sign or submit it. We enter every section, send it back for signature, and you submit. FEMA requires you to list us in the application's Contact Information section.</p>
     </div>
     <form id="f" class="card" novalidate>
       <label>Department name<input name="org" required autocomplete="organization"></label>
@@ -250,12 +265,13 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
         <label>State<input name="state" autocomplete="address-level1"></label>
         <label>Department type<select name="orgtype"><option>All-volunteer</option><option>Mostly volunteer / combination</option><option>Mostly career / career</option><option>Nonaffiliated EMS</option></select></label>
       </div>
+      <label>Plan<select name="plan"><option value="afg249">Finished narratives, $249</option><option value="gw795">Full FEMA GO prep, $795</option></select></label>
       <label>What you plan to request<select name="req"><option>PPE / turnout gear</option><option>SCBA</option><option>Other equipment</option><option>Vehicle</option><option>Training</option><option>Facility modification</option><option>Wellness and fitness</option><option>SAFER: hiring</option><option>SAFER: recruitment and retention</option><option>Fire Prevention and Safety</option><option>Not sure yet</option></select></label>
       <label>Anything else (optional)<textarea name="note" rows="3"></textarea></label>
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="btn" id="sub" type="submit">Reserve my FY2026 draft</button>
+      <button class="btn" id="sub" type="submit">Reserve my spot, pay nothing today</button>
       <div class="err" id="err" role="alert"></div>
-      <div class="ok" id="ok">Reserved. We will email you once, when the FY2026 AFG notice is published.</div>
+      <div class="ok" id="ok">Reserved. We will email you once, when FEMA publishes the FY2026 notice.</div>
     </form>
   </div>
 </section>
@@ -264,6 +280,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color
   <h2>Questions</h2>
   <details><summary>Who writes the drafts?</summary><p>Drafts are written with AI from your intake answers and checked against FEMA's published narrative guidance and the current funding notice. Every number comes from you. Your department reviews and approves everything before it is submitted.</p></details>
   <details><summary>Do you guarantee an award?</summary><p>No. Awards are competitive and decided by FEMA's review panels. We do not charge contingency fees, which FEMA does not allow as a grant cost.</p></details>
+  <details><summary>Can you submit the application for us?</summary><p>No one outside your department can. In FEMA GO, only your Authorized Organization Representative can sign and submit. With Full FEMA GO prep, you add us as your Grant Writer, we fill in the entire application, and your official reviews it, signs and submits in a few minutes.</p></details>
   <details><summary>Do we have to disclose that we used you?</summary><p>Yes. FEMA asks applicants to identify anyone who helped prepare the application, paid or not. We give you the exact details to enter.</p></details>
   <details><summary>Do you submit the application for us?</summary><p>No. Your department's authorized representative submits in FEMA GO. We supply the narrative text.</p></details>
   <details><summary>What about SAFER, FP&amp;S or state grants?</summary><p>AFG comes first. If you want help with another program, mention it in the form.</p></details>
@@ -288,10 +305,10 @@ f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
   var d=Object.fromEntries(new FormData(f).entries());
   if(!d.org.trim()||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email.trim())){err.textContent='Please add your department name and a valid email.';return}
   sub.disabled=true;sub.textContent='Reserving...';
-  fetch(API+'/api/reserve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({org:d.org,email:d.email,state:d.state,orgtype:d.orgtype,plan:'afg249',note:('[request: '+d.req+'] '+(d.note||'')).slice(0,600),src:src,vid:vid,website:d.website})})
+  fetch(API+'/api/reserve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({org:d.org,email:d.email,state:d.state,orgtype:d.orgtype,plan:(d.plan==='gw795'?'gw795':'afg249'),note:('[request: '+d.req+'] '+(d.note||'')).slice(0,600),src:src,vid:vid,website:d.website})})
   .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})})
   .then(function(){f.querySelectorAll('label,button,.err').forEach(function(x){x.style.display='none'});ok.style.display='block'})
-  .catch(function(x){err.textContent=x.message||'Could not reserve right now. Please try again.';sub.disabled=false;sub.textContent='Reserve my FY2026 draft'});
+  .catch(function(x){err.textContent=x.message||'Could not reserve right now. Please try again.';sub.disabled=false;sub.textContent='Reserve my spot, pay nothing today'});
 });
 var G=[
 ["2026-11-23","North Carolina","NC Forest Service Volunteer Fire Assistance","50% reimbursement","https://www.ncmhtd.com/NCFS/VFAP"],
@@ -453,7 +470,7 @@ var FP={
  oc:{what:'fire origin and cause investigation',full:F('e.g. fire investigation training, a thermal camera, scene documentation kits')+' for our fire investigation work',how:'Trained members will determine origin and cause on every qualifying fire, so we can see patterns and aim prevention where it is needed.',vuln:'many fire causes in our area are recorded as undetermined',inc:'fires with an undetermined cause',goal:'determine origin and cause on '+F('share')+' of qualifying fires within 12 months',o1:'train '+F('number')+' members in origin and cause investigation',o2:'complete investigations on every qualifying fire',m:'share of fires with a determined cause, compared with the year before the grant'}};
 $('dcopy').addEventListener('click',function(){if(navigator.clipboard)navigator.clipboard.writeText(window.__draftText||'').then(function(){$('dcopy').textContent='Copied'});ev('draft_copy')});
 $('ddl').addEventListener('click',function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([window.__draftText||''],{type:'text/plain'}));a.download='AFG-narratives-'+(D?D.name.replace(/[^A-Za-z0-9]+/g,'-'):'draft')+'.txt';a.click();ev('draft_copy')});
-$('dres_cta').addEventListener('click',function(){ev('reserve_click')});
+['dres_cta','dres_gw'].forEach(function(id){$(id).addEventListener('click',function(){var f=$('f');if(f&&f.plan)f.plan.value=$(id).getAttribute('data-plan');ev('reserve_click')})});
 var QS=new URLSearchParams(location.search),fd=QS.get('fdid'),pq=(QS.get('prog')||'').replace(/[^a-z]/g,'');
 if(pq){var pb=document.querySelector('#progg [data-v="'+pq+'"]');if(pb)pb.click()}
 if(fd){getJ('/api/dept?fdid='+encodeURIComponent(fd)+'&st='+encodeURIComponent(QS.get('st')||'')).then(function(j){if(j.results&&j.results.length){US=j.us;last=j.results;pick(0)}}).catch(function(x){window.__err=String(x&&x.stack||x)})}
