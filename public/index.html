@@ -204,10 +204,10 @@ section[id]{scroll-margin-top:12px}
       <label>State<select id="dst"><option value="">Any state</option></select></label>
     </div>
     <div id="dres" class="dres" aria-live="polite"></div>
-    <div class="ql" style="margin-top:14px">Which grant?</div>
-    <div class="qg" data-q="prog" id="progg">
+    <div class="qg multi" data-q="progs" id="progg" style="margin-top:14px"><div class="ql">Which grants? (tap all you plan to apply for)</div><p class="qh">Each grant is its own FEMA application. Pick more than one and we draft a full set for each.</p>
+      
       <button type="button" data-v="afg" aria-pressed="true">AFG: gear, equipment, training</button><button type="button" data-v="safer">SAFER: staffing and volunteers</button><button type="button" data-v="fps">Fire Prevention and Safety</button></div>
-    <p class="note" id="progn" style="margin-top:0"></p>
+    <p class="note" id="progn" hidden></p>
 
 
     <div id="dstep2" hidden>
@@ -320,7 +320,7 @@ section[id]{scroll-margin-top:12px}
   <div class="filt"><label for="stf" style="display:flex;gap:8px;align-items:center">Your state <select id="stf"><option value="">All states</option></select></label><span id="stc" class="note"></span></div>
   <table class="gt"><thead><tr><th>Due</th><th>State</th><th>Program</th><th>Amount and match</th></tr></thead><tbody id="gtb"></tbody></table>
   <p class="note" id="stlinks" style="margin-top:12px">State pages: <a href="/states/alaska.html">Alaska</a> · <a href="/states/florida.html">Florida</a> · <a href="/states/georgia.html">Georgia</a> · <a href="/states/illinois.html">Illinois</a> · <a href="/states/indiana.html">Indiana</a> · <a href="/states/iowa.html">Iowa</a> · <a href="/states/kansas.html">Kansas</a> · <a href="/states/kentucky.html">Kentucky</a> · <a href="/states/maine.html">Maine</a> · <a href="/states/michigan.html">Michigan</a> · <a href="/states/minnesota.html">Minnesota</a> · <a href="/states/missouri.html">Missouri</a> · <a href="/states/new-hampshire.html">New Hampshire</a> · <a href="/states/new-jersey.html">New Jersey</a> · <a href="/states/new-york.html">New York</a> · <a href="/states/north-carolina.html">North Carolina</a> · <a href="/states/ohio.html">Ohio</a> · <a href="/states/pennsylvania.html">Pennsylvania</a> · <a href="/states/south-carolina.html">South Carolina</a> · <a href="/states/tennessee.html">Tennessee</a> · <a href="/states/texas.html">Texas</a> · <a href="/states/utah.html">Utah</a> · <a href="/states/vermont.html">Vermont</a> · <a href="/states/virginia.html">Virginia</a> · <a href="/states/washington.html">Washington</a> · <a href="/states/west-virginia.html">West Virginia</a> · <a href="/states/wisconsin.html">Wisconsin</a></p>
-             <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
+              <p class="note" style="margin-top:12px">Most state forestry grants above are short applications. Backdraft Grants drafts the federal AFG narratives; if you want help with a state program, say so in the reservation form.</p>
   <div class="sec-cta"><a class="btn" href="#draft" data-ev="cta_inline">Start my free draft</a><span class="note">Free. No account. No card.</span></div>
 </section>
 
@@ -464,7 +464,7 @@ var API=window.__API_BASE__||'';
 function ev(k){try{fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:new URLSearchParams(location.search).get('src')||'direct',page:'afg'})})}catch(e){}}
 var ST=['AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','PR','GU','VI','AS','MP'];
 ST.forEach(function(s){var o=document.createElement('option');o.value=s;o.textContent=s;$('dst').appendChild(o)});
-var D=null,US=null,timer=null,last=[],A={prog:'afg',item:['ppe'],sact:'hire',npos:'',rr:[],fp:['alarm'],aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false,FILL={},EDIT=null;
+var D=null,US=null,timer=null,last=[],A={prog:'afg',progs:['afg'],item:['ppe'],sact:'hire',npos:'',rr:[],fp:['alarm'],aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false,FILL={},EDIT=null;
 function fmt(n){return Number(n).toLocaleString('en-US')}
 function getJ(u){return fetch(API+u).then(function(r){return r.json()})}
 function search(){var q=$('dq').value.trim();if(q.length<2){$('dres').innerHTML='';return}
@@ -491,12 +491,13 @@ Array.prototype.forEach.call(document.querySelectorAll('#dz .qg'),function(g){va
  if(!multi&&!g.querySelector('[aria-pressed=true]'))g.querySelector('button').setAttribute('aria-pressed','true');
  Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){if(!b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','false');
   b.addEventListener('click',function(){var v=b.getAttribute('data-v');
-   if(multi){var on=b.getAttribute('aria-pressed')!=='true',mx=+g.getAttribute('data-max')||0;var h0=g.querySelector('.qh.warn');if(h0){h0.classList.remove('warn');h0.textContent=h0.getAttribute('data-t')}if(on&&mx&&g.querySelectorAll('button[aria-pressed=true]').length>=mx){var h=g.querySelector('.qh');if(h){if(!h.getAttribute('data-t'))h.setAttribute('data-t',h.textContent);h.classList.add('warn');h.textContent='FEMA allows 3 projects per application. Tap one you picked to remove it, then pick this one.'}return}if(!on&&key==='fp'&&g.querySelectorAll('button[aria-pressed=true]').length<=1)return;b.setAttribute('aria-pressed',on?'true':'false');A[key]=Array.prototype.filter.call(g.querySelectorAll('button[aria-pressed=true]'),function(){return 1}).map(function(x){return x.getAttribute('data-v')})}
+   if(multi){var on=b.getAttribute('aria-pressed')!=='true',mx=+g.getAttribute('data-max')||0;var h0=g.querySelector('.qh.warn');if(h0){h0.classList.remove('warn');h0.textContent=h0.getAttribute('data-t')}if(on&&mx&&g.querySelectorAll('button[aria-pressed=true]').length>=mx){var h=g.querySelector('.qh');if(h){if(!h.getAttribute('data-t'))h.setAttribute('data-t',h.textContent);h.classList.add('warn');h.textContent='FEMA allows 3 projects per application. Tap one you picked to remove it, then pick this one.'}return}if(!on&&(key==='fp'||key==='progs')&&g.querySelectorAll('button[aria-pressed=true]').length<=1)return;b.setAttribute('aria-pressed',on?'true':'false');A[key]=Array.prototype.filter.call(g.querySelectorAll('button[aria-pressed=true]'),function(){return 1}).map(function(x){return x.getAttribute('data-v')})}
    else{Array.prototype.forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed','false')});b.setAttribute('aria-pressed','true');A[key]=v}
-   if(key==='prog'||key==='sact')vis();if(key==='prog')TAB=0;if(D)build()})})});
+   if(key==='prog'||key==='progs'||key==='sact')vis();if(key==='prog'||key==='progs')TAB=0;if(D)build()})})});
 Array.prototype.forEach.call(document.querySelectorAll('#dz .qg.multi'),function(g){A[g.getAttribute('data-q')]=Array.prototype.map.call(g.querySelectorAll('button[aria-pressed=true]'),function(x){return x.getAttribute('data-v')})});
 var PN={afg:'Assistance to Firefighters Grant: turnout gear, SCBA, radios, equipment, training and wellness. Four scored narratives.',safer:'Staffing for Adequate Fire and Emergency Response: hire career firefighters, or recruit and keep volunteers. Four scored narratives.',fps:'Fire Prevention and Safety: smoke alarms, fire safety education, wildfire outreach, code work and fire investigation. Six scored narratives.'};
-function vis(){var tag=A.prog==='safer'?'safer-'+A.sact:'';Array.prototype.forEach.call(document.querySelectorAll('#dz [data-prog]'),function(g){var p=g.getAttribute('data-prog');g.hidden=!(p===A.prog||p===tag)});$('progn').textContent=PN[A.prog];}
+function PLs(){return (A.progs&&A.progs.length?A.progs:['afg']).filter(function(x){return PN[x]})}
+function vis(){var PL=PLs(),tag=PL.indexOf('safer')>=0?'safer-'+A.sact:'';Array.prototype.forEach.call(document.querySelectorAll('#dz [data-prog]'),function(g){var p=g.getAttribute('data-prog');g.hidden=!(PL.indexOf(p)>=0||p===tag)});$('progn').textContent=PL.map(function(x){return PN[x]}).join(' ');}
 vis();
 function list(a){return a.length<2?a.join(''):a.slice(0,-1).join(', ')+' and '+a[a.length-1]}
 var F=function(t){return '\u27E6'+t+'\u27E7'};
@@ -519,8 +520,10 @@ function build(o){
  var budget='Our yearly operating budget is '+(A.bud||F('$ amount'))+', funded through '+(A.fund.length?list(A.fund):F('your funding sources'))+'. Fuel, insurance, apparatus maintenance, utilities and required testing take '+F('share, e.g. nearly all')+' of that budget, leaving little for new projects. ';
  var hz=A.hz.length?'Our first-due area includes '+list(A.hz)+'. ':'';
  var secs;
- if(A.prog==='safer')secs=A.sact==='hire'?safH():safR();else if(A.prog==='fps')secs=fps();else secs=afg();
- if(o&&o.compute)return secs;
+ function one(pg){var sp=A.prog;A.prog=pg;try{return pg==='safer'?(A.sact==='hire'?safH():safR()):(pg==='fps'?fps():afg())}finally{A.prog=sp}}
+ if(o&&o.compute){secs=one(A.prog);return secs}
+ var PL=PLs(),PNs={afg:'AFG',safer:'SAFER',fps:'FP&S'};secs=[];
+ PL.forEach(function(pg){one(pg).forEach(function(x){var gm=/^Project (\d+) \(([^)]*)\): (.*)$/.exec(x[0]),g=PL.length>1?PNs[pg]:'',sh=x[0];if(gm){g=(g?g+' \u00b7 ':'')+'Project '+gm[1]+': '+gm[2];sh=gm[3]}secs.push([g?g+': '+sh:sh,x[1],x[2],pg,x[0],g,sh])})});
  try{localStorage.setItem('afgdd',JSON.stringify({v:1,t:Date.now(),D:D,US:US,A:A,FILL:FILL,TAB:TAB}))}catch(e){}
  function afg(){var sel=A.item.filter(function(k){return IT[k]}),its=sel.map(function(k){return IT[k]}),it;
   if(!its.length)it={what:F('what you are requesting'),full:F('what you are requesting'),std:F('the standard it must meet'),risk:'',use:F('the calls it will be used on'),meet:F('the standard it must meet')};
@@ -554,13 +557,13 @@ function build(o){
  function fps(){var L=(A.fp&&A.fp.length?A.fp:['alarm']).filter(function(k){return FP[k]}).slice(0,3),out=[];if(!L.length)L=['alarm'];L.forEach(function(k,i){out=out.concat(fps1(FP[k],L.length>1?'Project '+(i+1)+' ('+FPN[k]+'): ':''))});return out}
  if(TAB>=secs.length)TAB=0;
  var btot=0,bdone=0,secInfo=[];
- function parts(s){var occ={},out=[];s[1].split(/(\u27E6[^\u27E7]*\u27E7)/).forEach(function(part){if(/^\u27E6/.test(part)){var lab=part.slice(1,-1);occ[lab]=(occ[lab]||0)+1;var k=A.prog+'|'+s[0]+'|'+lab+'|'+occ[lab];out.push({k:k,lab:lab,v:FILL[k]||''})}else if(part)out.push(part)});return out}
+ function parts(s){var occ={},out=[];s[1].split(/(\u27E6[^\u27E7]*\u27E7)/).forEach(function(part){if(/^\u27E6/.test(part)){var lab=part.slice(1,-1);occ[lab]=(occ[lab]||0)+1;var k=(s[3]||A.prog)+'|'+(s[4]||s[0])+'|'+lab+'|'+occ[lab];out.push({k:k,lab:lab,v:FILL[k]||''})}else if(part)out.push(part)});return out}
  function plain(s){return parts(s).map(function(x){return typeof x==='string'?x:(x.v||'['+x.lab+']')}).join('')}
  secs.forEach(function(s){var ps=parts(s),n=0,f=0;ps.forEach(function(x){if(typeof x!=='string'){n++;if(x.v)f++}});btot+=n;bdone+=f;secInfo.push([n,f])});
  window.__secs=secs.map(function(s){return [s[0],plain(s)]});
  window.__draftText=window.__secs.map(function(s){return s[0].toUpperCase()+'\n'+s[1]}).join('\n\n');
  var tabs=$('dtabs');tabs.innerHTML='';
- var lastG='';secs.forEach(function(s,i){var gm=/^(Project \d+ \(([^)]*)\)): (.*)$/.exec(s[0]);if(gm&&gm[1]!==lastG){lastG=gm[1];var gh=document.createElement('div');gh.className='tgrp';gh.textContent=gm[1].replace(' (',': ').replace(/\)$/,'');tabs.appendChild(gh)}var t=document.createElement('button');t.type='button';t.setAttribute('role','tab');t.setAttribute('aria-selected',i===TAB?'true':'false');var left=secInfo[i][0]-secInfo[i][1];
+ var lastG='';secs.forEach(function(s,i){var gm=s[5]?[0,s[5],0,s[6]]:null;if(gm&&gm[1]!==lastG){lastG=gm[1];var gh=document.createElement('div');gh.className='tgrp';gh.textContent=gm[1];tabs.appendChild(gh)}var t=document.createElement('button');t.type='button';t.setAttribute('role','tab');t.setAttribute('aria-selected',i===TAB?'true':'false');var left=secInfo[i][0]-secInfo[i][1];
   var nn=document.createElement('span');nn.className='tn';nn.textContent=left?String(i+1):'\u2713';if(!left)t.className='full';t.appendChild(nn);t.appendChild(document.createTextNode(gm?gm[3]:s[0]));
   t.addEventListener('click',function(){TAB=i;EDIT=null;build()});tabs.appendChild(t)});
  var s=secs[TAB],out=$('dsecs');out.innerHTML='';
@@ -588,11 +591,11 @@ function build(o){
  var pct=btot?Math.round(bdone/btot*100):100;$('dprog').style.width=pct+'%';$('dprogt').textContent=bdone+' of '+btot+' blanks filled';
  $('dsendn').textContent=secs.length+' sections for '+D.name+(btot-bdone?' ('+(btot-bdone)+' blanks still open; you can fill them later)':' (every blank filled)');
  var blanks=btot-bdone;
- var PNm={afg:'AFG',safer:'SAFER',fps:'Fire Prevention and Safety'}[A.prog];
+ var PNm=list(PL.map(function(x){return {afg:'AFG',safer:'SAFER',fps:'Fire Prevention and Safety'}[x]}));
  var how=$('how');how.innerHTML='';var h=document.createElement('p');var hb=document.createElement('b');hb.textContent='Your draft is ready. ';h.appendChild(hb);
  h.appendChild(document.createTextNode('We found '+D.name+' in the national registry, pulled '+D._facts+' facts about your department and county, and wrote all '+secs.length+' scored '+PNm+' narratives. Tap each red blank below to type the answer. Skip any you don\'t know yet; your work is saved on this device.'));how.appendChild(h);
  $('dout').hidden=false;
- var f=$('f');if(f){f.org.value=D.name;if(D.state)f.state.value=D.state;var map={ppe:'PPE / turnout gear',scba:'SCBA',radio:'Other equipment',equip:'Other equipment',train:'Training',well:'Wellness and fitness'};f.req.value=A.prog==='afg'?(A.item.length===1?map[A.item[0]]:(A.item.length?map[A.item[0]]:'Not sure yet')):(A.prog==='fps'?'Fire Prevention and Safety':(A.sact==='hire'?'SAFER: hiring':'SAFER: recruitment and retention'));f.orgtype.value=/volunteer/i.test(D.type)?'All-volunteer':'Mostly volunteer / combination'}}
+ var f=$('f');if(f){f.org.value=D.name;if(D.state)f.state.value=D.state;var map={ppe:'PPE / turnout gear',scba:'SCBA',radio:'Other equipment',equip:'Other equipment',train:'Training',well:'Wellness and fitness'};var A0=PL[0];f.req.value=A0==='afg'?(A.item.length===1?map[A.item[0]]:(A.item.length?map[A.item[0]]:'Not sure yet')):(A0==='fps'?'Fire Prevention and Safety':(A.sact==='hire'?'SAFER: hiring':'SAFER: recruitment and retention'));f.orgtype.value=/volunteer/i.test(D.type)?'All-volunteer':'Mostly volunteer / combination'}}
 var FPN={alarm:'Smoke alarms',crr:'Fire safety education',wui:'Wildfire outreach',code:'Inspections',oc:'Fire investigation'};
 var FP={
  alarm:{what:'smoke alarms and installation',full:F('number')+' 10-year sealed-battery smoke alarms, plus bed-shaker and strobe alarms for residents who are deaf or hard of hearing, installed free in homes by our members',how:'Members will go door to door and by appointment, install alarms on every level and outside sleeping areas, test existing alarms, and leave a home escape plan at each visit.',vuln:'many of these homes have missing, expired or disabled smoke alarms',inc:'residential fires, including '+F('number')+' in homes without working smoke alarms',goal:'install working smoke alarms in '+F('number')+' high-risk homes within 12 months',o1:'install '+F('number')+' alarms in '+F('number')+' homes',o2:'teach a home escape plan at every visit',m:'the number of homes visited, alarms installed, and homes with working alarms on follow-up checks of a sample of visited homes'},
@@ -615,7 +618,7 @@ if(fd){getJ('/api/dept?fdid='+encodeURIComponent(fd)+'&st='+encodeURIComponent(Q
 
 /* resume saved draft + sticky CTA */
 function applyChips(){Array.prototype.forEach.call(document.querySelectorAll('#dz .qg'),function(g){var k=g.getAttribute('data-q'),m=g.classList.contains('multi'),v=A[k];Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){var x=b.getAttribute('data-v');b.setAttribute('aria-pressed',(m?(Array.isArray(v)&&v.indexOf(x)>=0):x===v)?'true':'false')})});vis()}
-if(!fd){try{var SV=JSON.parse(localStorage.getItem('afgdd')||'null');if(SV&&SV.v===1&&SV.D&&Date.now()-SV.t<1000*60*60*24*120){for(var k in SV.A)if(k in A)A[k]=SV.A[k];if(typeof A.item==='string')A.item=[A.item];if(typeof A.fp==='string')A.fp=[A.fp];if(SV.FILL)FILL=SV.FILL;if(SV.TAB)TAB=SV.TAB;US=SV.US;applyChips();last=[SV.D];made=true;pick(0,true);
+if(!fd){try{var SV=JSON.parse(localStorage.getItem('afgdd')||'null');if(SV&&SV.v===1&&SV.D&&Date.now()-SV.t<1000*60*60*24*120){for(var k in SV.A)if(k in A)A[k]=SV.A[k];if(typeof A.item==='string')A.item=[A.item];if(typeof A.fp==='string')A.fp=[A.fp];if(!SV.A.progs&&SV.A.prog)A.progs=[SV.A.prog];if(SV.FILL)FILL=SV.FILL;if(SV.TAB)TAB=SV.TAB;US=SV.US;applyChips();last=[SV.D];made=true;pick(0,true);
  $('resumet').textContent='Welcome back. Your draft for '+SV.D.name+' is saved on this device.';$('resume').hidden=false;$('stkb').textContent='Continue my draft';$('stkt').textContent='Your draft for '+SV.D.name+' is saved';ev('resume')}}catch(e){window.__err=String(e)}}
 $('resumex').addEventListener('click',function(){try{localStorage.removeItem('afgdd')}catch(e){}location.href=location.pathname+'#draft';location.reload()});
 (function(){var bar=$('stk');if(!('IntersectionObserver' in window)){bar.classList.add('on');return}
@@ -646,6 +649,6 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  var y=(rb-zt+24<=vh)?zt-12:rb-vh+24;window.scrollTo({top:y,behavior:'smooth'});history.replaceState(null,'','#draft')},true);
 if(location.hash==='#draft')window.addEventListener('load',function(){setTimeout(function(){var row=document.getElementById('dpickrow'),z=document.getElementById('dz'),vh=window.innerHeight,zt=z.getBoundingClientRect().top+scrollY,rb=row.getBoundingClientRect().bottom+scrollY;window.scrollTo(0,(rb-zt+24<=vh)?zt-12:rb-vh+24)},50)});
 </script>
-<script>(function(){var V='1795526998';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
+<script>(function(){var V='1795527368';try{fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){t=t.trim();if(t&&t!==V&&!sessionStorage.getItem('afgv'+t)){sessionStorage.setItem('afgv'+t,'1');location.reload()}})}catch(e){}})();</script>
 </body>
 </html>
