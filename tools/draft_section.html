@@ -1,0 +1,79 @@
+<section id="draft">
+  <h2>Draft my department's AFG narratives</h2>
+  <p class="muted">Find your department. We pull what public records already show about it, ask six quick questions, and write all four AFG narratives in plain fire-service language. Anything only your officers know is marked in red for you to fill in. Free, and nothing is saved unless you reserve.</p>
+  <div class="card tool" id="dz">
+    <div class="stepn">Step 1 of 3 · Find your department</div>
+    <div class="two">
+      <label>Department or town name<input id="dq" placeholder="e.g. Mapleton or Ghent" autocomplete="off"></label>
+      <label>State<select id="dst"><option value="">Any state</option></select></label>
+    </div>
+    <div id="dres" class="dres" aria-live="polite"></div>
+
+    <div id="dstep2" hidden>
+      <div class="stepn">Step 2 of 3 · What we already know</div>
+      <ul class="known" id="known"></ul>
+      <p class="note">Sources: U.S. Fire Administration National Fire Department Registry; U.S. Census Bureau 2024 Small Area Income and Poverty Estimates and 2024 county population estimates.</p>
+
+      <div class="stepn">Step 3 of 3 · Six quick questions (skip any you don't know)</div>
+      <label>What are you asking AFG for?<select id="qitem">
+        <option value="ppe">Turnout gear (structural PPE)</option>
+        <option value="scba">SCBA (air packs, masks and bottles)</option>
+        <option value="radio">Portable radios</option>
+        <option value="equip">Other equipment (TIC, hose, extrication tools)</option>
+        <option value="train">Training (Firefighter I and II)</option>
+        <option value="well">Wellness (annual physicals)</option>
+      </select></label>
+      <div class="two">
+        <label>How old is the gear you'd replace? (years)<input id="qage" inputmode="numeric" placeholder="e.g. 12"></label>
+        <label>How many members need it?<input id="qn" inputmode="numeric"></label>
+      </div>
+      <div class="two">
+        <label>Calls per year<input id="qcalls" inputmode="numeric" placeholder="e.g. 240"></label>
+        <label>Yearly operating budget ($)<input id="qbud" inputmode="numeric" placeholder="e.g. 85000"></label>
+      </div>
+      <fieldset class="chk"><legend>Where your money comes from</legend>
+        <label><input type="checkbox" value="fundraisers and donations">Fundraisers and donations</label>
+        <label><input type="checkbox" value="a town or county appropriation">Town or county money</label>
+        <label><input type="checkbox" value="a fire district tax">Fire district tax</label>
+        <label><input type="checkbox" value="EMS or service billing">EMS or service billing</label>
+        <label><input type="checkbox" value="state aid">State aid</label>
+      </fieldset>
+      <fieldset class="chk" id="qhz"><legend>What's in your first-due area</legend>
+        <label><input type="checkbox" value="an interstate or major highway">Interstate or major highway</label>
+        <label><input type="checkbox" value="a rail line">Rail line</label>
+        <label><input type="checkbox" value="farms and agricultural buildings">Farms and barns</label>
+        <label><input type="checkbox" value="woodland and brush (wildland-urban interface)">Woods and brush</label>
+        <label><input type="checkbox" value="schools">Schools</label>
+        <label><input type="checkbox" value="nursing homes or assisted living">Nursing homes</label>
+        <label><input type="checkbox" value="industrial or chemical sites">Industrial or chemical sites</label>
+        <label><input type="checkbox" value="lakes and rivers">Lakes and rivers</label>
+      </fieldset>
+      <button class="btn" id="dgo" type="button">Write my four narratives</button>
+    </div>
+
+    <div id="dout" hidden>
+      <div class="how" id="how"></div>
+      <div id="dsecs"></div>
+      <div class="cta-row">
+        <button class="btn ghost" id="dcopy" type="button">Copy all four</button>
+        <button class="btn ghost" id="ddl" type="button">Download as text</button>
+      </div>
+      <div class="card upsell">
+        <h3>Want it finished, not just started?</h3>
+        <p>For $249 we take this draft, fill every red blank with you, rewrite each section with AI writing tools for your department, and check every line against FEMA's published scoring guidance. You read and approve it before it goes anywhere. One revision round included.</p>
+        <a class="btn" href="#reserve" id="dres_cta" data-ev="reserve_click">Reserve my finished draft, pay nothing today</a>
+      </div>
+      <div class="card gochk">
+        <h3>What's left to submit in FEMA GO</h3>
+        <p class="note">FEMA requires your department's own authorized official to submit and sign, so no outside service can press Submit for you. Everything below is ready-to-paste or a quick check.</p>
+        <ol>
+          <li>Active SAM.gov registration with a Unique Entity ID. Renew if it expires before awards. <a href="https://sam.gov/" target="_blank" rel="noopener">sam.gov</a></li>
+          <li>FEMA GO account with your Authorized Official and a Signatory listed. <a href="https://go.fema.gov/" target="_blank" rel="noopener">go.fema.gov</a></li>
+          <li>Incident reporting current in NFIRS or NERIS.</li>
+          <li>Written price quotes for what you're buying, so the Request Details match your Cost-Benefit numbers.</li>
+          <li>Paste the four narratives above, fill the red blanks, and submit before the FY2026 deadline.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
