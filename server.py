@@ -174,7 +174,7 @@ _nfdr = os.path.join(BASE, "data", "nfdr_national.csv")
 if os.path.exists(_nfdr):
     try:
         with open(_nfdr, newline="", encoding="utf-8", errors="ignore") as _f:
-            for _r in csv.DictReader(_f):
+            for _r in csv.DictReader(_f, skipinitialspace=True):
                 _k = (_r.get("FDID", "").strip(), _r.get("HQ state", "").strip().upper())
                 _p = _r.get("HQ phone", "").strip()
                 if _k[0] and _p: DEPT_PHONES[_k] = _p
