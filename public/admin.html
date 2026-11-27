@@ -174,18 +174,37 @@ tr:last-child td{border-bottom:0}
   }
   var OUTCOMES = ['Not started','Emailed','Left voicemail','Spoke - interested','Spoke - send info','Reserved','Not interested','Opted out'];
   var STATE_DEADLINES = {
-    IL:['2026-11-30','Nov 30'], PA:['2026-11-30','Nov 30'], MN:['2026-12-01','Dec 1'],
+    IL:['2026-11-30','Nov 30'], MN:['2026-12-01','Dec 1'],
     WA:['2026-12-13','Dec 13'], TN:['2026-12-15','Dec 15'], AK:['2026-12-17','Dec 17'],
     ME:['2026-12-18','Dec 18'], NY:['2026-12-30','Dec 30'], TX:['2026-12-31','Dec 31'],
-    UT:['2027-01-06','Jan 6'], OH:['2027-01-09','Jan 9'], NH:['2027-02-01','Feb 1'],
-    SD:['2027-02-15','Feb 15'], NC:['2027-03-01','Mar 1'], IN:['2027-03-01','Mar 1'],
-    VA:['2027-03-31','Mar 31']
+    UT:['2027-01-06','Jan 6'], PA:['2027-01-07','Jan 7'], OH:['2027-01-09','Jan 9'],
+    NH:['2027-02-01','Feb 1'], SD:['2027-02-15','Feb 15'], NC:['2027-03-01','Mar 1'],
+    IN:['2027-03-01','Mar 1'], VA:['2027-03-31','Mar 31']
   };
-  function deadlineKey(st){ var d = STATE_DEADLINES[(st||'').toUpperCase()]; return d ? d[0] : '9999-99-99'; }
-  function deadlineBadge(st){
+  function isAssociation(x){
+    if(x && String(x.type||'').toLowerCase() === 'association') return true;
+    return /\b(association|federation|council|league|society)\b/i.test(String((x && x.dept) || ''));
+  }
+  function daysUntil(iso){
+    var p = String(iso||'').split('-');
+    if(p.length !== 3) return null;
+    var due = new Date(+p[0], +p[1]-1, +p[2]);
+    var now = new Date(); now.setHours(0,0,0,0);
+    return Math.round((due - now) / 86400000);
+  }
+  function deadlineKey(st){
     var d = STATE_DEADLINES[(st||'').toUpperCase()];
+    if(!d) return '9999-99-99';
+    var left = daysUntil(d[0]);
+    return (left !== null && left < 0) ? '9998-99-99' : d[0];
+  }
+  function deadlineBadge(x){
+    if(isAssociation(x)) return '';
+    var d = STATE_DEADLINES[(x && x.state || '').toUpperCase()];
     if(!d) return '';
-    var soon = d[0] <= '2026-12-18';
+    var left = daysUntil(d[0]);
+    if(left === null || left < 0) return '';
+    var soon = left <= 21;
     return ' <span class="pill '+(soon?'warn':'')+'" style="font-size:11px;margin-left:6px;vertical-align:middle">Due '+esc(d[1])+'</span>';
   }
   var state = { key: '', items: [], stats: null };
@@ -275,6 +294,8 @@ tr:last-child td{border-bottom:0}
       var ka = deadlineKey(a.state), kb = deadlineKey(b.state);
       if(ka !== kb) return ka < kb ? -1 : 1;
       if((a.state||'') !== (b.state||'')) return (a.state||'').localeCompare(b.state||'');
+      var aa = isAssociation(a) ? 1 : 0, ab = isAssociation(b) ? 1 : 0;
+      if(aa !== ab) return aa - ab;
       return (a.dept||'').localeCompare(b.dept||'');
     });
     $('tbody').innerHTML = list.map(function(x){
@@ -283,7 +304,7 @@ tr:last-child td{border-bottom:0}
       var draftHtml = x.draft_url ? ' · <a href="'+esc(x.draft_url)+'" target="_blank" rel="noopener">Open free draft</a>' : '';
       var opts = OUTCOMES.map(function(o){ return '<option value="'+esc(o)+'"'+(x.outcome===o?' selected':'')+'>'+esc(o)+'</option>'; }).join('');
       return '<tr data-id="'+x.id+'">' +
-        '<td><div class="deptname">'+esc(x.dept)+deadlineBadge(x.state)+'</div>' +
+        '<td><div class="deptname">'+esc(x.dept)+deadlineBadge(x)+'</div>' +
         '<div class="meta">'+(loc?esc(loc)+' · ':'')+(x.email?'<a href="mailto:'+esc(x.email)+'">'+esc(x.email)+'</a>':'No email')+'</div>' +
         '<div class="meta">Phone: '+phoneHtml+draftHtml+'</div></td>' +
         '<td class="chkcell"><input type="checkbox" data-f="emailed"'+(x.emailed?' checked':'')+'><span class="chkdate">'+esc(x.emailed_at)+'</span></td>' +
