@@ -460,7 +460,8 @@ section[id]{scroll-margin-top:12px}
 var API=window.__API_BASE__;
 var q=new URLSearchParams(location.search);var src=(q.get('src')||'direct').slice(0,40);
 var vid=Math.random().toString(36).slice(2,12);
-function ev(k){try{fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:src,page:'afg',vid:vid})})}catch(e){}}
+function isSelf(){try{return !!localStorage.getItem('bdg_admin_key')||/^(qa|t|internal|self|admin)$/i.test(src)}catch(e){return false}}
+function ev(k){if(isSelf())return;try{fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:src,page:'afg',vid:vid})})}catch(e){}}
 ev('view');
 (function(){var fs=false,ff=document.getElementById('f');if(ff)ff.addEventListener('focusin',function(){if(!fs){fs=true;ev('form_start')}})})();
 document.querySelectorAll('[data-ev]').forEach(function(a){a.addEventListener('click',function(){ev(a.getAttribute('data-ev'))})});
@@ -470,7 +471,7 @@ f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
   var d=Object.fromEntries(new FormData(f).entries());
   if(!d.org.trim()||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email.trim())){err.textContent='Please add your department name and a valid email.';return}
   sub.disabled=true;sub.textContent='Reserving...';
-  fetch(API+'/api/reserve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({org:d.org,email:d.email,state:d.state,orgtype:d.orgtype,plan:(d.plan==='gw795'?'gw795':'afg249'),note:('[terms 2026-11-24] [request: '+(d.req||'none')+'] '+(d.note||'')).slice(0,600),src:src,vid:vid,website:d.website})})
+  fetch(API+'/api/reserve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({org:d.org,email:d.email,state:d.state,orgtype:d.orgtype,plan:(d.plan==='gw795'?'gw795':'afg249'),note:('[terms 2026-11-24] [request: '+(d.req||'none')+'] '+(d.note||'')).slice(0,600),src:(isSelf()?'internal':src),vid:vid,website:d.website})})
   .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})})
   .then(function(){f.querySelectorAll('label,button,.err,details,.note').forEach(function(x){x.style.display='none'});ok.style.display='block'})
   .catch(function(x){err.textContent=x.message||'Could not reserve right now. Please try again.';sub.disabled=false;sub.textContent='Reserve my spot, pay nothing today'});
@@ -511,7 +512,7 @@ nar.addEventListener('input',run);run();
 (function(){
 var $=function(i){return document.getElementById(i)};
 var API=window.__API_BASE__||'';
-function ev(k){try{fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:new URLSearchParams(location.search).get('src')||'direct',page:'afg'})})}catch(e){}}
+function ev(k){try{if(localStorage.getItem('bdg_admin_key'))return;var s=new URLSearchParams(location.search).get('src')||'direct';if(/^(qa|t|internal|self|admin)$/i.test(s))return;fetch(API+'/api/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:k,src:s,page:'afg'})})}catch(e){}}
 var ST=['AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','PR','GU','VI','AS','MP'];
 ST.forEach(function(s){var o=document.createElement('option');o.value=s;o.textContent=s;$('dst').appendChild(o)});
 var D=null,US=null,timer=null,last=[],A={prog:'afg',progs:['afg'],item:['ppe'],sact:'hire',npos:'',rr:[],fp:['alarm'],aud:[],age:'',calls:'',bud:'',fund:[],hz:[]},TAB=0,made=false,FILL={},EDIT=null,QON=false,QI=0,QGR='',FS={},AMSG='';

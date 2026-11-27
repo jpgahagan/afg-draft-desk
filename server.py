@@ -21,6 +21,18 @@ def db():
 def authed():
     return hmac.compare_digest(request.headers.get("X-Admin-Key", ""), ADMIN_KEY)
 
+INTERNAL_SRCS = {"qa", "t", "internal", "self", "admin"}
+INTERNAL_EMAILS = {
+    "zzqa@example.com", "joe.gahagan@gmail.com", "qa-legal@example.com",
+    "hello@backdraftgrants.com", "joseph@solcompas.com", "hello@wagl.com",
+    "hayes@gahaganllc.com", "hayes@loringenergy.com", "joegahagan@clearplanconsulting.com"
+}
+BOT_UA = re.compile(r"bot|crawler|spider|headless|curl|wget|python|urllib|go-http|lighthouse|pingdom|uptime|slurp|facebookexternalhit|preview", re.I)
+
+def is_internal_email(email):
+    e = (email or "").strip().lower()
+    return (e in INTERNAL_EMAILS) or e.endswith("@gahaganllc.com") or e.endswith("@backdraftgrants.com") or e.endswith("@example.com")
+
 @app.route("/api/event", methods=["POST", "OPTIONS"])
 def event():
     if request.method == "OPTIONS": return ("", 204)
@@ -28,8 +40,12 @@ def event():
     kind = str(d.get("kind", ""))[:32]
     if kind not in ("view", "reserve_click", "list_click", "faq_open", "draft_made", "draft_copy", "form_start", "example_write", "sticky_click", "cta_inline", "cta_nav", "resume", "flow_done"):
         return jsonify(ok=False), 400
+    src = str(d.get("src", ""))[:64]
+    ua = request.headers.get("User-Agent", "")
+    if src.lower() in INTERNAL_SRCS or d.get("internal") or BOT_UA.search(ua):
+        return jsonify(ok=True, ignored=True)
     c = db(); c.execute("INSERT INTO events(ts,kind,src,page,vid) VALUES(?,?,?,?,?)",
-        (time.time(), kind, str(d.get("src", ""))[:64], str(d.get("page", ""))[:64], str(d.get("vid", ""))[:40])); c.commit()
+        (time.time(), kind, src, str(d.get("page", ""))[:64], str(d.get("vid", ""))[:40])); c.commit()
     return jsonify(ok=True)
 
 EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
@@ -58,9 +74,31 @@ def stats():
     if not authed(): return jsonify(error="forbidden"), 403
     c = db()
     ev = c.execute("SELECT kind, src, COUNT(*), COUNT(DISTINCT vid) FROM events GROUP BY kind, src").fetchall()
+    ev = [(a, b, n, u) for a, b, n, u in ev if (b or "").lower() not in INTERNAL_SRCS]
     rs = c.execute("SELECT ts, org, email, state, orgtype, plan, src, note FROM reservations ORDER BY ts").fetchall()
+    rs = [r for r in rs if (r[6] or "").lower() not in INTERNAL_SRCS and not is_internal_email(r[2])]
     return jsonify(events=[dict(kind=a, src=b, n=n, uniq=u) for a, b, n, u in ev],
                    reservations=[dict(ts=a, org=b, email=e, state=s, orgtype=t, plan=p, src=x, note=nt) for a, b, e, s, t, p, x, nt in rs])
+
+@app.route("/api/stats/reset-internal", methods=["POST", "OPTIONS"])
+def stats_reset_internal():
+    if request.method == "OPTIONS": return ("", 204)
+    if not authed(): return jsonify(error="forbidden"), 403
+    d = request.get_json(silent=True) or {}
+    c = db()
+    ev_deleted = 0
+    if d.get("clear_prelaunch"):
+        ev_deleted = c.execute("DELETE FROM events").rowcount
+    else:
+        ev_deleted = c.execute("DELETE FROM events WHERE lower(src) IN ('qa','t','internal','self','admin')").rowcount
+    res_rows = c.execute("SELECT id, email, src FROM reservations").fetchall()
+    res_deleted = 0
+    for rid, em, sr in res_rows:
+        if (sr or "").lower() in INTERNAL_SRCS or is_internal_email(em):
+            c.execute("DELETE FROM reservations WHERE id=?", (rid,))
+            res_deleted += 1
+    c.commit()
+    return jsonify(ok=True, events_deleted=ev_deleted, reservations_deleted=res_deleted)
 
 PIPE_COLS = ("id","dept","state","town","email","phone","fdid","draft_url","emailed","emailed_at","called","called_at","outcome","owner","notes","updated_at")
 OUTCOMES = ("Not started","Emailed","Left voicemail","Spoke - interested","Spoke - send info","Reserved","Not interested","Opted out")

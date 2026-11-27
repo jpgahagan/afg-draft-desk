@@ -152,7 +152,11 @@ tr:last-child td{border-bottom:0}
 (function(){
   var API = (window.__API_BASE__ && window.__API_BASE__.indexOf('__PORT_') === -1) ? window.__API_BASE__ : '';
   var KEY_STORE = 'bdg_admin_key';
-  var TEST_EMAILS = {'zzqa@example.com':1,'joe.gahagan@gmail.com':1,'qa-legal@example.com':1};
+  var TEST_EMAILS = {'zzqa@example.com':1,'joe.gahagan@gmail.com':1,'qa-legal@example.com':1,'hello@backdraftgrants.com':1,'joseph@solcompas.com':1,'hello@wagl.com':1,'hayes@gahaganllc.com':1,'hayes@loringenergy.com':1};
+  function isInternalRes(r){
+    var e = (r.email||'').toLowerCase(), s = (r.src||'').toLowerCase();
+    return s==='qa'||s==='t'||s==='internal'||s==='self'||s==='admin'||!!TEST_EMAILS[e]||e.endsWith('@gahaganllc.com')||e.endsWith('@backdraftgrants.com')||e.endsWith('@example.com');
+  }
   var OUTCOMES = ['Not started','Emailed','Left voicemail','Spoke - interested','Spoke - send info','Reserved','Not interested','Opted out'];
   var state = { key: '', items: [], stats: null };
   function $(id){ return document.getElementById(id); }
@@ -207,16 +211,17 @@ tr:last-child td{border-bottom:0}
     $('s_opt').textContent = opt + ' opted out';
 
     var st = state.stats || {events:[], reservations:[]};
-    var realRes = st.reservations.filter(function(r){ return r.src !== 'qa' && !TEST_EMAILS[(r.email||'').toLowerCase()]; });
+    var realRes = st.reservations.filter(function(r){ return !isInternalRes(r); });
     var views = 0, rclicks = 0;
     st.events.forEach(function(e){
-      if(e.src === 'qa') return;
+      var s = (e.src||'').toLowerCase();
+      if(s==='qa'||s==='t'||s==='internal'||s==='self'||s==='admin') return;
       if(e.kind === 'view') views += e.n;
       if(e.kind === 'reserve_click') rclicks += e.n;
     });
     $('s_res').textContent = realRes.length;
     $('s_views').textContent = views;
-    $('s_clicks').textContent = rclicks + ' reserve clicks';
+    $('s_clicks').textContent = rclicks + ' reserve clicks (external only)';
   }
 
   function renderTable(){
@@ -254,16 +259,15 @@ tr:last-child td{border-bottom:0}
   }
 
   function renderReservations(){
-    var rs = (state.stats && state.stats.reservations) || [];
+    var rs = ((state.stats && state.stats.reservations) || []).filter(function(r){ return !isInternalRes(r); });
     if(!rs.length){
-      $('rbody').innerHTML = '<tr><td colspan="6" class="muted" style="text-align:center;padding:18px">No reservations yet.</td></tr>';
+      $('rbody').innerHTML = '<tr><td colspan="6" class="muted" style="text-align:center;padding:18px">No real reservations yet.</td></tr>';
       return;
     }
     $('rbody').innerHTML = rs.slice().reverse().map(function(r){
-      var isTest = r.src === 'qa' || !!TEST_EMAILS[(r.email||'').toLowerCase()];
       var dt = r.ts ? new Date(r.ts*1000).toISOString().slice(0,10) : '';
       var plan = r.plan === 'gw795' ? 'Full FEMA GO ($795)' : 'Finished narratives ($249)';
-      return '<tr><td>'+esc(dt)+'</td><td><b>'+esc(r.org)+'</b>'+(r.state?' ('+esc(r.state)+')':'')+'</td><td>'+esc(r.email)+'</td><td>'+esc(plan)+'</td><td>'+esc(r.src||'direct')+'</td><td>'+(isTest?'<span class="pill">Test</span>':'<span class="pill ok">Real</span>')+'</td></tr>';
+      return '<tr><td>'+esc(dt)+'</td><td><b>'+esc(r.org)+'</b>'+(r.state?' ('+esc(r.state)+')':'')+'</td><td>'+esc(r.email)+'</td><td>'+esc(plan)+'</td><td>'+esc(r.src||'direct')+'</td><td><span class="pill ok">Real</span></td></tr>';
     }).join('');
   }
 
