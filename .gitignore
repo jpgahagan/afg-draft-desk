@@ -4,3 +4,4 @@ __pycache__
 server.log
 admin_key.txt
 outreach/
+!public/og-card.png
