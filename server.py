@@ -69,13 +69,15 @@ def reserve():
     c.commit()
     return jsonify(ok=True)
 
+LAUNCH_TS = 1795793000.0  # Nov 27, 2026 pre-outreach cutoff (excludes pre-launch self-tests/bots)
+
 @app.route("/api/stats")
 def stats():
     if not authed(): return jsonify(error="forbidden"), 403
     c = db()
-    ev = c.execute("SELECT kind, src, COUNT(*), COUNT(DISTINCT vid) FROM events GROUP BY kind, src").fetchall()
+    ev = c.execute("SELECT kind, src, COUNT(*), COUNT(DISTINCT vid) FROM events WHERE ts >= ? GROUP BY kind, src", (LAUNCH_TS,)).fetchall()
     ev = [(a, b, n, u) for a, b, n, u in ev if (b or "").lower() not in INTERNAL_SRCS]
-    rs = c.execute("SELECT ts, org, email, state, orgtype, plan, src, note FROM reservations ORDER BY ts").fetchall()
+    rs = c.execute("SELECT ts, org, email, state, orgtype, plan, src, note FROM reservations WHERE ts >= ? ORDER BY ts", (LAUNCH_TS,)).fetchall()
     rs = [r for r in rs if (r[6] or "").lower() not in INTERNAL_SRCS and not is_internal_email(r[2])]
     return jsonify(events=[dict(kind=a, src=b, n=n, uniq=u) for a, b, n, u in ev],
                    reservations=[dict(ts=a, org=b, email=e, state=s, orgtype=t, plan=p, src=x, note=nt) for a, b, e, s, t, p, x, nt in rs])
