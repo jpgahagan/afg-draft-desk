@@ -62,6 +62,14 @@ tr:last-child td{border-bottom:0}
 .pill.stop{background:#fde8e6;color:var(--accent)}
 .addbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 18px;padding:16px;background:#faf8f5;border:1px solid var(--line);border-radius:var(--r)}
 .addbox .full{grid-column:1/-1}
+.acwrap{position:relative}
+.aclist{position:absolute;left:0;right:0;top:100%;z-index:40;background:#fff;border:1px solid #d4cfc7;border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.12);max-height:260px;overflow-y:auto;margin-top:4px}
+.acitem{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid #f0ece6;background:#fff;padding:9px 12px;cursor:pointer;font:inherit;color:var(--ink)}
+.acitem:last-child{border-bottom:0}
+.acitem:hover,.acitem:focus{background:#faf6f0;outline:none}
+.acitem strong{display:block;font-size:14px;font-weight:700}
+.acitem span{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.acmeta{font-size:12px;color:var(--ok);margin-top:4px;min-height:16px;font-weight:600}
 .section-h{font:800 20px/1.2 "Archivo",sans-serif;margin:28px 0 10px}
 .hide{display:none !important}
 @media(max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.addbox{grid-template-columns:1fr}}
@@ -108,13 +116,20 @@ tr:last-child td{border-bottom:0}
     <div class="statusline" id="saveok" role="status"></div>
 
     <form id="addform" class="addbox hide">
-      <div><label>Department name *</label><input name="dept" type="text" required placeholder="e.g. Caribou Fire & Ambulance"></div>
-      <div><label>State (2 letters)</label><input name="state" type="text" maxlength="2" placeholder="ME"></div>
-      <div><label>Town</label><input name="town" type="text" placeholder="Caribou"></div>
-      <div><label>Contact email</label><input name="email" type="email" placeholder="chief@department.org"></div>
-      <div><label>Non-emergency phone</label><input name="phone" type="text" placeholder="207-555-0100"></div>
+      <div class="acwrap">
+        <label>Department name * (type to search USFA registry)</label>
+        <input id="add_dept" name="dept" type="text" required autocomplete="off" placeholder="Start typing department or town...">
+        <div id="aclist" class="aclist hide" role="listbox"></div>
+        <div id="acmeta" class="acmeta"></div>
+      </div>
+      <div><label>State (2 letters)</label><input id="add_state" name="state" type="text" maxlength="2" placeholder="ME"></div>
+      <div><label>Town</label><input id="add_town" name="town" type="text" placeholder="Caribou"></div>
+      <div><label>Contact email</label><input id="add_email" name="email" type="email" placeholder="chief@department.org"></div>
+      <div><label>Non-emergency phone</label><input id="add_phone" name="phone" type="text" placeholder="207-555-0100"></div>
       <div><label>Owner</label><select name="owner"><option value="Hayes">Hayes</option><option value="Joseph">Joseph</option></select></div>
-      <div class="full"><label>Notes</label><input name="notes" type="text" placeholder="Maine pilot, association intro, etc."></div>
+      <div class="full"><label>Notes</label><input id="add_notes" name="notes" type="text" placeholder="Maine pilot, association intro, etc."></div>
+      <input id="add_fdid" name="fdid" type="hidden">
+      <input id="add_draft_url" name="draft_url" type="hidden">
       <div class="full" style="display:flex;gap:8px;align-items:center">
         <button class="btn sm" type="submit">Save department</button>
         <button class="btn sec sm" id="canceladd" type="button">Cancel</button>
@@ -305,15 +320,70 @@ tr:last-child td{border-bottom:0}
 
   ['q','fst','fout'].forEach(function(id){ $(id).addEventListener('input', renderTable); $(id).addEventListener('change', renderTable); });
   $('refbtn').addEventListener('click', function(){ loadAll().then(function(){ flash('Refreshed.'); }); });
-  $('toggleadd').addEventListener('click', function(){ $('addform').classList.toggle('hide'); });
-  $('canceladd').addEventListener('click', function(){ $('addform').classList.add('hide'); });
+  $('toggleadd').addEventListener('click', function(){
+    $('addform').classList.toggle('hide');
+    if(!$('addform').classList.contains('hide')) $('add_dept').focus();
+  });
+  $('canceladd').addEventListener('click', function(){
+    $('addform').classList.add('hide');
+    $('aclist').classList.add('hide');
+  });
+
+  var acTimer = null, acHits = [];
+  function hideAC(){ $('aclist').classList.add('hide'); }
+  function runAC(){
+    var q = ($('add_dept').value || '').trim();
+    var st = ($('add_state').value || '').trim().toUpperCase();
+    if(q.length < 2){ hideAC(); return; }
+    fetch(API + '/api/dept?q=' + encodeURIComponent(q) + '&st=' + encodeURIComponent(st))
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        acHits = (j && j.results) || [];
+        if(!acHits.length){ hideAC(); return; }
+        $('aclist').innerHTML = acHits.slice(0, 10).map(function(d, idx){
+          var sub = [d.city, d.state].filter(Boolean).join(', ') + (d.type ? ' · ' + d.type : '') + (d.phone ? ' · ' + d.phone : '');
+          return '<button type="button" class="acitem" data-idx="'+idx+'"><strong>'+esc(d.name)+'</strong><span>'+esc(sub)+'</span></button>';
+        }).join('');
+        $('aclist').classList.remove('hide');
+      }).catch(function(){ hideAC(); });
+  }
+  $('add_dept').addEventListener('input', function(){
+    $('add_fdid').value = ''; $('add_draft_url').value = ''; $('acmeta').textContent = '';
+    clearTimeout(acTimer); acTimer = setTimeout(runAC, 150);
+  });
+  $('add_state').addEventListener('input', function(){
+    if(($('add_dept').value || '').trim().length >= 2){ clearTimeout(acTimer); acTimer = setTimeout(runAC, 150); }
+  });
+  $('aclist').addEventListener('click', function(e){
+    var btn = e.target.closest('.acitem');
+    if(!btn) return;
+    var d = acHits[Number(btn.getAttribute('data-idx'))];
+    if(!d) return;
+    $('add_dept').value = d.name || '';
+    $('add_state').value = d.state || '';
+    $('add_town').value = d.city || '';
+    if(d.phone) $('add_phone').value = d.phone;
+    $('add_fdid').value = d.fdid || '';
+    $('add_draft_url').value = d.fdid ? ('https://backdraftgrants.com/?fdid=' + encodeURIComponent(d.fdid) + '&st=' + encodeURIComponent(d.state || '') + '#draft') : '';
+    if(!$('add_notes').value.trim()){
+      var meta = [d.type, d.county ? d.county + ' County' : ''].filter(Boolean).join(' · ');
+      if(meta) $('add_notes').value = meta;
+    }
+    $('acmeta').textContent = 'USFA match loaded (FDID ' + (d.fdid || 'n/a') + ') — prefilled draft link ready';
+    hideAC();
+    if(!$('add_email').value.trim()) $('add_email').focus();
+  });
+  document.addEventListener('click', function(e){ if(!e.target.closest('.acwrap')) hideAC(); });
+  $('add_dept').addEventListener('keydown', function(e){ if(e.key === 'Escape') hideAC(); });
 
   $('addform').addEventListener('submit', function(e){
     e.preventDefault(); $('adderr').textContent = '';
     var d = Object.fromEntries(new FormData($('addform')).entries());
+    if(!d.draft_url && d.state){ d.draft_url = 'https://backdraftgrants.com/?st=' + encodeURIComponent(d.state.toUpperCase()) + '#draft'; }
     api('/api/pipeline', {method:'POST', body:JSON.stringify(d)}).then(function(res){
       state.items = res.items || state.items;
-      $('addform').reset(); $('addform').classList.add('hide');
+      $('addform').reset(); $('add_fdid').value = ''; $('add_draft_url').value = ''; $('acmeta').textContent = '';
+      hideAC(); $('addform').classList.add('hide');
       populateFilters(); renderSummary(); renderTable(); flash('Department added.');
     }).catch(function(err){ $('adderr').textContent = err.message; });
   });

@@ -1,4 +1,4 @@
-import os, sqlite3, json, re, time, secrets, hmac
+import os, sqlite3, json, re, time, secrets, hmac, csv
 from flask import Flask, request, jsonify, send_from_directory
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -169,6 +169,17 @@ def pipeline_item(pid):
 DEPTS = json.load(open(os.path.join(BASE, "data", "depts.json")))
 ECON = json.load(open(os.path.join(BASE, "data", "econ.json")))
 for _d in DEPTS: _d.append(_d[1].lower())
+DEPT_PHONES = {}
+_nfdr = os.path.join(BASE, "data", "nfdr_national.csv")
+if os.path.exists(_nfdr):
+    try:
+        with open(_nfdr, newline="", encoding="utf-8", errors="ignore") as _f:
+            for _r in csv.DictReader(_f):
+                _k = (_r.get("FDID", "").strip(), _r.get("HQ state", "").strip().upper())
+                _p = _r.get("HQ phone", "").strip()
+                if _k[0] and _p: DEPT_PHONES[_k] = _p
+    except Exception:
+        pass
 
 @app.route("/api/dept")
 def dept_search():
@@ -180,7 +191,7 @@ def dept_search():
         if hit:
             d = hit[0]; c = ECON["counties"].get(d[10]) if d[10] else None
             return jsonify(results=[dict(fdid=d[0], name=d[1], city=d[2], state=d[3], county=d[4], type=d[5], stations=d[6],
-                        career=d[7], volunteer=d[8], ppc=d[9], county_econ=c, state_econ=ECON["states"].get(d[3]))], us=ECON["us"])
+                        career=d[7], volunteer=d[8], ppc=d[9], phone=DEPT_PHONES.get((d[0], d[3]), ""), county_econ=c, state_econ=ECON["states"].get(d[3]))], us=ECON["us"])
     if len(q) < 2: return jsonify(results=[], us=ECON["us"], state_econ=ECON["states"].get(st) if st else None)
     words = q.split()
     out = []
@@ -194,7 +205,7 @@ def dept_search():
     for d in out:
         c = ECON["counties"].get(d[10]) if d[10] else None
         res.append(dict(fdid=d[0], name=d[1], city=d[2], state=d[3], county=d[4], type=d[5], stations=d[6],
-                        career=d[7], volunteer=d[8], ppc=d[9], county_econ=c, state_econ=ECON["states"].get(d[3])))
+                        career=d[7], volunteer=d[8], ppc=d[9], phone=DEPT_PHONES.get((d[0], d[3]), ""), county_econ=c, state_econ=ECON["states"].get(d[3])))
     return jsonify(results=res, us=ECON["us"], state_econ=ECON["states"].get(st) if st else None)
 
 @app.route("/")
