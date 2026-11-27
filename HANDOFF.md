@@ -68,3 +68,9 @@ The Perplexity daily cycle also edits main every day; it re-verifies state deadl
 - The homepage footer and the reservation acknowledgment line (`#ack`) are in `public/index.html`. Reservations record `[terms 2026-11-24]` at the start of the note. If the Terms change materially, update that date tag and the "Last updated" line together.
 - The Privacy Policy describes actual practices (no cookies, no IP stored by the app, drafts stay in the browser, Google Fonts loaded). If you add analytics, cookies, payments, AI processing of customer data or new vendors, update the policy in the same PR.
 - Not yet decided by the owner: refund terms for paid plans, checkbox vs text acknowledgment, liability cap amount, venue. Paid-service refund terms must be approved before any payment collection.
+
+## Admin & Outreach Pipeline dashboard (added Nov 27, 2026)
+- Live at `https://backdraftgrants.com/admin.html` (marked `noindex, nofollow`, locked behind `X-Admin-Key` from `admin_key.txt`).
+- Shows live non-QA site visitors, reserve clicks, real vs test reservations, and the outreach pipeline table (`Emailed`, `Called`, `Outcome`, `Notes`, non-emergency HQ phone, draft link, Add Department, CSV export).
+- Backed by `pipeline` table in SQLite `data.db` (`GET/POST /api/pipeline`, `PATCH/DELETE /api/pipeline/<id>`).
+- Contact lists and customer records remain out of the public git repo (`outreach/`, `data.db`, `admin_key.txt` are gitignored).

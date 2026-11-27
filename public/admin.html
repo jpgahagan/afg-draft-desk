@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin &amp; Outreach Pipeline | Backdraft Grants</title>
+<script>window.__API_BASE__='__PORT_5001__';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4f1;--surface:#fff;--ink:#1f1d1b;--muted:#5d5852;--line:#e2ddd6;--accent:#a3271c;--accent-ink:#fff;--ok:#2d6a4f;--warn:#9a6700;--r:12px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Inter",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+header{background:#23201e;color:#f3efe9;padding:16px 0}
+header .row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font:800 18px/1 "Archivo",sans-serif;letter-spacing:.02em;color:#fff;text-decoration:none}
+.badge{display:inline-block;background:rgba(255,255,255,.14);color:#f3efe9;font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;margin-left:8px;vertical-align:middle}
+.hbtn{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;padding:7px 13px;border-radius:8px;font:600 13px/1 "Inter",sans-serif;cursor:pointer;text-decoration:none}
+.hbtn:hover{background:rgba(255,255,255,.1)}
+main{padding:26px 0 60px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.gate{max-width:440px;margin:60px auto}
+.gate h1{font:800 24px/1.2 "Archivo",sans-serif;margin:0 0 8px}
+.muted{color:var(--muted)}
+label{display:block;font-weight:600;font-size:13px;margin:12px 0 5px}
+input[type=text],input[type=password],input[type=email],select,textarea{width:100%;padding:9px 11px;border:1px solid #cfc8be;border-radius:8px;font:14px/1.4 "Inter",sans-serif;background:#fff;color:var(--ink)}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font:600 14px/1 "Inter",sans-serif;padding:11px 16px;border-radius:8px;border:0;cursor:pointer;text-decoration:none}
+.btn.sec{background:#fff;color:var(--ink);border:1px solid #cfc8be}
+.btn.sm{padding:8px 12px;font-size:13px}
+.err{color:var(--accent);font-size:13px;margin-top:8px;min-height:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.stat .k{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.stat .v{font:800 28px/1.15 "Archivo",sans-serif;margin:6px 0 2px}
+.stat .s{font-size:13px;color:var(--muted)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.toolbar input,.toolbar select{width:auto;min-width:150px}
+.toolbar .grow{flex:1;min-width:200px}
+.statusline{font-size:13px;color:var(--ok);min-height:18px;font-weight:600}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:#fff}
+table{width:100%;border-collapse:collapse;min-width:920px}
+th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:14px}
+th{background:#faf8f5;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.deptname{font-weight:700;color:var(--ink)}
+.meta{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.45}
+.meta a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.chkcell{text-align:center;width:82px}
+.chkcell input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.chkdate{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+.outcell{width:180px}
+.outcell select{padding:6px 8px;font-size:13px}
+.notecell{min-width:220px}
+.notecell textarea{padding:6px 8px;font-size:13px;min-height:42px;resize:vertical}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:600;background:#f0ece6;color:var(--ink)}
+.pill.ok{background:#e3f3ea;color:var(--ok)}
+.pill.warn{background:#fef3d6;color:var(--warn)}
+.pill.stop{background:#fde8e6;color:var(--accent)}
+.addbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 18px;padding:16px;background:#faf8f5;border:1px solid var(--line);border-radius:var(--r)}
+.addbox .full{grid-column:1/-1}
+.section-h{font:800 20px/1.2 "Archivo",sans-serif;margin:28px 0 10px}
+.hide{display:none !important}
+@media(max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.addbox{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap row">
+    <div><a class="brand" href="/">Backdraft Grants</a><span class="badge">Team Admin</span></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a class="hbtn" href="/">View live site</a>
+      <button class="hbtn hide" id="signout" type="button">Sign out</button>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <section id="gate" class="card gate">
+    <h1>Team sign-in</h1>
+    <p class="muted" style="margin:0 0 14px">Enter the Backdraft Grants admin key to view live site stats and the outreach pipeline.</p>
+    <form id="loginform">
+      <label for="keyin">Admin key</label>
+      <input id="keyin" type="password" autocomplete="current-password" required placeholder="Paste admin key">
+      <div style="margin-top:14px"><button class="btn" type="submit">Open dashboard</button></div>
+      <div class="err" id="loginerr"></div>
+    </form>
+  </section>
+
+  <div id="app" class="hide">
+    <div class="stats">
+      <div class="stat"><div class="k">Real reservations</div><div class="v" id="s_res">0</div><div class="s">Goal: 25 (excludes tests)</div></div>
+      <div class="stat"><div class="k">Pipeline departments</div><div class="v" id="s_pipe">0</div><div class="s" id="s_pipe_sub">0 emailed · 0 called</div></div>
+      <div class="stat"><div class="k">Interested / Reserved</div><div class="v" id="s_warm">0</div><div class="s" id="s_opt">0 opted out</div></div>
+      <div class="stat"><div class="k">Site visits (non-QA)</div><div class="v" id="s_views">0</div><div class="s" id="s_clicks">0 reserve clicks</div></div>
+    </div>
+
+    <div class="toolbar">
+      <input class="grow" id="q" type="text" placeholder="Search department, town, email, or notes...">
+      <select id="fst"><option value="">All states</option></select>
+      <select id="fout"><option value="">All outcomes</option></select>
+      <button class="btn sm" id="toggleadd" type="button">+ Add department</button>
+      <button class="btn sec sm" id="csvbtn" type="button">Export CSV</button>
+      <button class="btn sec sm" id="refbtn" type="button">Refresh</button>
+    </div>
+    <div class="statusline" id="saveok" role="status"></div>
+
+    <form id="addform" class="addbox hide">
+      <div><label>Department name *</label><input name="dept" type="text" required placeholder="e.g. Caribou Fire & Ambulance"></div>
+      <div><label>State (2 letters)</label><input name="state" type="text" maxlength="2" placeholder="ME"></div>
+      <div><label>Town</label><input name="town" type="text" placeholder="Caribou"></div>
+      <div><label>Contact email</label><input name="email" type="email" placeholder="chief@department.org"></div>
+      <div><label>Non-emergency phone</label><input name="phone" type="text" placeholder="207-555-0100"></div>
+      <div><label>Owner</label><select name="owner"><option value="Hayes">Hayes</option><option value="Joseph">Joseph</option></select></div>
+      <div class="full"><label>Notes</label><input name="notes" type="text" placeholder="Maine pilot, association intro, etc."></div>
+      <div class="full" style="display:flex;gap:8px;align-items:center">
+        <button class="btn sm" type="submit">Save department</button>
+        <button class="btn sec sm" id="canceladd" type="button">Cancel</button>
+        <span class="err" id="adderr" style="margin:0"></span>
+      </div>
+    </form>
+
+    <div class="tblwrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Department &amp; Contact</th>
+            <th class="chkcell">Emailed</th>
+            <th class="chkcell">Called</th>
+            <th class="outcell">Outcome</th>
+            <th class="notecell">Notes / Next step</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <h2 class="section-h">Website reservations</h2>
+    <div class="tblwrap">
+      <table style="min-width:680px">
+        <thead>
+          <tr><th>Date</th><th>Department</th><th>Email</th><th>Plan</th><th>Source</th><th>Type</th></tr>
+        </thead>
+        <tbody id="rbody"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<script>
+(function(){
+  var API = (window.__API_BASE__ && window.__API_BASE__.indexOf('__PORT_') === -1) ? window.__API_BASE__ : '';
+  var KEY_STORE = 'bdg_admin_key';
+  var TEST_EMAILS = {'zzqa@example.com':1,'joe.gahagan@gmail.com':1,'qa-legal@example.com':1};
+  var OUTCOMES = ['Not started','Emailed','Left voicemail','Spoke - interested','Spoke - send info','Reserved','Not interested','Opted out'];
+  var state = { key: '', items: [], stats: null };
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]}); }
+  function today(){ return new Date().toISOString().slice(0,10); }
+  function flash(msg){ $('saveok').textContent = msg; setTimeout(function(){ if($('saveok').textContent===msg) $('saveok').textContent=''; }, 2500); }
+
+  function api(path, opts){
+    opts = opts || {};
+    opts.headers = Object.assign({'X-Admin-Key': state.key, 'Content-Type': 'application/json'}, opts.headers || {});
+    return fetch(API + path, opts).then(function(r){
+      if(r.status === 403) throw new Error('Invalid admin key.');
+      if(!r.ok) throw new Error('Request failed ('+r.status+')');
+      return r.json();
+    });
+  }
+
+  function loadAll(){
+    return Promise.all([api('/api/pipeline'), api('/api/stats')]).then(function(res){
+      state.items = res[0].items || [];
+      if(res[0].outcomes) OUTCOMES = res[0].outcomes;
+      state.stats = res[1];
+      populateFilters();
+      renderSummary();
+      renderTable();
+      renderReservations();
+      $('gate').classList.add('hide');
+      $('app').classList.remove('hide');
+      $('signout').classList.remove('hide');
+    });
+  }
+
+  function populateFilters(){
+    var stSel = $('fst'), curSt = stSel.value;
+    var states = Array.from(new Set(state.items.map(function(x){return x.state}).filter(Boolean))).sort();
+    stSel.innerHTML = '<option value="">All states ('+states.length+')</option>' + states.map(function(s){return '<option value="'+esc(s)+'">'+esc(s)+'</option>'}).join('');
+    stSel.value = curSt;
+    var outSel = $('fout'), curOut = outSel.value;
+    outSel.innerHTML = '<option value="">All outcomes</option>' + OUTCOMES.map(function(o){return '<option value="'+esc(o)+'">'+esc(o)+'</option>'}).join('');
+    outSel.value = curOut;
+  }
+
+  function renderSummary(){
+    var items = state.items;
+    var emailed = items.filter(function(x){return x.emailed}).length;
+    var called = items.filter(function(x){return x.called}).length;
+    var warm = items.filter(function(x){return x.outcome==='Spoke - interested'||x.outcome==='Spoke - send info'||x.outcome==='Reserved'}).length;
+    var opt = items.filter(function(x){return x.outcome==='Opted out'}).length;
+    $('s_pipe').textContent = items.length;
+    $('s_pipe_sub').textContent = emailed + ' emailed · ' + called + ' called';
+    $('s_warm').textContent = warm;
+    $('s_opt').textContent = opt + ' opted out';
+
+    var st = state.stats || {events:[], reservations:[]};
+    var realRes = st.reservations.filter(function(r){ return r.src !== 'qa' && !TEST_EMAILS[(r.email||'').toLowerCase()]; });
+    var views = 0, rclicks = 0;
+    st.events.forEach(function(e){
+      if(e.src === 'qa') return;
+      if(e.kind === 'view') views += e.n;
+      if(e.kind === 'reserve_click') rclicks += e.n;
+    });
+    $('s_res').textContent = realRes.length;
+    $('s_views').textContent = views;
+    $('s_clicks').textContent = rclicks + ' reserve clicks';
+  }
+
+  function renderTable(){
+    var q = ($('q').value || '').trim().toLowerCase();
+    var fst = $('fst').value;
+    var fout = $('fout').value;
+    var list = state.items.filter(function(x){
+      if(fst && x.state !== fst) return false;
+      if(fout && x.outcome !== fout) return false;
+      if(q){
+        var hay = (x.dept+' '+x.town+' '+x.state+' '+x.email+' '+x.phone+' '+x.notes).toLowerCase();
+        if(hay.indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+    if(!list.length){
+      $('tbody').innerHTML = '<tr><td colspan="5" class="muted" style="text-align:center;padding:24px">No departments match this filter.</td></tr>';
+      return;
+    }
+    $('tbody').innerHTML = list.map(function(x){
+      var loc = [x.town, x.state].filter(Boolean).join(', ');
+      var phoneHtml = x.phone ? '<a href="tel:'+esc(x.phone.replace(/[^\d+]/g,''))+'">'+esc(x.phone)+'</a>' : '<span class="muted">No phone listed</span>';
+      var draftHtml = x.draft_url ? ' · <a href="'+esc(x.draft_url)+'" target="_blank" rel="noopener">Open free draft</a>' : '';
+      var opts = OUTCOMES.map(function(o){ return '<option value="'+esc(o)+'"'+(x.outcome===o?' selected':'')+'>'+esc(o)+'</option>'; }).join('');
+      return '<tr data-id="'+x.id+'">' +
+        '<td><div class="deptname">'+esc(x.dept)+'</div>' +
+        '<div class="meta">'+(loc?esc(loc)+' · ':'')+(x.email?'<a href="mailto:'+esc(x.email)+'">'+esc(x.email)+'</a>':'No email')+'</div>' +
+        '<div class="meta">Phone: '+phoneHtml+draftHtml+'</div></td>' +
+        '<td class="chkcell"><input type="checkbox" data-f="emailed"'+(x.emailed?' checked':'')+'><span class="chkdate">'+esc(x.emailed_at)+'</span></td>' +
+        '<td class="chkcell"><input type="checkbox" data-f="called"'+(x.called?' checked':'')+'><span class="chkdate">'+esc(x.called_at)+'</span></td>' +
+        '<td class="outcell"><select data-f="outcome">'+opts+'</select></td>' +
+        '<td class="notecell"><textarea data-f="notes" placeholder="Add call notes or next step...">'+esc(x.notes)+'</textarea></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function renderReservations(){
+    var rs = (state.stats && state.stats.reservations) || [];
+    if(!rs.length){
+      $('rbody').innerHTML = '<tr><td colspan="6" class="muted" style="text-align:center;padding:18px">No reservations yet.</td></tr>';
+      return;
+    }
+    $('rbody').innerHTML = rs.slice().reverse().map(function(r){
+      var isTest = r.src === 'qa' || !!TEST_EMAILS[(r.email||'').toLowerCase()];
+      var dt = r.ts ? new Date(r.ts*1000).toISOString().slice(0,10) : '';
+      var plan = r.plan === 'gw795' ? 'Full FEMA GO ($795)' : 'Finished narratives ($249)';
+      return '<tr><td>'+esc(dt)+'</td><td><b>'+esc(r.org)+'</b>'+(r.state?' ('+esc(r.state)+')':'')+'</td><td>'+esc(r.email)+'</td><td>'+esc(plan)+'</td><td>'+esc(r.src||'direct')+'</td><td>'+(isTest?'<span class="pill">Test</span>':'<span class="pill ok">Real</span>')+'</td></tr>';
+    }).join('');
+  }
+
+  function updateRow(id, patch){
+    return api('/api/pipeline/'+id, {method:'PATCH', body:JSON.stringify(patch)}).then(function(res){
+      var idx = state.items.findIndex(function(x){return x.id===id});
+      if(idx >= 0 && res.item) state.items[idx] = res.item;
+      renderSummary();
+      flash('Saved.');
+    }).catch(function(e){ alert('Could not save: '+e.message); });
+  }
+
+  $('tbody').addEventListener('change', function(e){
+    var tr = e.target.closest('tr'); if(!tr) return;
+    var id = Number(tr.getAttribute('data-id'));
+    var f = e.target.getAttribute('data-f');
+    var cur = state.items.find(function(x){return x.id===id});
+    if(f === 'emailed'){
+      var v = e.target.checked;
+      var p = { emailed: v, emailed_at: v ? today() : '' };
+      if(v && cur && cur.outcome === 'Not started'){ p.outcome = 'Emailed'; tr.querySelector('[data-f="outcome"]').value = 'Emailed'; }
+      tr.querySelectorAll('.chkdate')[0].textContent = p.emailed_at;
+      updateRow(id, p);
+    } else if(f === 'called'){
+      var v2 = e.target.checked;
+      var p2 = { called: v2, called_at: v2 ? today() : '' };
+      tr.querySelectorAll('.chkdate')[1].textContent = p2.called_at;
+      updateRow(id, p2);
+    } else if(f === 'outcome'){
+      updateRow(id, { outcome: e.target.value });
+    } else if(f === 'notes'){
+      updateRow(id, { notes: e.target.value });
+    }
+  });
+
+  ['q','fst','fout'].forEach(function(id){ $(id).addEventListener('input', renderTable); $(id).addEventListener('change', renderTable); });
+  $('refbtn').addEventListener('click', function(){ loadAll().then(function(){ flash('Refreshed.'); }); });
+  $('toggleadd').addEventListener('click', function(){ $('addform').classList.toggle('hide'); });
+  $('canceladd').addEventListener('click', function(){ $('addform').classList.add('hide'); });
+
+  $('addform').addEventListener('submit', function(e){
+    e.preventDefault(); $('adderr').textContent = '';
+    var d = Object.fromEntries(new FormData($('addform')).entries());
+    api('/api/pipeline', {method:'POST', body:JSON.stringify(d)}).then(function(res){
+      state.items = res.items || state.items;
+      $('addform').reset(); $('addform').classList.add('hide');
+      populateFilters(); renderSummary(); renderTable(); flash('Department added.');
+    }).catch(function(err){ $('adderr').textContent = err.message; });
+  });
+
+  $('csvbtn').addEventListener('click', function(){
+    var cols = ['dept','state','town','email','phone','emailed','emailed_at','called','called_at','outcome','owner','notes','draft_url'];
+    var lines = [cols.join(',')].concat(state.items.map(function(x){
+      return cols.map(function(c){ return '"' + String(x[c]==null?'':x[c]).replace(/"/g,'""') + '"'; }).join(',');
+    }));
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([lines.join('\n')], {type:'text/csv'}));
+    a.download = 'backdraft-pipeline-'+today()+'.csv';
+    a.click();
+  });
+
+  $('loginform').addEventListener('submit', function(e){
+    e.preventDefault(); $('loginerr').textContent = '';
+    state.key = $('keyin').value.trim();
+    loadAll().then(function(){
+      try{ localStorage.setItem(KEY_STORE, state.key); }catch(ex){}
+    }).catch(function(err){ $('loginerr').textContent = err.message; });
+  });
+
+  $('signout').addEventListener('click', function(){
+    try{ localStorage.removeItem(KEY_STORE); }catch(ex){}
+    state.key = ''; $('keyin').value = '';
+    $('app').classList.add('hide'); $('signout').classList.add('hide'); $('gate').classList.remove('hide');
+  });
+
+  try{
+    var saved = localStorage.getItem(KEY_STORE);
+    if(saved){ state.key = saved; loadAll().catch(function(){ localStorage.removeItem(KEY_STORE); }); }
+  }catch(ex){}
+})();
+</script>
+</body>
+</html>
