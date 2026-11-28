@@ -27,6 +27,7 @@ GUIDES_NAV = (
     f'<a href="{SITE}/guides/afg-2026-deadline-checklist.html">AFG 2026–27 Deadlines &amp; Checklist</a>'
     f'<a href="{SITE}/guides/fire-department-equipment-grants.html">Turnout Gear, SCBA &amp; Truck Grants</a>'
     f'<a href="{SITE}/guides/safer-grant-narrative-guide.html">SAFER Grant Guide</a>'
+    f'<a href="{SITE}/guides/fps-grant-narrative-guide.html">FP&amp;S Grant Guide</a>'
     f'<a href="{SITE}/guides/volunteer-fire-department-grants.html">All 50 State Fire Grants</a>'
     '</nav>'
 )
@@ -360,7 +361,41 @@ build_guide(
     'grants for turnout gear volunteer fire department, SCBA grant fire department, fire truck grant volunteer fire department, fire department radio grant, FEMA AFG equipment grant, PPE grant firefighters',
 )
 
-# Guide 4: All 50 State Fire Grants Directory Hub
+# Guide 4: FEMA Fire Prevention & Safety (FP&S) Grant Narrative Guide
+build_guide(
+    'fps-grant-narrative-guide',
+    'FEMA Fire Prevention & Safety (FP&S) Grant Narrative Guide (2026–27)',
+    'How fire departments write competitive FEMA Fire Prevention and Safety (FP&S) grant narratives for smoke alarms, community risk reduction, code enforcement, and arson investigation—including the 5% cash or in-kind match.',
+    'FEMA Fire Prevention & Safety (FP&S) Grant Narrative Guide (2026–27)',
+    '''<p class="muted">Updated November 2026 · Verified against FEMA FP&amp;S Notice of Funding Opportunity (NOFO) and 15 U.S.C. § 2229(k) rules.</p>
+<p>FEMA's Fire Prevention and Safety (FP&amp;S) grant program funds projects that reduce fire-related injuries and fatalities before an alarm ever sounds. Fire departments—including volunteer, combination, and rural departments—can apply directly under the <strong>Fire Prevention &amp; Safety (FP&amp;S) Activity</strong> for up to $1.5 million in federal funding.</p>
+<h2>What Fire Departments Can Fund Under FP&amp;S</h2>
+<ul>
+  <li><strong>Community Risk Reduction (CRR):</strong> Smoke alarm and carbon monoxide alarm installation campaigns targeting high-risk households (older adults, low-income neighborhoods, rural homes without working detectors), plus public fire-safety education.</li>
+  <li><strong>Code Enforcement &amp; Awareness:</strong> Training, certifications, and software or tools to adopt, update, or enforce modern fire and building safety codes.</li>
+  <li><strong>Fire &amp; Arson Investigation:</strong> Training, certification, and investigation equipment to determine fire origin and cause and prevent repeat incidents.</li>
+  <li><strong>Wildland-Urban Interface (WUI) Risk Reduction:</strong> Community risk assessments, home-ignition-zone education, and local wildfire prevention outreach.</li>
+</ul>
+<h2>FP&amp;S Cost-Share Match (5% Cash or In-Kind)</h2>
+<ul>
+  <li><strong>Mandatory 5% non-federal match:</strong> Under 15 U.S.C. § 2229(k), FP&amp;S applicants agree to provide a non-federal cost share equal to at least <strong>5% of the federal grant award</strong> (not required to be in hand at application time).</li>
+  <li><strong>In-kind (soft match) is allowed:</strong> Unlike AFG equipment grants, FP&amp;S allows <strong>in-kind contributions</strong>—such as donated volunteer hours, staff time, facilities, or complementary smoke alarms—documented under 2 C.F.R. § 200.306.</li>
+  <li><strong>Hardship waivers:</strong> The FEMA Administrator may waive or reduce the 5% cost share or Maintenance of Effort (80% of prior two-year average) in cases of demonstrated economic hardship.</li>
+</ul>
+<h2>What FP&amp;S Peer Reviewers Score Highest</h2>
+<ul>
+  <li><strong>Local risk data (Vulnerability Statement):</strong> Cite 3 to 5 years of NFIRS / NERIS structure-fire, fire-injury, or false-alarm data showing exactly which neighborhoods or demographics face the highest fire risk.</li>
+  <li><strong>Measurable implementation plan:</strong> State how many homes you will visit, how many 10-year sealed-battery alarms you will install, who will perform the work, and your month-by-month timeline.</li>
+  <li><strong>Evaluation &amp; sustainability:</strong> Explain how you will track outcomes (install logs, pre/post surveys, reduced residential fire losses) and keep the prevention program active after the grant closes.</li>
+</ul>''',
+    [
+        ('What is the local match for a FEMA FP&S grant?', 'FEMA Fire Prevention and Safety (FP&S) grants require a 5% non-federal cost share, which can be met with cash (hard match) or documented in-kind contributions (soft match) such as volunteer hours, staff time, or facilities.'),
+        ('Can a volunteer fire department apply directly for a FEMA FP&S grant?', 'Yes. Volunteer, combination, and career fire departments are eligible to apply directly under the Fire Prevention and Safety (FP&S) Activity. (The separate Research & Development activity is for academic and research organizations.)'),
+    ],
+    'FEMA FP&S grant narrative, Fire Prevention and Safety grant 2026 2027, smoke alarm grant fire department, community risk reduction grant FEMA, volunteer fire department prevention grant',
+)
+
+# Guide 5: All 50 State Fire Grants Directory Hub
 state_cards = "".join(
     f'<a href="{SITE}/states/{st.lower().replace(" ", "-")}.html"><strong>{html.escape(st)}</strong><br><span class="note">{sum(1 for g in G if g[1] == st)} program{"s" if sum(1 for g in G if g[1] == st) > 1 else ""}</span></a>'
     for st in states
@@ -378,6 +413,7 @@ build_guide(
   <li><a href="{SITE}/guides/afg-grant-narrative-template.html">FEMA AFG Grant Narrative Template &amp; Scoring Guide</a></li>
   <li><a href="{SITE}/guides/afg-2026-deadline-checklist.html">FEMA AFG 2026–27 Deadlines &amp; FEMA GO Checklist</a></li>
   <li><a href="{SITE}/guides/safer-grant-narrative-guide.html">FEMA SAFER Grant Narrative Guide (Hiring &amp; Volunteer R&amp;R)</a></li>
+  <li><a href="{SITE}/guides/fps-grant-narrative-guide.html">FEMA Fire Prevention &amp; Safety (FP&amp;S) Grant Narrative Guide</a></li>
 </ul>''',
     [
         ('Where can volunteer fire departments find state grants?', 'Every state administers federal-state Volunteer Fire Assistance (VFA) grants through its state forestry agency, plus many states offer dedicated fire marshal, emergency services, or rural equipment grants.'),
